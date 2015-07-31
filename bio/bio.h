@@ -1,5 +1,5 @@
-#ifndef _NAEEM_BIO_H_
-#define _NAEEM_BIO_H_
+#ifndef _NAEEM_CORELIBS__BIO_H_
+#define _NAEEM_CORELIBS__BIO_H_
 
 #include <naeem/types.h>
 
@@ -10,7 +10,7 @@ extern "C" {
 
 
 #define NAEEM_BIO_BIOMETRIC_INFORMATION_GROUP_TEMPLATE_TAG                          0x7f61
-#define NAEEM_BIO_BIOMENTRIC_INFORMATION_GROUP_TEMPLATE_NUM_OF_INSTANCES_TAG        0x02
+#define NAEEM_BIO_BIOMETRIC_INFORMATION_GROUP_TEMPLATE_NUM_OF_INSTANCES_TAG         0x02
 #define NAEEM_BIO_BIOMETRIC_INFORMATION_TEMPLATE_TAG                                0x7f60
 #define NAEEM_BIO_BIOMETRIC_HEADER_TEMPLATE_TAG                                     0xa1
 #define NAEEM_BIO_BIOMETRIC_HEADER_TEMPLATE_PATRON_HEADER_FORMAT_TAG                0x80
@@ -35,8 +35,8 @@ typedef struct {
   NAEEM_data                                         data;
   NAEEM_uint32                                       length;
   NAEEM_uint32                                       type;
-} NAEEM_bio_JPEG_image;
-typedef NAEEM_bio_JPEG_image PTR   NAEEM_bio_JPEG_image_ptr;
+} NAEEM_bio__JPEG_image;
+typedef NAEEM_bio__JPEG_image PTR   NAEEM__bio_JPEG_image_ptr;
 
 
 typedef struct {
@@ -48,8 +48,8 @@ typedef struct {
   NAEEM_byte                                        source_type;
   NAEEM_byte                                        device_type[2];
   NAEEM_byte                                        quality[2];
-} NAEEM_bio_image_information;
-typedef NAEEM_bio_image_information PTR   NAEEM_bio_image_information_ptr;
+} NAEEM_bio__image_information;
+typedef NAEEM_bio__image_information PTR   NAEEM_bio__image_information_ptr;
 
 
 typedef struct {
@@ -57,8 +57,8 @@ typedef struct {
   NAEEM_byte                                        feature_point_code;
   NAEEM_byte                                        horizantal_position[2];
   NAEEM_byte                                        vertical_position[2];
-} NAEEM_bio_feature_point;
-typedef NAEEM_bio_feature_point PTR   NAEEM_bio_feature_point_ptr;
+} NAEEM_bio__feature_point;
+typedef NAEEM_bio__feature_point PTR   NAEEM_bio__feature_point_ptr;
 
 
 typedef struct {
@@ -71,32 +71,32 @@ typedef struct {
   NAEEM_byte                                        expression[2];
   NAEEM_byte                                        pose_angle[3];
   NAEEM_byte                                        pose_angle_uncertainty[3];
-} NAEEM_bio_facial_information;
-typedef NAEEM_bio_facial_information PTR   NAEEM_bio_facial_information_ptr;
+} NAEEM_bio__facial_information;
+typedef NAEEM_bio__facial_information PTR   NAEEM_bio__facial_information_ptr;
 
 
 typedef struct {
-  NAEEM_bio_facial_information                      facial_information;
-  NAEEM_bio_feature_point_ptr                       feature_points;
-  NAEEM_bio_image_information                       image_information;
-  NAEEM_bio_JPEG_image                              jpeg_image;
-} NAEEM_facial_record_data;
-typedef NAEEM_facial_record_data PTR   NAEEM_facial_record_data_ptr;
+  NAEEM_bio__facial_information                      facial_information;
+  NAEEM_bio__feature_point_ptr                       feature_points;
+  NAEEM_bio__image_information                       image_information;
+  NAEEM_bio__JPEG_image                              jpeg_image;
+} NAEEM_bio__facial_record_data;
+typedef NAEEM_bio__facial_record_data PTR   NAEEM_bio_facial__record_data_ptr;
 
 
 typedef struct {
   NAEEM_byte                                         version_number[4];
   NAEEM_byte                                         length_of_record[4];
   NAEEM_byte                                         number_of_facial_images[2];
-} NAEEM_facial_record_header;
-typedef NAEEM_facial_record_header PTR   NAEEM_facial_record_header_ptr;
+} NAEEM_bio__facial_record_header;
+typedef NAEEM_bio__facial_record_header PTR   NAEEM_bio__facial_record_header_ptr;
 
 
 typedef struct {
-  NAEEM_facial_record_header                         facial_record_header;
-  NAEEM_facial_record_data                           facial_record_data;                          
-} NAEEM_bio_FAC_biometric_data_block;
-typedef NAEEM_bio_FAC_biometric_data_block PTR    NAEEM_bio_FAC_biometric_data_block_ptr;
+  NAEEM_bio__facial_record_header                         facial_record_header;
+  NAEEM_bio__facial_record_data                           facial_record_data;                          
+} NAEEM_bio__FAC_biometric_data_block;
+typedef NAEEM_bio__FAC_biometric_data_block PTR    NAEEM_bio__FAC_biometric_data_block_ptr;
 
 
 typedef struct {
@@ -115,36 +115,36 @@ typedef struct {
   NAEEM_bool                                         pid_is_present;
   NAEEM_byte                                         format_owner[2];
   NAEEM_byte                                         format_type[2];
-} NAEEM_bio_biometric_header_template;
-typedef NAEEM_bio_biometric_header_template PTR   NAEEM_bio_biometric_header_template_ptr;
+} NAEEM_bio__biometric_header_template;
+typedef NAEEM_bio__biometric_header_template PTR   NAEEM_bio__biometric_header_template_ptr;
 
 
 typedef struct {
-  NAEEM_bio_biometric_header_template                BHT_record;
+  NAEEM_bio__biometric_header_template                BHT_record;
   NAEEM_data                                         BDB_record;
   NAEEM_uint32                                       BDB_record_type;
   NAEEM_uint32                                       BDB_record_length;
-} NAEEM_bio_biometric_information_group_template;
-typedef NAEEM_bio_biometric_information_group_template PTR   NAEEM_bio_biometric_information_group_template_ptr;
-typedef NAEEM_bio_biometric_information_group_template_ptr PTR   NAEEM_bio_biometric_information_group_template_ptr_ptr;
+} NAEEM_bio__biometric_information_group_template;
+typedef NAEEM_bio__biometric_information_group_template PTR   NAEEM_bio__biometric_information_group_template_ptr;
+typedef NAEEM_bio__biometric_information_group_template_ptr PTR   NAEEM_bio__biometric_information_group_template_ptr_ptr;
 
 typedef struct {
-  NAEEM_bio_biometric_information_group_template_ptr_ptr   BIG_records;   
+  NAEEM_bio__biometric_information_group_template_ptr_ptr   BIG_records;   
   NAEEM_uint32                                             BIG_records_length; 
-} NAEEM_bio_CBEFF_template;
-typedef NAEEM_bio_CBEFF_template PTR   NAEEM_bio_CBEFF_template_ptr;
+} NAEEM_bio__CBEFF_template;
+typedef NAEEM_bio__CBEFF_template PTR   NAEEM_bio__CBEFF_template_ptr;
 
 
 NAEEM_void
-NAEEM_create_CBEFF_record_from_facial_image_data (NAEEM_data                       /* Image data */,
-                                                  NAEEM_uint32                     /* Image data length */,
-                                                  NAEEM_bio_CBEFF_template_ptr     /* Pointer to CBEFF record */);
+NAEEM_bio__create_CBEFF_record_from_facial_image_data (NAEEM_data                       /* Image data */,
+                                                       NAEEM_uint32                     /* Image data length */,
+                                                       NAEEM_bio__CBEFF_template_ptr    /* Pointer to CBEFF record */);
 
 
 NAEEM_void
-NAEEM_get_CBEFF_data (NAEEM_bio_CBEFF_template_ptr     /* Pointer to CBEFF record */,
-                      NAEEM_data_ptr                   /* Pointer to CBEFF data buffer */,
-                      NAEEM_uint32_ptr                 /* Pointer to CBEFF data buffer length */);
+NAEEM_bio__get_CBEFF_data (NAEEM_bio__CBEFF_template_ptr     /* Pointer to CBEFF record */,
+                           NAEEM_data_ptr                    /* Pointer to CBEFF data buffer */,
+                           NAEEM_uint32_ptr                  /* Pointer to CBEFF data buffer length */);
 
 
 #ifdef __cplusplus

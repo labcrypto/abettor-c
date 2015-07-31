@@ -1,15 +1,15 @@
 #include <naeem/bio.h>
 #include <naeem/test.h>
-#include <naeem/util.h>
+#include <naeem/utils.h>
 
 NAEEM_void
-NAEEM_create_CBEFF_record_from_facial_image_data (NAEEM_data image_data,
-                                                  NAEEM_uint32 image_data_length,
-                                                  NAEEM_bio_CBEFF_template_ptr CBEFF_record_ptr) {
+NAEEM_bio__create_CBEFF_record_from_facial_image_data (NAEEM_data image_data,
+                                                       NAEEM_uint32 image_data_length,
+                                                       NAEEM_bio__CBEFF_template_ptr CBEFF_record_ptr) {
 
-  NAEEM_bio_FAC_biometric_data_block_ptr FAC_biometric_data_block = 
-              (NAEEM_bio_FAC_biometric_data_block_ptr)malloc(
-                    sizeof(NAEEM_bio_FAC_biometric_data_block));
+  NAEEM_bio__FAC_biometric_data_block_ptr FAC_biometric_data_block = 
+              (NAEEM_bio__FAC_biometric_data_block_ptr)malloc(
+                    sizeof(NAEEM_bio__FAC_biometric_data_block));
 
   FAC_biometric_data_block->facial_record_header.version_number[0] = 0x30;
   FAC_biometric_data_block->facial_record_header.version_number[1] = 0x31;
@@ -43,8 +43,8 @@ NAEEM_create_CBEFF_record_from_facial_image_data (NAEEM_data image_data,
   FAC_biometric_data_block->facial_record_data.facial_information.pose_angle_uncertainty[1] = 0x00;
   FAC_biometric_data_block->facial_record_data.facial_information.pose_angle_uncertainty[2] = 0x00;
 
-  FAC_biometric_data_block->facial_record_data.feature_points = (NAEEM_bio_feature_point_ptr)malloc(
-                    sizeof(NAEEM_bio_feature_point));
+  FAC_biometric_data_block->facial_record_data.feature_points = (NAEEM_bio__feature_point_ptr)malloc(
+                    sizeof(NAEEM_bio__feature_point));
 
   FAC_biometric_data_block->facial_record_data.feature_points[0].feature_point_type = 0x01;
   FAC_biometric_data_block->facial_record_data.feature_points[0].feature_point_code = 0xc1;
@@ -76,9 +76,9 @@ NAEEM_create_CBEFF_record_from_facial_image_data (NAEEM_data image_data,
   FAC_biometric_data_block->facial_record_data.jpeg_image.length = image_data_length;
   FAC_biometric_data_block->facial_record_data.jpeg_image.type = NAEEM_BIO_JPEG_TYPE_JPEG_JFIF;
 
-  NAEEM_bio_biometric_information_group_template_ptr BIG_record = 
-              (NAEEM_bio_biometric_information_group_template_ptr)malloc(
-                    sizeof(NAEEM_bio_biometric_information_group_template));
+  NAEEM_bio__biometric_information_group_template_ptr BIG_record = 
+              (NAEEM_bio__biometric_information_group_template_ptr)malloc(
+                    sizeof(NAEEM_bio__biometric_information_group_template));
 
   BIG_record->BHT_record.patron_header_format_is_present = FALSE;
   BIG_record->BHT_record.biometric_type_is_present = TRUE;
@@ -98,8 +98,8 @@ NAEEM_create_CBEFF_record_from_facial_image_data (NAEEM_data image_data,
   BIG_record->BDB_record_type = NAEEM_BIO_BDB_TYPE_FAC;
   BIG_record->BDB_record_length = image_data_length + 54;
 
-  CBEFF_record_ptr->BIG_records = (NAEEM_bio_biometric_information_group_template_ptr_ptr)malloc(
-                                            sizeof(NAEEM_bio_biometric_information_group_template_ptr));
+  CBEFF_record_ptr->BIG_records = (NAEEM_bio__biometric_information_group_template_ptr_ptr)malloc(
+                                            sizeof(NAEEM_bio__biometric_information_group_template_ptr));
 
   CBEFF_record_ptr->BIG_records_length = 1;
   CBEFF_record_ptr->BIG_records[0] = BIG_record;
@@ -107,9 +107,9 @@ NAEEM_create_CBEFF_record_from_facial_image_data (NAEEM_data image_data,
 
 
 NAEEM_void
-NAEEM_get_CBEFF_data (NAEEM_bio_CBEFF_template_ptr CBEFF_record_ptr,
-                      NAEEM_data_ptr data,
-                      NAEEM_uint32_ptr data_length) {
+NAEEM_bio__get_CBEFF_data (NAEEM_bio__CBEFF_template_ptr CBEFF_record_ptr,
+                           NAEEM_data_ptr data,
+                           NAEEM_uint32_ptr data_length) {
   NAEEM_uint32 i = 0;
   NAEEM_uint32 overal_length = 2 /* 0x76f1 */ + 3 /* Length */;
   overal_length += 1 /* 0x02 */ + 1 /* Length: 0x01 */ + 1 /* Value */;
@@ -241,8 +241,8 @@ NAEEM_get_CBEFF_data (NAEEM_bio_CBEFF_template_ptr CBEFF_record_ptr,
     buffer[c++] = CBEFF_record_ptr->BIG_records[i]->BDB_record_length % 256;
     //------------------------ BDB --------------------------------
     if (CBEFF_record_ptr->BIG_records[i]->BDB_record_type == NAEEM_BIO_BDB_TYPE_FAC) {
-      NAEEM_bio_FAC_biometric_data_block_ptr FAC_biometric_data_block_ptr = 
-                         (NAEEM_bio_FAC_biometric_data_block_ptr)CBEFF_record_ptr->BIG_records[i]->BDB_record;
+      NAEEM_bio__FAC_biometric_data_block_ptr FAC_biometric_data_block_ptr = 
+                         (NAEEM_bio__FAC_biometric_data_block_ptr)CBEFF_record_ptr->BIG_records[i]->BDB_record;
       buffer[c++] = 0x46;
       buffer[c++] = 0x41;
       buffer[c++] = 0x43;
