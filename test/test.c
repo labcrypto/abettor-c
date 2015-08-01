@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include <naeem/test.h>
-#include <naeem/utils.h>
+#include <naeem/util.h>
 
 
 NAEEM_void
