@@ -217,7 +217,7 @@ NAEEM_crypto__MAC_v3 (NAEEM_data message,
                       NAEEM_bool padded,
                       NAEEM_DES_key key1,
                       NAEEM_DES_key key2) {
-  NAEEM_test_assert((message_length % 8) == 0, "Message length is not a product of 8 bytes.");
+  NAEEM_test__assert((message_length % 8) == 0, "Message length is not a product of 8 bytes.");
   // TODO (kamran) Use NAEEM_util_pad function.
   NAEEM_uint32 i = 0, j = 0;
   NAEEM_byte check_block[8];
@@ -233,11 +233,11 @@ NAEEM_crypto__MAC_v3 (NAEEM_data message,
   i = 0;
   while (i < message_length) {
     NAEEM_byte block[8];
-    NAEEM_util_copy_array(block, message, i, 8);
-    NAEEM_util_xor(check_block, 8, block);
+    NAEEM_util__copy_array(block, message, i, 8);
+    NAEEM_util__xor(check_block, 8, block);
     // NAEEM_util_print_array("CBLOCK    ", check_block, 8); 
     NAEEM_byte cipher[8];
-    NAEEM_crypto_DES_cbc_encrypt(check_block, 8, cipher, NULL, key1);
+    NAEEM_crypto__DES_cbc_encrypt(check_block, 8, cipher, NULL, key1);
     for (j = 0; j < 8; j++) {
       check_block[j] = cipher[j];
     }
@@ -247,20 +247,20 @@ NAEEM_crypto__MAC_v3 (NAEEM_data message,
     NAEEM_byte padding[8];
     padding[0] = 0x80;
     padding[1] = padding[2] = padding[3] = padding[4] = padding[5] = padding[6] = padding[7] = 0x00;
-    NAEEM_util_xor(check_block, 8, padding);
+    NAEEM_util__xor(check_block, 8, padding);
     NAEEM_byte cipher[8];
-    NAEEM_crypto_DES_cbc_encrypt(check_block, 8, cipher, NULL, key1);  
+    NAEEM_crypto__DES_cbc_encrypt(check_block, 8, cipher, NULL, key1);  
     for (j = 0; j < 8; j++) {
       check_block[j] = cipher[j];
     }
   }
   NAEEM_byte decipher[8];
-  NAEEM_crypto_DES_cbc_decrypt(check_block, 8, decipher, NULL, key2);
+  NAEEM_crypto__DES_cbc_decrypt(check_block, 8, decipher, NULL, key2);
   for (j = 0; j < 8; j++) {
     check_block[j] = decipher[j];
   }
   // NAEEM_util_print_array("DECIPHER    ", check_block, 8); 
-  NAEEM_crypto_DES_cbc_encrypt(check_block, 8, mac, NULL, key1);
+  NAEEM_crypto__DES_cbc_encrypt(check_block, 8, mac, NULL, key1);
   // NAEEM_util_print_array("CIPHER    ", check_block, 8);
   return NAEEM_RESULT_SUCCESS;
 }
