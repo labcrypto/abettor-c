@@ -1,6 +1,6 @@
 #include <string.h>
 
-#include <naeem/utils.h>
+#include <naeem/util.h>
 
 
 NAEEM_void
@@ -132,7 +132,7 @@ NAEEM_util__pad (NAEEM_data buffer,
                  NAEEM_uint32_ptr padded_buffer_length) {
   NAEEM_uint32 new_length = (buffer_length % 8) == 0 ? buffer_length + 8 : ((buffer_length / 8) + 1) * 8;
   *padded_buffer = (NAEEM_data)malloc(new_length * sizeof(NAEEM_byte));
-  NAEEM_util_make_zero(*padded_buffer, new_length);
+  NAEEM_util__make_zero(*padded_buffer, new_length);
   NAEEM_uint32 i = 0;
   for (; i < buffer_length; i++) {
     (*padded_buffer)[i] = buffer[i];

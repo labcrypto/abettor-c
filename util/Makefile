@@ -7,7 +7,7 @@ LIB_DIR=.lib
 SYMLINK = ln -s
 RM = rm -rfv
 
-SRCS = utils.c
+SRCS = util.c
 
 TEST_SRCS = 
 
