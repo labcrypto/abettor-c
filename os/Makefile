@@ -7,7 +7,7 @@ LIB_DIR=.lib
 SYMLINK = ln -s
 RM = rm -rfv
 
-SRCS = util.c
+SRCS = os.c
 
 TEST_SRCS = 
 
@@ -17,7 +17,7 @@ TEST_OBJS = $(TEST_SRCS:.c=.o)
 OBJECTS = $(addprefix $(LIB_DIR)/, $(OBJS))
 TEST_OBJECTS = $(addprefix $(LIB_DIR)/, $(TEST_OBJS))
 
-LIB_NAME = libnaeem-util
+LIB_NAME = libnaeem-os
 MAJOR_VERSION = 1
 MINOR_VERSION = 1
 

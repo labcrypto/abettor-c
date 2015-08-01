@@ -8,9 +8,9 @@
 
 
 NAEEM_void
-NAEEM_os_read_file (FILE *fd, 
-                    NAEEM_data_ptr data, 
-                    NAEEM_uint32_ptr data_length) {
+NAEEM_os__read_file (FILE *fd, 
+                     NAEEM_data_ptr data, 
+                     NAEEM_uint32_ptr data_length) {
   NAEEM_uint32 current_limit = 128;
   *data_length = 0;
   *data = (NAEEM_data)malloc(current_limit * sizeof(NAEEM_byte));
@@ -47,23 +47,23 @@ NAEEM_os_read_file (FILE *fd,
 
 
 NAEEM_void
-NAEEM_os_read_file_with_path (NAEEM_string base_dir,
-                              NAEEM_string file_name,
-                              NAEEM_data_ptr buffer,
-                              NAEEM_uint32_ptr buffer_length) {
+NAEEM_os__read_file_with_path (NAEEM_string base_dir,
+                               NAEEM_string file_name,
+                               NAEEM_data_ptr buffer,
+                               NAEEM_uint32_ptr buffer_length) {
   NAEEM_char path[512];
   strcpy(path, "");
   strcat(path, base_dir);
   strcat(path, "/");
   strcat(path, file_name);
   FILE *f = fopen(path, "r");
-  NAEEM_os_read_file(f, buffer, buffer_length);
+  NAEEM_os__read_file(f, buffer, buffer_length);
   fclose(f);
 }
 
 
 NAEEM_void
-NAEEM_os_mkdir(NAEEM_string dir_name) {
+NAEEM_os__mkdir(NAEEM_string dir_name) {
   struct stat st = {0};
   if (stat(dir_name, &st) == -1) {
     mkdir(dir_name, 0700);
@@ -72,7 +72,7 @@ NAEEM_os_mkdir(NAEEM_string dir_name) {
 
 
 NAEEM_void
-NAEEM_os_write_to_file (NAEEM_string base_dir,
+NAEEM_os__write_to_file (NAEEM_string base_dir,
                         NAEEM_string file_name,
                         NAEEM_data buffer,
                         NAEEM_uint32 buffer_length) {

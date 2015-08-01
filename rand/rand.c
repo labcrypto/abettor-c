@@ -1,7 +1,8 @@
 #include <naeem/rand.h>
 
+
 NAEEM_void
-NAEEM_rand_generate_8_bytes (NAEEM_data buffer) {
+NAEEM_rand__generate_8_bytes (NAEEM_data buffer) {
   buffer[0] = 0x78;
   buffer[1] = 0x17;
   buffer[2] = 0x23;
@@ -14,7 +15,7 @@ NAEEM_rand_generate_8_bytes (NAEEM_data buffer) {
 
 
 NAEEM_void
-NAEEM_rand_generate_16_bytes (NAEEM_data buffer) {
+NAEEM_rand__generate_16_bytes (NAEEM_data buffer) {
   buffer[0] = 0x0b;
   buffer[1] = 0x79;
   buffer[2] = 0x52;

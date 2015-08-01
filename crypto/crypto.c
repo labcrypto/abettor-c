@@ -12,9 +12,9 @@
 
 
 NAEEM_result
-NAEEM_crypto_SHA1 (NAEEM_data data,
-                   NAEEM_uint32 data_length,
-                   NAEEM_data hash) {
+NAEEM_crypto__SHA1 (NAEEM_data data,
+                    NAEEM_uint32 data_length,
+                    NAEEM_data hash) {
   SHA_CTX ctx;
   SHA1_Init(&ctx);
   SHA1_Update(&ctx, data, data_length);
@@ -24,9 +24,9 @@ NAEEM_crypto_SHA1 (NAEEM_data data,
 
 
 NAEEM_result
-NAEEM_crypto_SHA256 (NAEEM_data data,
-                     NAEEM_uint32 data_length,
-                     NAEEM_data hash) {
+NAEEM_crypto__SHA256 (NAEEM_data data,
+                      NAEEM_uint32 data_length,
+                      NAEEM_data hash) {
   SHA256_CTX ctx;
   SHA256_Init(&ctx);
   SHA256_Update(&ctx, data, data_length);
@@ -36,11 +36,11 @@ NAEEM_crypto_SHA256 (NAEEM_data data,
 
 
 NAEEM_result
-NAEEM_crypto_DES_cbc_encrypt (NAEEM_data data,
-                              NAEEM_uint32 data_length,
-                              NAEEM_data cipher,
-                              NAEEM_uint32_ptr cipher_length_ptr,
-                              NAEEM_DES_key key) {
+NAEEM_crypto__DES_cbc_encrypt (NAEEM_data data,
+                               NAEEM_uint32 data_length,
+                               NAEEM_data cipher,
+                               NAEEM_uint32_ptr cipher_length_ptr,
+                               NAEEM_DES_key key) {
   NAEEM_uint32 i = 0;
   DES_cblock cb;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
@@ -72,11 +72,11 @@ NAEEM_crypto_DES_cbc_encrypt (NAEEM_data data,
 
 
 NAEEM_result
-NAEEM_crypto_DES_cbc_decrypt (NAEEM_data cipher,
-                              NAEEM_uint32 cipher_length,
-                              NAEEM_data data,
-                              NAEEM_uint32_ptr data_length_ptr,
-                              NAEEM_DES_key key) {
+NAEEM_crypto__DES_cbc_decrypt (NAEEM_data cipher,
+                               NAEEM_uint32 cipher_length,
+                               NAEEM_data data,
+                               NAEEM_uint32_ptr data_length_ptr,
+                               NAEEM_DES_key key) {
   NAEEM_uint32 i = 0;
   DES_cblock cb;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
@@ -108,13 +108,13 @@ NAEEM_crypto_DES_cbc_decrypt (NAEEM_data cipher,
 
 
 NAEEM_result
-NAEEM_crypto_3DES_cbc_encrypt (NAEEM_data data,
-                               NAEEM_uint32 data_length,
-                               NAEEM_data cipher,
-                               NAEEM_uint32_ptr cipher_length_ptr,
-                               NAEEM_DES_key first_key,
-                               NAEEM_DES_key second_key,
-                               NAEEM_DES_key thrid_key) {
+NAEEM_crypto__3DES_cbc_encrypt (NAEEM_data data,
+                                NAEEM_uint32 data_length,
+                                NAEEM_data cipher,
+                                NAEEM_uint32_ptr cipher_length_ptr,
+                                NAEEM_DES_key first_key,
+                                NAEEM_DES_key second_key,
+                                NAEEM_DES_key thrid_key) {
   NAEEM_uint32 i = 0;
   DES_cblock cb1;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
@@ -159,13 +159,13 @@ NAEEM_crypto_3DES_cbc_encrypt (NAEEM_data data,
 
 
 NAEEM_result
-NAEEM_crypto_3DES_cbc_decrypt (NAEEM_data cipher,
-                               NAEEM_uint32 cipher_length,
-                               NAEEM_data data,
-                               NAEEM_uint32_ptr data_length_ptr,
-                               NAEEM_DES_key first_key,
-                               NAEEM_DES_key second_key,
-                               NAEEM_DES_key thrid_key) {
+NAEEM_crypto__3DES_cbc_decrypt (NAEEM_data cipher,
+                                NAEEM_uint32 cipher_length,
+                                NAEEM_data data,
+                                NAEEM_uint32_ptr data_length_ptr,
+                                NAEEM_DES_key first_key,
+                                NAEEM_DES_key second_key,
+                                NAEEM_DES_key thrid_key) {
   NAEEM_uint32 i = 0;
   DES_cblock cb1;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
@@ -210,13 +210,13 @@ NAEEM_crypto_3DES_cbc_decrypt (NAEEM_data cipher,
 
 
 NAEEM_result
-NAEEM_crypto_MAC_v3 (NAEEM_data message,
-                     NAEEM_uint32 message_length,
-                     NAEEM_data mac,
-                     NAEEM_data initial_check_block,
-                     NAEEM_bool padded,
-                     NAEEM_DES_key key1,
-                     NAEEM_DES_key key2) {
+NAEEM_crypto__MAC_v3 (NAEEM_data message,
+                      NAEEM_uint32 message_length,
+                      NAEEM_data mac,
+                      NAEEM_data initial_check_block,
+                      NAEEM_bool padded,
+                      NAEEM_DES_key key1,
+                      NAEEM_DES_key key2) {
   NAEEM_test_assert((message_length % 8) == 0, "Message length is not a product of 8 bytes.");
   // TODO (kamran) Use NAEEM_util_pad function.
   NAEEM_uint32 i = 0, j = 0;

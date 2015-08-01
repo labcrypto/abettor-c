@@ -1,6 +1,7 @@
 #include <naeem/bio.h>
 #include <naeem/test.h>
-#include <naeem/utils.h>
+#include <naeem/util.h>
+
 
 NAEEM_void
 NAEEM_bio__create_CBEFF_record_from_facial_image_data (NAEEM_data image_data,
@@ -69,7 +70,7 @@ NAEEM_bio__create_CBEFF_record_from_facial_image_data (NAEEM_data image_data,
   FAC_biometric_data_block->facial_record_data.jpeg_image.data = 
                            (NAEEM_data)malloc(image_data_length * sizeof(NAEEM_byte));
 
-  NAEEM_util_copy_array(FAC_biometric_data_block->facial_record_data.jpeg_image.data, 
+  NAEEM_util__copy_array(FAC_biometric_data_block->facial_record_data.jpeg_image.data, 
                         image_data,
                         0,
                         image_data_length);
