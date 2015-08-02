@@ -24,6 +24,7 @@ extern "C" {
 #define FALSE 0
 #endif
 
+
 typedef void NAEEM_void;
 typedef int NAEEM_int32;
 typedef long int NAEEM_int64;
@@ -36,13 +37,13 @@ typedef double NAEEM_real;
 typedef NAEEM_uint32 NAEEM_counter;
 typedef NAEEM_uint32 NAEEM_size;
 typedef NAEEM_uint32 NAEEM_count;
-typedef NAEEM_int64 NAEEM_datetime;
+typedef NAEEM_int64 NAEEM_unix_epoch;
 typedef NAEEM_size NAEEM_length;
 
 typedef NAEEM_counter PTR NAEEM_counter_ptr;
 typedef NAEEM_size PTR NAEEM_size_ptr;
 typedef NAEEM_count PTR NAEEM_count_ptr;
-typedef NAEEM_datetime PTR NAEEM_datetime_ptr;
+typedef NAEEM_unix_epoch PTR NAEEM_unix_epoch_ptr;
 typedef NAEEM_length PTR NAEEM_length_ptr;
 
 typedef NAEEM_bool PTR NAEEM_bool_ptr;
@@ -60,6 +61,34 @@ typedef NAEEM_string PTR NAEEM_string_ptr;
 typedef NAEEM_string_ptr PTR NAEEM_string_ptr_ptr;
 
 typedef NAEEM_uint32 NAEEM_result;
+
+typedef struct {
+  NAEEM_uint32       year;
+  NAEEM_uint32       month;
+  NAEEM_uint32       day;
+} NAEEM_date;
+typedef NAEEM_date PTR NAEEM_date_ptr;
+
+typedef struct {
+  NAEEM_uint32       hour;
+  NAEEM_uint32       minute;
+  NAEEM_uint32       second;
+  NAEEM_uint32       millisecond;
+} NAEEM_time;
+typedef NAEEM_time PTR NAEEM_time_ptr;
+
+typedef struct {
+  NAEEM_date         date;
+  NAEEM_time         time;
+} NAEEM_datetime;
+typedef NAEEM_datetime PTR NAEEM_datetime_ptr;
+
+typedef struct {
+  NAEEM_data        image_data;
+  NAEEM_length      image_data_length;
+} NAEEM_image;
+typedef NAEEM_image PTR NAEEM_image_ptr;
+
 
 #ifdef __cplusplus
 }
