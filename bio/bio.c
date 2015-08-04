@@ -310,7 +310,7 @@ NAEEM_bio__get_CBEFF_data (NAEEM_bio__CBEFF_template_ptr CBEFF_record_ptr,
         buffer[c++] = FAC_biometric_data_block_ptr->facial_record_data.jpeg_image.data[cc];
       }
     }
-    NAEEM_test_assert(c == overal_length, "Inconsistency in bio structure.");
+    NAEEM_test__assert(c == overal_length, "Inconsistency in bio structure.");
   }
 }
 
