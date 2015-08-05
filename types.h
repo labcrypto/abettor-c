@@ -63,27 +63,6 @@ typedef NAEEM_string_ptr PTR NAEEM_string_ptr_ptr;
 typedef NAEEM_uint32 NAEEM_result;
 
 typedef struct {
-  NAEEM_uint32       year;
-  NAEEM_uint32       month;
-  NAEEM_uint32       day;
-} NAEEM_date;
-typedef NAEEM_date PTR NAEEM_date_ptr;
-
-typedef struct {
-  NAEEM_uint32       hour;
-  NAEEM_uint32       minute;
-  NAEEM_uint32       second;
-  NAEEM_uint32       millisecond;
-} NAEEM_time;
-typedef NAEEM_time PTR NAEEM_time_ptr;
-
-typedef struct {
-  NAEEM_date         date;
-  NAEEM_time         time;
-} NAEEM_datetime;
-typedef NAEEM_datetime PTR NAEEM_datetime_ptr;
-
-typedef struct {
   NAEEM_data        image_data;
   NAEEM_length      image_data_length;
 } NAEEM_image;
