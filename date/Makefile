@@ -17,7 +17,7 @@ TEST_OBJS = $(TEST_SRCS:.c=.o)
 OBJECTS = $(addprefix $(LIB_DIR)/, $(OBJS))
 TEST_OBJECTS = $(addprefix $(LIB_DIR)/, $(TEST_OBJS))
 
-LIB_NAME = libnaeem-log
+LIB_NAME = libnaeem-date
 MAJOR_VERSION = 1
 MINOR_VERSION = 1
 
