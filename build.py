@@ -2,7 +2,7 @@
 
 import os
 
-dirs = ['bio', 'log', 'test', 'crypto', 'rand', 'os', 'scard', 'util', 'date']
+dirs = ['bio', 'log', 'test', 'crypto', 'rand', 'os', 'scard', 'util', 'date', 'pkcs11']
 
 os.system("mkdir -p lib")
 os.system("rm -rf lib/*")

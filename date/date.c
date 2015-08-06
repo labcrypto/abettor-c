@@ -3,6 +3,51 @@
 #include <naeem/date.h>
 
 
+NAEEM_unix_epoch
+NAEEM_date__get_epoch_from_gregorian_date(NAEEM_date__gregorian_date gregorian_date) {
+  struct tm t;
+  time_t t_of_day;
+  t.tm_year = gregorian_date.year - 1900;
+  t.tm_mon = gregorian_date.month - 1;
+  t.tm_mday = gregorian_date.day;
+  t.tm_hour = 0;
+  t.tm_min = 0;
+  t.tm_sec = 0;
+  t.tm_isdst = -1;
+  t_of_day = mktime(&t);
+  return t_of_day;
+}
+
+
+NAEEM_void
+NAEEM_date__get_gregorian_date_from_epoch(NAEEM_unix_epoch epoch,
+                                          NAEEM_date__gregorian_date_ptr gregorian_date_ptr) {
+  struct tm tm = *localtime(&epoch);
+  gregorian_date_ptr->year = tm.tm_year + 1900;
+  gregorian_date_ptr->month = tm.tm_mon + 1;
+  gregorian_date_ptr->day = tm.tm_mday;
+}
+
+
+NAEEM_void
+NAEEM_date__add_years_to_gregorian_date(NAEEM_date__gregorian_date_ptr gregorian_date_ptr,
+                                        NAEEM_uint32 number_of_years) {
+  NAEEM_unix_epoch epoch = NAEEM_date__get_epoch_from_gregorian_date(*gregorian_date_ptr);
+  epoch += number_of_years * 365 * 24 * 3600;
+  NAEEM_date__get_gregorian_date_from_epoch(epoch, gregorian_date_ptr);
+}
+
+
+NAEEM_void
+NAEEM_date__add_years_to_jalali_date(NAEEM_date__jalali_date_ptr jalali_date_ptr,
+                                     NAEEM_uint32 number_of_years) {
+  NAEEM_date__gregorian_date gregorian_date;
+  NAEEM_date__convert_gregorian_to_jalali(*jalali_date_ptr, &gregorian_date);
+  NAEEM_date__add_years_to_gregorian_date(&gregorian_date, number_of_years);
+  NAEEM_date__convert_jalali_to_gregorian(gregorian_date, jalali_date_ptr);
+}
+
+
 NAEEM_void
 NAEEM_date__get_current_gregorian_date(NAEEM_date__gregorian_date_ptr gregorian_date_ptr) {
   time_t t = time(NULL);

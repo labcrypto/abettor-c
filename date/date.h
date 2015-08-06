@@ -23,6 +23,25 @@ typedef NAEEM_date__jalali_date PTR NAEEM_date__jalali_date_ptr;
 typedef NAEEM_date__gregorian_date PTR NAEEM_date__gregorian_date_ptr;
 
 
+NAEEM_unix_epoch
+NAEEM_date__get_epoch_from_gregorian_date(NAEEM_date__gregorian_date);
+
+
+NAEEM_void
+NAEEM_date__get_gregorian_date_from_epoch(NAEEM_unix_epoch,
+                                          NAEEM_date__gregorian_date_ptr);
+
+
+NAEEM_void
+NAEEM_date__add_years_to_gregorian_date(NAEEM_date__gregorian_date_ptr,
+                                        NAEEM_uint32);
+
+
+NAEEM_void
+NAEEM_date__add_years_to_jalali_date(NAEEM_date__gregorian_date_ptr,
+                                        NAEEM_uint32);
+
+
 NAEEM_void
 NAEEM_date__get_current_gregorian_date(NAEEM_date__gregorian_date_ptr);
 

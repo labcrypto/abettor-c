@@ -85,7 +85,13 @@ extern "C" {
 #define NAEEM_RESULT_DG15_DELETION_FAILED                                               0x8000004D
 #define NAEEM_RESULT_DG15_WRITE_FAILED                                                  0x8000004E
 #define NAEEM_RESULT_DG15_READ_FAILED                                                   0x8000004F
+
+#define NAEEM_RESULT_PKCS11__SHARED_LIBRARY_NOT_FOUND                                   0x80000050
+#define NAEEM_RESULT_PKCS11__C_GET_FUNCTION_LIST_FAILED                                 0x80000051
+#define NAEEM_RESULT_PKCS11__C_INITIALIZE_FAILED                                        0x80000052
+
 #define NAEEM_RESULT_GENERAL_ERROR                                                      0x80001000
+
 
 #define NAEEM_RESULT_APDU_STATUS_90_00_SUCCESS                                          0x00000000
 #define NAEEM_RESULT_APDU_STATUS_63_00_VERIFICATION_FAILED                              0x81000001

@@ -252,6 +252,17 @@ NAEEM_error_get_string (unsigned int error_code,
       break;
   }
   switch(error_code) {
+    case NAEEM_RESULT_PKCS11__SHARED_LIBRARY_NOT_FOUND:
+      strcpy(*buffer, "PKCS11: Shared Library not found.");
+      break;
+    case NAEEM_RESULT_PKCS11__GET_FUNCTION_LIST_FAILED:
+      strcpy(*buffer, "PKCS11: C_GetFunctionList failed.");
+      break;
+    case NAEEM_RESULT_PKCS11__C_INITIALIZE_FAILED:
+      strcpy(*buffer, "PKCS11: C_Initialize failed.");
+      break;
+  }
+  switch(error_code) {
     case NAEEM_RESULT_APDU_STATUS_63_00_VERIFICATION_FAILED:
       strcpy(*buffer, "APDU Repsonse: 0x63 0x00 -> Verification failed.");
       break;

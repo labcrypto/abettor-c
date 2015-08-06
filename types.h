@@ -46,6 +46,7 @@ typedef NAEEM_count PTR NAEEM_count_ptr;
 typedef NAEEM_unix_epoch PTR NAEEM_unix_epoch_ptr;
 typedef NAEEM_length PTR NAEEM_length_ptr;
 
+typedef NAEEM_void PTR NAEEM_void_ptr;
 typedef NAEEM_bool PTR NAEEM_bool_ptr;
 typedef NAEEM_uint32 PTR NAEEM_uint32_ptr;
 typedef NAEEM_int32 PTR NAEEM_int32_ptr; 
@@ -59,6 +60,8 @@ typedef NAEEM_data PTR NAEEM_data_ptr;
 typedef NAEEM_char PTR NAEEM_string;
 typedef NAEEM_string PTR NAEEM_string_ptr;
 typedef NAEEM_string_ptr PTR NAEEM_string_ptr_ptr;
+typedef NAEEM_string NAEEM_path;
+typedef NAEEM_path PTR NAEEM_path_ptr;
 
 typedef NAEEM_uint32 NAEEM_result;
 
