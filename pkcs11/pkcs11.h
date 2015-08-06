@@ -21,17 +21,21 @@ extern "C" {
 typedef CK_ULONG                   NAEEM_pkcs11__pkcs11_uint64;
 typedef CK_ULONG                   NAEEM_pkcs11__pkcs11_result;
 typedef CK_SLOT_ID                 NAEEM_pkcs11__slot_id;
+typedef CK_FUNCTION_LIST           NAEEM_pkcs11__function_list;
 typedef CK_FUNCTION_LIST_PTR       NAEEM_pkcs11__function_list_ptr;
+typedef CK_FUNCTION_LIST_PTR_PTR   NAEEM_pkcs11__function_list_ptr_ptr;
+typedef CK_SLOT_INFO               NAEEM_pkcs11__slot_info;
+typedef CK_TOKEN_INFO              NAEEM_pkcs11__token_info;
 
 typedef struct {
-  NAEEM_string             label;
+  NAEEM_char               label[32];
 } NAEEM_pkcs11__token;
 typedef NAEEM_pkcs11__token PTR NAEEM_pkcs11__token_ptr;
 
 
 typedef struct {
   NAEEM_pkcs11__slot_id    id;
-  NAEEM_string             label;
+  NAEEM_char               description[64];
   NAEEM_pkcs11__token      token;
 } NAEEM_pkcs11__slot;
 typedef NAEEM_pkcs11__slot PTR NAEEM_pkcs11__slot_ptr;
@@ -44,7 +48,7 @@ get_pkcs11_error_name(NAEEM_pkcs11__pkcs11_result);
 
 NAEEM_result
 NAEEM_pkcs11__load_shared_object(NAEEM_path, 
-                                 NAEEM_pkcs11__function_list_ptr);
+                                 NAEEM_pkcs11__function_list_ptr_ptr);
 
 
 NAEEM_result

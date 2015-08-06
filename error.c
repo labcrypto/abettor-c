@@ -261,6 +261,15 @@ NAEEM_error_get_string (unsigned int error_code,
     case NAEEM_RESULT_PKCS11__C_INITIALIZE_FAILED:
       strcpy(*buffer, "PKCS11: C_Initialize failed.");
       break;
+    case NAEEM_RESULT_PKCS11__C_GET_SLOT_LIST_FAILED:
+      strcpy(*buffer, "PKCS11: C_GetSlotList failed.");
+      break;
+     case NAEEM_RESULT_PKCS11__C_GET_SLOT_INFO_FAILED:
+      strcpy(*buffer, "PKCS11: C_GetSlotInfo failed.");
+      break;
+    case NAEEM_RESULT_PKCS11__C_GET_TOKEN_INFO_FAILED:
+      strcpy(*buffer, "PKCS11: C_GetTokenInfo failed.");
+      break;
   }
   switch(error_code) {
     case NAEEM_RESULT_APDU_STATUS_63_00_VERIFICATION_FAILED:

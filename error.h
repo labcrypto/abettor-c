@@ -89,6 +89,9 @@ extern "C" {
 #define NAEEM_RESULT_PKCS11__SHARED_LIBRARY_NOT_FOUND                                   0x80000050
 #define NAEEM_RESULT_PKCS11__C_GET_FUNCTION_LIST_FAILED                                 0x80000051
 #define NAEEM_RESULT_PKCS11__C_INITIALIZE_FAILED                                        0x80000052
+#define NAEEM_RESULT_PKCS11__C_GET_SLOT_LIST_FAILED                                     0x80000053
+#define NAEEM_RESULT_PKCS11__C_GET_SLOT_INFO_FAILED                                     0x80000054
+#define NAEEM_RESULT_PKCS11__C_GET_TOKEN_INFO_FAILED                                    0x80000055
 
 #define NAEEM_RESULT_GENERAL_ERROR                                                      0x80001000
 
