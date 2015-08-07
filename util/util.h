@@ -66,6 +66,11 @@ NAEEM_util__pad (NAEEM_data       /* Buffer */,
                  NAEEM_uint32_ptr /* Pointer to padded buffer length */);
 
 
+NAEEM_string
+NAEEM_util__array_to_string (NAEEM_data       /* Array */, 
+                             NAEEM_uint32     /* Array length */);
+
+
 #ifdef __cplusplus
 }
 #endif

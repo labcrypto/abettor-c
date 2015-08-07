@@ -270,6 +270,27 @@ NAEEM_error_get_string (unsigned int error_code,
     case NAEEM_RESULT_PKCS11__C_GET_TOKEN_INFO_FAILED:
       strcpy(*buffer, "PKCS11: C_GetTokenInfo failed.");
       break;
+    case NAEEM_RESULT_PKCS11__C_OPEN_SESSION_FAILED:
+      strcpy(*buffer, "PKCS11: C_OpenSession failed.");
+      break;
+    case NAEEM_RESULT_PKCS11__C_CLOSE_SESSION_FAILED:
+      strcpy(*buffer, "PKCS11: C_CloseSession failed.");
+      break;
+    case NAEEM_RESULT_PKCS11__C_LOGIN_FAILED:
+      strcpy(*buffer, "PKCS11: C_Login failed.");
+      break;
+    case NAEEM_RESULT_PKCS11__C_FIND_OBJECTS_INIT_FAILED:
+      strcpy(*buffer, "PKCS11: C_FindObjectsInit failed.");
+      break;
+    case NAEEM_RESULT_PKCS11__C_FIND_OBJECTS_FAILED:
+      strcpy(*buffer, "PKCS11: C_FindObjects failed.");
+      break;
+    case NAEEM_RESULT_PKCS11__C_FIND_OBJECTS_FINAL_FAILED:
+      strcpy(*buffer, "PKCS11: C_FindObjectsFinal failed.");
+      break;
+    case NAEEM_RESULT_PKCS11__OBJECT_NOT_FOUND:
+      strcpy(*buffer, "PKCS11: Object not found.");
+      break;
   }
   switch(error_code) {
     case NAEEM_RESULT_APDU_STATUS_63_00_VERIFICATION_FAILED:

@@ -142,3 +142,18 @@ NAEEM_util__pad (NAEEM_data buffer,
     *padded_buffer_length = new_length;
   }
 }
+
+
+NAEEM_string
+NAEEM_util__array_to_string (NAEEM_data array, 
+                             NAEEM_uint32 length) {
+  NAEEM_char temp[3];
+  NAEEM_string result = (NAEEM_string)malloc((2 * length + 1) * sizeof(NAEEM_char));
+  strcpy(result, "");
+  NAEEM_uint32 i = 0;
+  for (; i < length; i++) {
+    sprintf(temp, "%x", array[i]);
+    strcat(result, temp);
+  }
+  return result;
+}

@@ -18,14 +18,19 @@
 extern "C" {
 #endif
 
-typedef CK_ULONG                   NAEEM_pkcs11__pkcs11_uint64;
-typedef CK_ULONG                   NAEEM_pkcs11__pkcs11_result;
-typedef CK_SLOT_ID                 NAEEM_pkcs11__slot_id;
-typedef CK_FUNCTION_LIST           NAEEM_pkcs11__function_list;
-typedef CK_FUNCTION_LIST_PTR       NAEEM_pkcs11__function_list_ptr;
-typedef CK_FUNCTION_LIST_PTR_PTR   NAEEM_pkcs11__function_list_ptr_ptr;
-typedef CK_SLOT_INFO               NAEEM_pkcs11__slot_info;
-typedef CK_TOKEN_INFO              NAEEM_pkcs11__token_info;
+typedef CK_ULONG                             NAEEM_pkcs11__pkcs11_uint64;
+typedef CK_ULONG                             NAEEM_pkcs11__pkcs11_result;
+typedef CK_SLOT_ID                           NAEEM_pkcs11__slot_id;
+typedef CK_FUNCTION_LIST                     NAEEM_pkcs11__function_list;
+typedef CK_FUNCTION_LIST_PTR                 NAEEM_pkcs11__function_list_ptr;
+typedef CK_FUNCTION_LIST_PTR_PTR             NAEEM_pkcs11__function_list_ptr_ptr;
+typedef CK_SLOT_INFO                         NAEEM_pkcs11__slot_info;
+typedef CK_TOKEN_INFO                        NAEEM_pkcs11__token_info;
+typedef CK_SESSION_HANDLE                    NAEEM_pkcs11__session;
+typedef CK_SESSION_HANDLE_PTR                NAEEM_pkcs11__session_ptr;
+typedef CK_OBJECT_HANDLE                     NAEEM_pkcs11__object;
+typedef CK_OBJECT_HANDLE_PTR                 NAEEM_pkcs11__object_ptr;
+typedef CK_OBJECT_HANDLE_PTR PTR             NAEEM_pkcs11__object_ptr_ptr;
 
 typedef struct {
   NAEEM_char               label[32];
@@ -59,6 +64,36 @@ NAEEM_result
 NAEEM_pkcs11__get_slots(NAEEM_pkcs11__function_list_ptr,
                         NAEEM_pkcs11__slot_ptr_ptr,
                         NAEEM_length_ptr);
+
+NAEEM_result
+NAEEM_pkcs11__open_session(NAEEM_pkcs11__function_list_ptr,
+                           NAEEM_pkcs11__slot,
+                           NAEEM_pkcs11__session_ptr);
+
+
+NAEEM_result
+NAEEM_pkcs11__close_session(NAEEM_pkcs11__function_list_ptr,
+                            NAEEM_pkcs11__session);
+
+
+NAEEM_result
+NAEEM_pkcs11__login(NAEEM_pkcs11__function_list_ptr,
+                    NAEEM_pkcs11__session,
+                    NAEEM_password);
+
+
+NAEEM_result
+NAEEM_pkcs11__get_all_des3_keys(NAEEM_pkcs11__function_list_ptr,
+                                NAEEM_pkcs11__session,
+                                NAEEM_pkcs11__object_ptr_ptr,
+                                NAEEM_length_ptr);
+
+
+NAEEM_result
+NAEEM_pkcs11__find_object_by_name(NAEEM_pkcs11__function_list_ptr,
+                                  NAEEM_pkcs11__session,
+                                  NAEEM_pkcs11__object_ptr,
+                                  NAEEM_string);
 
 
 #ifdef __cplusplus

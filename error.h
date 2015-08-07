@@ -92,6 +92,13 @@ extern "C" {
 #define NAEEM_RESULT_PKCS11__C_GET_SLOT_LIST_FAILED                                     0x80000053
 #define NAEEM_RESULT_PKCS11__C_GET_SLOT_INFO_FAILED                                     0x80000054
 #define NAEEM_RESULT_PKCS11__C_GET_TOKEN_INFO_FAILED                                    0x80000055
+#define NAEEM_RESULT_PKCS11__C_OPEN_SESSION_FAILED                                      0x80000056
+#define NAEEM_RESULT_PKCS11__C_CLOSE_SESSION_FAILED                                     0x80000057
+#define NAEEM_RESULT_PKCS11__C_LOGIN_FAILED                                             0x80000058
+#define NAEEM_RESULT_PKCS11__C_FIND_OBJECTS_INIT_FAILED                                 0x80000059
+#define NAEEM_RESULT_PKCS11__C_FIND_OBJECTS_FAILED                                      0x8000005a
+#define NAEEM_RESULT_PKCS11__C_FIND_OBJECTS_FINAL_FAILED                                0x8000005b
+#define NAEEM_RESULT_PKCS11__OBJECT_NOT_FOUND                                           0x8000005c
 
 #define NAEEM_RESULT_GENERAL_ERROR                                                      0x80001000
 
@@ -117,3 +124,4 @@ NAEEM_error_print (unsigned int        /* Error code */);
 #endif
 
 #endif
+

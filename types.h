@@ -62,6 +62,7 @@ typedef NAEEM_string PTR NAEEM_string_ptr;
 typedef NAEEM_string_ptr PTR NAEEM_string_ptr_ptr;
 typedef NAEEM_string NAEEM_path;
 typedef NAEEM_path PTR NAEEM_path_ptr;
+typedef NAEEM_string NAEEM_password;
 
 typedef NAEEM_uint32 NAEEM_result;
 
