@@ -30,7 +30,7 @@ typedef int NAEEM_int32;
 typedef long int NAEEM_int64;
 typedef unsigned int NAEEM_uint32;
 typedef unsigned long int NAEEM_uint64;
-typedef unsigned char NAEEM_char;
+typedef char NAEEM_char;
 typedef unsigned int NAEEM_bool;
 typedef double NAEEM_real;
 
@@ -52,7 +52,7 @@ typedef NAEEM_uint32 PTR NAEEM_uint32_ptr;
 typedef NAEEM_int32 PTR NAEEM_int32_ptr; 
 typedef NAEEM_char PTR NAEEM_char_ptr;
 
-typedef NAEEM_char NAEEM_byte;
+typedef unsigned char NAEEM_byte;
 typedef NAEEM_byte PTR NAEEM_byte_ptr;
 typedef NAEEM_byte PTR NAEEM_data;
 typedef NAEEM_data PTR NAEEM_data_ptr;

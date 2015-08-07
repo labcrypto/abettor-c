@@ -19,21 +19,35 @@ NAEEM_os__read_file (FILE *             /* FILE pointer */,
 
 
 NAEEM_void
-NAEEM_os__read_file_with_path (NAEEM_string    /* Base directory */,
-                               NAEEM_string    /* File name */,
+NAEEM_os__read_file_with_path (NAEEM_path         /* Base directory */,
+                               NAEEM_string       /* File name */,
                                NAEEM_data_ptr     /* Pointer to buffer */, 
                                NAEEM_uint32_ptr   /* Pointer to buffer size */);
 
 
 NAEEM_void
-NAEEM_os__mkdir (NAEEM_string    /* Direcotry name */);
+NAEEM_os__mkdir (NAEEM_path      /* Direcotry name */);
 
 
 NAEEM_void
-NAEEM_os__write_to_file (NAEEM_string    /* Base directory */,
+NAEEM_os__rmdir (NAEEM_path      /* Direcotry name */);
+
+
+NAEEM_void
+NAEEM_os__write_to_file (NAEEM_path      /* Base directory */,
                          NAEEM_string    /* File name */,
                          NAEEM_data      /* Buffer */,
                          NAEEM_uint32    /* Bufer length */);
+
+
+NAEEM_bool
+NAEEM_os__file_exists (NAEEM_path      /* Base directory */,
+                       NAEEM_string    /* File name */);
+
+
+NAEEM_void
+NAEEM_os__create_file (NAEEM_path      /* Base directory */,
+                       NAEEM_string    /* File name */);
 
 
 #ifdef __cplusplus
