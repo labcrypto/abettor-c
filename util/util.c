@@ -157,3 +157,14 @@ NAEEM_util__array_to_string (NAEEM_data array,
   }
   return result;
 }
+
+
+NAEEM_void
+NAEME_util__to_upper(NAEEM_string str) {
+  NAEEM_uint32 i = 0;
+  for (; i < strlen(str); i++) {
+    if (str[i] >= 'a' && str[i] <= 'z') {
+      str[i] = str[i] - 32;
+    }
+  }
+}

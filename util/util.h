@@ -71,6 +71,10 @@ NAEEM_util__array_to_string (NAEEM_data       /* Array */,
                              NAEEM_uint32     /* Array length */);
 
 
+NAEEM_void
+NAEME_util__to_upper(NAEEM_string);
+
+
 #ifdef __cplusplus
 }
 #endif
