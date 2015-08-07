@@ -100,6 +100,8 @@ extern "C" {
 #define NAEEM_RESULT_PKCS11__C_FIND_OBJECTS_FINAL_FAILED                                0x8000005b
 #define NAEEM_RESULT_PKCS11__OBJECT_NOT_FOUND                                           0x8000005c
 #define NAEEM_RESULT_PKCS11__C_LOGOUT_FAILED                                            0x80000056
+#define NAEEM_RESULT_PKCS11__C_ENCRYPT_INIT_FAILED                                      0x80000057
+#define NAEEM_RESULT_PKCS11__C_ENCRYPT_FAILED                                           0x80000058
 
 #define NAEEM_RESULT_GENERAL_ERROR                                                      0x80001000
 

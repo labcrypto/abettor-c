@@ -31,6 +31,9 @@ typedef CK_SESSION_HANDLE_PTR                NAEEM_pkcs11__session_ptr;
 typedef CK_OBJECT_HANDLE                     NAEEM_pkcs11__object;
 typedef CK_OBJECT_HANDLE_PTR                 NAEEM_pkcs11__object_ptr;
 typedef CK_OBJECT_HANDLE_PTR PTR             NAEEM_pkcs11__object_ptr_ptr;
+typedef CK_OBJECT_HANDLE                     NAEEM_pkcs11__key;
+typedef CK_OBJECT_HANDLE_PTR                 NAEEM_pkcs11__key_ptr;
+
 
 typedef struct {
   NAEEM_char               label[32];
@@ -99,6 +102,16 @@ NAEEM_pkcs11__find_object_by_label(NAEEM_pkcs11__function_list_ptr,
                                    NAEEM_pkcs11__session,
                                    NAEEM_pkcs11__object_ptr,
                                    NAEEM_string);
+
+
+NAEEM_result
+NAEEM_pkcs11__encrypt_des3(NAEEM_pkcs11__function_list_ptr,
+                           NAEEM_pkcs11__session,
+                           NAEEM_pkcs11__key,
+                           NAEEM_data,
+                           NAEEM_length,
+                           NAEEM_data_ptr,
+                           NAEEM_length_ptr);
 
 
 #ifdef __cplusplus

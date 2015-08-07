@@ -1,4 +1,5 @@
 #include <naeem/pkcs11.h>
+#include <naeem/util.h>
 
 
 NAEEM_result
@@ -232,5 +233,40 @@ NAEEM_pkcs11__find_object_by_label(NAEEM_pkcs11__function_list_ptr function_list
     return NAEEM_RESULT_PKCS11__OBJECT_NOT_FOUND;
   }
   *object_ptr = object_handles[0];
+  return NAEEM_RESULT_SUCCESS;
+}
+
+
+NAEEM_result
+NAEEM_pkcs11__encrypt_des3(NAEEM_pkcs11__function_list_ptr function_list_ptr,
+                           NAEEM_pkcs11__session session,
+                           NAEEM_pkcs11__key key,
+                           NAEEM_data data,
+                           NAEEM_length data_length,
+                           NAEEM_data_ptr cipher,
+                           NAEEM_length_ptr cipher_length_ptr) {
+  CK_BYTE iv[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+  CK_MECHANISM mechanism = {CKM_DES3_CBC, iv, 8};
+  NAEEM_pkcs11__pkcs11_result result = function_list_ptr->C_EncryptInit(session, 
+                                                                        &mechanism, 
+                                                                        key);
+  if (result) {
+    printf("Error in init: C_EncryptInit failed %s\n", get_pkcs11_error_name(result));
+    return NAEEM_RESULT_PKCS11__C_ENCRYPT_INIT_FAILED;
+  }
+  NAEEM_byte temp[8];
+  NAEEM_length temp_length;
+  result = function_list_ptr->C_Encrypt(session, 
+                                        data, 
+                                        data_length, 
+                                        temp,
+                                        (CK_ULONG_PTR)&temp_length);
+  if (result) {
+    printf("Error in init: C_Encrypt failed %s\n", get_pkcs11_error_name(result));
+    return NAEEM_RESULT_PKCS11__C_ENCRYPT_FAILED;
+  }
+  *cipher = (NAEEM_data)malloc(8 * sizeof(NAEEM_byte));
+  *cipher_length_ptr = 8;
+  NAEEM_util__copy_array(*cipher, temp, 0, 8);
   return NAEEM_RESULT_SUCCESS;
 }
