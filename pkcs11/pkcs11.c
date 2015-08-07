@@ -124,6 +124,18 @@ NAEEM_pkcs11__login(NAEEM_pkcs11__function_list_ptr function_list_ptr,
 
 
 NAEEM_result
+NAEEM_pkcs11__logout(NAEEM_pkcs11__function_list_ptr function_list_ptr,
+                     NAEEM_pkcs11__session session) {
+  NAEEM_pkcs11__pkcs11_result result = function_list_ptr->C_Logout(session);
+  if (result) {
+    printf("Error in init: C_Logout failed %s\n", get_pkcs11_error_name(result));
+    return NAEEM_RESULT_PKCS11__C_LOGOUT_FAILED;
+  }
+  return NAEEM_RESULT_SUCCESS;
+}
+
+
+NAEEM_result
 NAEEM_pkcs11__get_all_des3_keys(NAEEM_pkcs11__function_list_ptr function_list_ptr,
                                 NAEEM_pkcs11__session session,
                                 NAEEM_pkcs11__object_ptr_ptr objects,
@@ -192,7 +204,7 @@ NAEEM_pkcs11__find_object_by_label(NAEEM_pkcs11__function_list_ptr function_list
   object_template[2].type = CKA_LABEL;
   object_template[2].pValue = (CK_CHAR_PTR) malloc((strlen(label) + 1) * sizeof(CK_CHAR));
   object_template[2].ulValueLen = strlen(label);
-  strcat(object_template[2].pValue, label);
+  strcpy(object_template[2].pValue, label);
 
   NAEEM_pkcs11__pkcs11_result result = function_list_ptr->C_FindObjectsInit(session, 
                                                                             object_template, 

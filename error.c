@@ -291,6 +291,9 @@ NAEEM_error_get_string (unsigned int error_code,
     case NAEEM_RESULT_PKCS11__OBJECT_NOT_FOUND:
       strcpy(*buffer, "PKCS11: Object not found.");
       break;
+    case NAEEM_RESULT_PKCS11__C_LOGOUT_FAILED:
+      strcpy(*buffer, "PKCS11: C_Logout failed.");
+      break;
   }
   switch(error_code) {
     case NAEEM_RESULT_APDU_STATUS_63_00_VERIFICATION_FAILED:

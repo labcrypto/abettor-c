@@ -83,6 +83,11 @@ NAEEM_pkcs11__login(NAEEM_pkcs11__function_list_ptr,
 
 
 NAEEM_result
+NAEEM_pkcs11__logout(NAEEM_pkcs11__function_list_ptr,
+                     NAEEM_pkcs11__session);
+
+
+NAEEM_result
 NAEEM_pkcs11__get_all_des3_keys(NAEEM_pkcs11__function_list_ptr,
                                 NAEEM_pkcs11__session,
                                 NAEEM_pkcs11__object_ptr_ptr,
@@ -90,10 +95,10 @@ NAEEM_pkcs11__get_all_des3_keys(NAEEM_pkcs11__function_list_ptr,
 
 
 NAEEM_result
-NAEEM_pkcs11__find_object_by_name(NAEEM_pkcs11__function_list_ptr,
-                                  NAEEM_pkcs11__session,
-                                  NAEEM_pkcs11__object_ptr,
-                                  NAEEM_string);
+NAEEM_pkcs11__find_object_by_label(NAEEM_pkcs11__function_list_ptr,
+                                   NAEEM_pkcs11__session,
+                                   NAEEM_pkcs11__object_ptr,
+                                   NAEEM_string);
 
 
 #ifdef __cplusplus

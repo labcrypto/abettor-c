@@ -152,7 +152,7 @@ NAEEM_util__array_to_string (NAEEM_data array,
   strcpy(result, "");
   NAEEM_uint32 i = 0;
   for (; i < length; i++) {
-    sprintf(temp, "%x", array[i]);
+    sprintf(temp, "%02x", array[i]);
     strcat(result, temp);
   }
   return result;
@@ -160,7 +160,7 @@ NAEEM_util__array_to_string (NAEEM_data array,
 
 
 NAEEM_void
-NAEME_util__to_upper(NAEEM_string str) {
+NAEEM_util__to_upper(NAEEM_string str) {
   NAEEM_uint32 i = 0;
   for (; i < strlen(str); i++) {
     if (str[i] >= 'a' && str[i] <= 'z') {
