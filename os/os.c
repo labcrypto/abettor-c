@@ -47,6 +47,16 @@ NAEEM_os__read_file (FILE *fd,
 
 
 NAEEM_void
+NAEEM_os__read_file2 (NAEEM_path file_path, 
+                      NAEEM_data_ptr data, 
+                      NAEEM_uint32_ptr data_length) {
+  FILE *file = fopen(file_path, "r");
+  NAEEM_os__read_file(file, data, data_length);
+  fclose(file);
+}
+
+
+NAEEM_void
 NAEEM_os__read_file_with_path (NAEEM_string base_dir,
                                NAEEM_string file_name,
                                NAEEM_data_ptr buffer,

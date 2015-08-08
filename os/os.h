@@ -19,6 +19,12 @@ NAEEM_os__read_file (FILE *             /* FILE pointer */,
 
 
 NAEEM_void
+NAEEM_os__read_file2 (NAEEM_path         /* File path */, 
+                      NAEEM_data_ptr     /* Pointer to buffer */, 
+                      NAEEM_uint32_ptr   /* Pointer to buffer size */);
+
+
+NAEEM_void
 NAEEM_os__read_file_with_path (NAEEM_path         /* Base directory */,
                                NAEEM_string       /* File name */,
                                NAEEM_data_ptr     /* Pointer to buffer */, 
