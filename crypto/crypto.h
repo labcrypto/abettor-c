@@ -98,8 +98,12 @@ NAEEM_crypto__MAC_v3 (NAEEM_data         /* Message */,
                       NAEEM_DES_key      /* Key 2*/);
 
 
-NAEEM_result
+NAEEM_void
 NAEEM_crypto__generate_RSA (NAEEM_crypto__RSA_key_pair_ptr    /* Pointer to RSA key pair struct */);
+
+
+NAEEM_void
+NAEEM_crypto__calculate_public_key(NAEEM_crypto__RSA_key_pair_ptr    /* Pointer to RSA key pair struct */);
 
 
 #ifdef __cplusplus

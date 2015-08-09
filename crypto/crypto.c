@@ -267,9 +267,9 @@ NAEEM_crypto__MAC_v3 (NAEEM_data message,
   return NAEEM_RESULT_SUCCESS;
 }
 
-NAEEM_result
+NAEEM_void
 NAEEM_crypto__generate_RSA (NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
-  RSA *keypair = RSA_generate_key(1024, 3, NULL, NULL);
+  RSA *keypair = RSA_generate_key(1024, 257, NULL, NULL);
   NAEEM_byte buffer[512];
   NAEEM_uint32 copied = 0;
 
@@ -321,5 +321,105 @@ NAEEM_crypto__generate_RSA (NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
   NAEEM_util__copy_array(RSA_key_pair_ptr->C_data, buffer, 0, RSA_key_pair_ptr->C_length);
   // NAEEM_util__print_array("C           ", RSA_key_pair_ptr->C_data, RSA_key_pair_ptr->C_length);
 
-  return NAEEM_RESULT_SUCCESS;
+  NAEEM_crypto__calculate_public_key(RSA_key_pair_ptr);
+}
+
+NAEEM_void
+NAEEM_crypto__calculate_public_key(NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
+  NAEEM_byte n_and_e[500];
+  NAEEM_counter c = 0, i = 0;
+  n_and_e[c++] = 0x02;
+  if ((RSA_key_pair_ptr->N_length + 1) > 255) {
+    n_and_e[c++] = 0x82;
+    n_and_e[c++] = (RSA_key_pair_ptr->N_length + 1) / 256;
+    n_and_e[c++] = (RSA_key_pair_ptr->N_length + 1) % 256;
+  } else {
+    n_and_e[c++] = 0x81;
+    n_and_e[c++] = (RSA_key_pair_ptr->N_length + 1);
+  }
+  n_and_e[c++] = 0x00;
+  for (i = 0; i < RSA_key_pair_ptr->N_length; i++) {
+    n_and_e[c++] = RSA_key_pair_ptr->N_data[i];
+  }
+  n_and_e[c++] = 0x02;
+  n_and_e[c++] = RSA_key_pair_ptr->E_length;
+  for (i = 0; i < RSA_key_pair_ptr->E_length; i++) {
+    n_and_e[c++] = RSA_key_pair_ptr->E_data[i];
+  }
+  NAEEM_length n_and_e_length = c;
+  //--------------------------------
+  NAEEM_byte n_and_e_wrapper_data[500];
+  c = 0;
+  n_and_e_wrapper_data[c++] = 0x00;
+  n_and_e_wrapper_data[c++] = 0x30;
+  if (n_and_e_length > 255) {
+    n_and_e_wrapper_data[c++] = 0x82;
+    n_and_e_wrapper_data[c++] = n_and_e_length / 256;
+    n_and_e_wrapper_data[c++] = n_and_e_length % 256;
+  } else {
+    n_and_e_wrapper_data[c++] = 0x81;
+    n_and_e_wrapper_data[c++] = n_and_e_length;
+  }
+  for (i = 0; i < n_and_e_length; i++) {
+    n_and_e_wrapper_data[c++] = n_and_e[i];
+  }
+  NAEEM_length n_and_e_wrapper_data_length = c;
+  //--------------------------------
+  NAEEM_byte n_and_e_wrapper2_data[500];
+  c = 0;
+  n_and_e_wrapper2_data[c++] = 0x03;
+  if (n_and_e_wrapper_data_length > 255) {
+    n_and_e_wrapper2_data[c++] = 0x82;
+    n_and_e_wrapper2_data[c++] = n_and_e_wrapper_data_length / 256;
+    n_and_e_wrapper2_data[c++] = n_and_e_wrapper_data_length % 256;
+  } else {
+    n_and_e_wrapper2_data[c++] = 0x81;
+    n_and_e_wrapper2_data[c++] = n_and_e_wrapper_data_length;
+  }
+  for (i = 0; i < n_and_e_wrapper_data_length; i++) {
+    n_and_e_wrapper2_data[c++] = n_and_e_wrapper_data[i];
+  }
+  NAEEM_length n_and_e_wrapper2_data_length = c;
+  //--------------------------------
+  NAEEM_byte n_and_e_wrapper3_data[500];
+  c = 0;
+  n_and_e_wrapper3_data[c++] = 0x30;
+  n_and_e_wrapper3_data[c++] = 0x0d;
+  n_and_e_wrapper3_data[c++] = 0x06;
+  n_and_e_wrapper3_data[c++] = 0x09;
+  n_and_e_wrapper3_data[c++] = 0x2a;
+  n_and_e_wrapper3_data[c++] = 0x86;
+  n_and_e_wrapper3_data[c++] = 0x48;
+  n_and_e_wrapper3_data[c++] = 0x86;
+  n_and_e_wrapper3_data[c++] = 0xf7;
+  n_and_e_wrapper3_data[c++] = 0x0d;
+  n_and_e_wrapper3_data[c++] = 0x01;
+  n_and_e_wrapper3_data[c++] = 0x01;
+  n_and_e_wrapper3_data[c++] = 0x01;
+  n_and_e_wrapper3_data[c++] = 0x05;
+  n_and_e_wrapper3_data[c++] = 0x00;
+  for (i = 0; i < n_and_e_wrapper2_data_length; i++) {
+    n_and_e_wrapper3_data[c++] = n_and_e_wrapper2_data[i];
+  }
+  NAEEM_length n_and_e_wrapper3_data_length = c;
+  //--------------------------------
+  NAEEM_byte public_key_data[500];
+  c = 0;  
+  public_key_data[c++] = 0x30;
+  if (n_and_e_wrapper3_data_length > 255) {
+    public_key_data[c++] = 0x82;
+    public_key_data[c++] = n_and_e_wrapper3_data_length / 256;
+    public_key_data[c++] = n_and_e_wrapper3_data_length % 256;
+  } else {
+    public_key_data[c++] = 0x81;
+    public_key_data[c++] = n_and_e_wrapper3_data_length;
+  }
+  for (i = 0; i < n_and_e_wrapper3_data_length; i++) {
+    public_key_data[c++] = n_and_e_wrapper3_data[i];
+  }
+  NAEEM_length public_key_data_length = c;
+  //--------------------------------
+  RSA_key_pair_ptr->public_key_length = public_key_data_length;
+  RSA_key_pair_ptr->public_key = (NAEEM_data)malloc(RSA_key_pair_ptr->public_key_length * sizeof(NAEEM_byte));
+  NAEEM_util__copy_array(RSA_key_pair_ptr->public_key, public_key_data, 0, RSA_key_pair_ptr->public_key_length);
 }
