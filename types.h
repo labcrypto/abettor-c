@@ -64,6 +64,9 @@ typedef NAEEM_string NAEEM_path;
 typedef NAEEM_path PTR NAEEM_path_ptr;
 typedef NAEEM_string NAEEM_password;
 
+typedef NAEEM_string NAEEM_ip_address;
+typedef NAEEM_uint32 NAEEM_port;
+
 typedef NAEEM_uint32 NAEEM_result;
 
 typedef struct {

@@ -300,6 +300,9 @@ NAEEM_error_get_string (unsigned int error_code,
     case NAEEM_RESULT_PKCS11__C_ENCRYPT_FAILED:
       strcpy(*buffer, "PKCS11: C_Encrypt failed.");
       break;
+    case NAEEM_RESULT__REMOTE_SIGN_FAILED:
+      strcpy(*buffer, "Remote Sign failed.");
+      break;
   }
   switch(error_code) {
     case NAEEM_RESULT_APDU_STATUS_63_00_VERIFICATION_FAILED:

@@ -4,6 +4,8 @@
 
 #include <openssl/des.h>
 #include <openssl/sha.h>
+#include <openssl/bn.h>
+#include <openssl/rsa.h>
 
 #include <naeem/crypto.h>
 #include <naeem/util.h>
@@ -262,5 +264,62 @@ NAEEM_crypto__MAC_v3 (NAEEM_data message,
   // NAEEM_util_print_array("DECIPHER    ", check_block, 8); 
   NAEEM_crypto__DES_cbc_encrypt(check_block, 8, mac, NULL, key1);
   // NAEEM_util_print_array("CIPHER    ", check_block, 8);
+  return NAEEM_RESULT_SUCCESS;
+}
+
+NAEEM_result
+NAEEM_crypto__generate_RSA (NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
+  RSA *keypair = RSA_generate_key(1024, 3, NULL, NULL);
+  NAEEM_byte buffer[512];
+  NAEEM_uint32 copied = 0;
+
+  copied = BN_bn2bin(keypair->n, buffer);
+  RSA_key_pair_ptr->N_length = copied;
+  RSA_key_pair_ptr->N_data = malloc(RSA_key_pair_ptr->N_length * sizeof(NAEEM_byte));
+  NAEEM_util__copy_array(RSA_key_pair_ptr->N_data, buffer, 0, RSA_key_pair_ptr->N_length);
+  // NAEEM_util__print_array("N           ", RSA_key_pair_ptr->N_data, RSA_key_pair_ptr->N_length);
+
+  copied = BN_bn2bin(keypair->e, buffer);
+  RSA_key_pair_ptr->E_length = copied;
+  RSA_key_pair_ptr->E_data = malloc(RSA_key_pair_ptr->E_length * sizeof(NAEEM_byte));
+  NAEEM_util__copy_array(RSA_key_pair_ptr->E_data, buffer, 0, RSA_key_pair_ptr->E_length);
+  // NAEEM_util__print_array("E           ", RSA_key_pair_ptr->E_data, RSA_key_pair_ptr->E_length);
+
+  copied = BN_bn2bin(keypair->d, buffer);
+  RSA_key_pair_ptr->D_length = copied;
+  RSA_key_pair_ptr->D_data = malloc(RSA_key_pair_ptr->D_length * sizeof(NAEEM_byte));
+  NAEEM_util__copy_array(RSA_key_pair_ptr->D_data, buffer, 0, RSA_key_pair_ptr->D_length);
+  // NAEEM_util__print_array("D           ", RSA_key_pair_ptr->D_data, RSA_key_pair_ptr->D_length);
+
+  copied = BN_bn2bin(keypair->p, buffer);
+  RSA_key_pair_ptr->P_length = copied;
+  RSA_key_pair_ptr->P_data = malloc(RSA_key_pair_ptr->P_length * sizeof(NAEEM_byte));
+  NAEEM_util__copy_array(RSA_key_pair_ptr->P_data, buffer, 0, RSA_key_pair_ptr->P_length);
+  // NAEEM_util__print_array("P           ", RSA_key_pair_ptr->P_data, RSA_key_pair_ptr->P_length);
+
+  copied = BN_bn2bin(keypair->q, buffer);
+  RSA_key_pair_ptr->Q_length = copied;
+  RSA_key_pair_ptr->Q_data = malloc(RSA_key_pair_ptr->Q_length * sizeof(NAEEM_byte));
+  NAEEM_util__copy_array(RSA_key_pair_ptr->Q_data, buffer, 0, RSA_key_pair_ptr->Q_length);
+  // NAEEM_util__print_array("Q           ", RSA_key_pair_ptr->Q_data, RSA_key_pair_ptr->Q_length);
+
+  copied = BN_bn2bin(keypair->dmp1, buffer);
+  RSA_key_pair_ptr->EXP1_length = copied;
+  RSA_key_pair_ptr->EXP1_data = malloc(RSA_key_pair_ptr->EXP1_length * sizeof(NAEEM_byte));
+  NAEEM_util__copy_array(RSA_key_pair_ptr->EXP1_data, buffer, 0, RSA_key_pair_ptr->EXP1_length);
+  // NAEEM_util__print_array("EXP1        ", RSA_key_pair_ptr->EXP1_data, RSA_key_pair_ptr->EXP1_length);
+
+  copied = BN_bn2bin(keypair->dmq1, buffer);
+  RSA_key_pair_ptr->EXP2_length = copied;
+  RSA_key_pair_ptr->EXP2_data = malloc(RSA_key_pair_ptr->EXP2_length * sizeof(NAEEM_byte));
+  NAEEM_util__copy_array(RSA_key_pair_ptr->EXP2_data, buffer, 0, RSA_key_pair_ptr->EXP2_length);
+  // NAEEM_util__print_array("EXP2        ", RSA_key_pair_ptr->EXP2_data, RSA_key_pair_ptr->EXP2_length);
+
+  copied = BN_bn2bin(keypair->iqmp, buffer);
+  RSA_key_pair_ptr->C_length = copied;
+  RSA_key_pair_ptr->C_data = malloc(RSA_key_pair_ptr->C_length * sizeof(NAEEM_byte));
+  NAEEM_util__copy_array(RSA_key_pair_ptr->C_data, buffer, 0, RSA_key_pair_ptr->C_length);
+  // NAEEM_util__print_array("C           ", RSA_key_pair_ptr->C_data, RSA_key_pair_ptr->C_length);
+
   return NAEEM_RESULT_SUCCESS;
 }
