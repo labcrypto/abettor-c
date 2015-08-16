@@ -39,6 +39,7 @@ typedef NAEEM_uint32 NAEEM_size;
 typedef NAEEM_uint32 NAEEM_count;
 typedef NAEEM_int64 NAEEM_unix_epoch;
 typedef NAEEM_size NAEEM_length;
+typedef NAEEM_uint32 NAEEM_pixel;
 
 typedef NAEEM_counter PTR NAEEM_counter_ptr;
 typedef NAEEM_size PTR NAEEM_size_ptr;

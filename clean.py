@@ -2,7 +2,7 @@
 
 import os
 
-dirs = ['bio', 'log', 'test', 'crypto', 'rand', 'os', 'scard', 'util', 'date', 'pkcs11', 'unicode']
+dirs = ['bio', 'log', 'test', 'crypto', 'rand', 'os', 'scard', 'util', 'date', 'pkcs11', 'unicode', 'image']
 
 for d in dirs:
   os.chdir(d)  
