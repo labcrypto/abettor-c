@@ -138,6 +138,8 @@ typedef NAEEM_bio__CBEFF_template PTR   NAEEM_bio__CBEFF_template_ptr;
 NAEEM_void
 NAEEM_bio__create_CBEFF_record_from_facial_image_data (NAEEM_data                       /* Image data */,
                                                        NAEEM_uint32                     /* Image data length */,
+                                                       NAEEM_pixel                      /* Width */,
+                                                       NAEEM_pixel                      /* Height */,
                                                        NAEEM_bio__CBEFF_template_ptr    /* Pointer to CBEFF record */);
 
 

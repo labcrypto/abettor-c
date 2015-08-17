@@ -7,6 +7,7 @@
 
 #include <naeem/types.h>
 
+// #define SCARD_SIMULATION 1
 
 #ifdef __cplusplus
 extern "C" {

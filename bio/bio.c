@@ -6,6 +6,8 @@
 NAEEM_void
 NAEEM_bio__create_CBEFF_record_from_facial_image_data (NAEEM_data image_data,
                                                        NAEEM_uint32 image_data_length,
+                                                       NAEEM_pixel width,
+                                                       NAEEM_pixel height,
                                                        NAEEM_bio__CBEFF_template_ptr CBEFF_record_ptr) {
 
   NAEEM_bio__FAC_biometric_data_block_ptr FAC_biometric_data_block = 
@@ -56,10 +58,10 @@ NAEEM_bio__create_CBEFF_record_from_facial_image_data (NAEEM_data image_data,
 
   FAC_biometric_data_block->facial_record_data.image_information.face_image_type = 0x01; // Full frontal
   FAC_biometric_data_block->facial_record_data.image_information.image_data_type = 0x00;
-  FAC_biometric_data_block->facial_record_data.image_information.width[0] = 0x00;
-  FAC_biometric_data_block->facial_record_data.image_information.width[1] = 0xf0; // ???
-  FAC_biometric_data_block->facial_record_data.image_information.height[0] = 0x01;
-  FAC_biometric_data_block->facial_record_data.image_information.height[1] = 0x40; // ???
+  FAC_biometric_data_block->facial_record_data.image_information.width[0] = width / 256;
+  FAC_biometric_data_block->facial_record_data.image_information.width[1] = width % 256;
+  FAC_biometric_data_block->facial_record_data.image_information.height[0] = height / 256;
+  FAC_biometric_data_block->facial_record_data.image_information.height[1] = height % 256;
   FAC_biometric_data_block->facial_record_data.image_information.image_color_space = 0x01;
   FAC_biometric_data_block->facial_record_data.image_information.source_type = 0x03;
   FAC_biometric_data_block->facial_record_data.image_information.device_type[0] = 0x00;

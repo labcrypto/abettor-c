@@ -32,6 +32,15 @@ typedef struct {
 typedef NAEEM_image__image PTR NAEEM_image__image_ptr;
 
 
+NAEEM_void
+NAEEM_image__start_library(NAEEM_int32          /* argc */, 
+                           NAEEM_string_ptr     /* argv */);
+
+
+NAEEM_void
+NAEEM_image__shutdown_library();
+
+
 NAEEM_result
 NAEEM_image__load_image(NAEEM_path,
                         NAEEM_image__image_ptr);
