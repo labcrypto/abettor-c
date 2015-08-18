@@ -2,12 +2,12 @@ C = gcc -g -Wall -Wno-comment -fPIC
 CC = g++ -g -Wall
 AR = ar -cq
 CFLAGS = -I../naeem-win
-LIBS =
+LIBS = -lssl -lcrypto -L../test/.lib-win64 -lnaeem-test -L../util/.lib-win64 -lnaeem-util
 LIB_DIR=.lib-win64
 SYMLINK = ln -s
 RM = rm -rfv
 
-SRCS = rand.c
+SRCS = crypto.c
 
 TEST_SRCS = 
 
@@ -17,7 +17,7 @@ TEST_OBJS = $(TEST_SRCS:.c=.o)
 OBJECTS = $(addprefix $(LIB_DIR)/, $(OBJS))
 TEST_OBJECTS = $(addprefix $(LIB_DIR)/, $(TEST_OBJS))
 
-LIB_NAME = libnaeem-rand
+LIB_NAME = libnaeem-crypto
 MAJOR_VERSION = 1
 MINOR_VERSION = 1
 

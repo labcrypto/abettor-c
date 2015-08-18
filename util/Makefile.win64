@@ -21,7 +21,7 @@ LIB_NAME = libnaeem-util
 MAJOR_VERSION = 1
 MINOR_VERSION = 1
 
-all: dirs $(OBJECTS) $(TEST_OBJECTS) static
+all: dirs $(OBJECTS) $(TEST_OBJECTS) static dynamic
 static:
 	$(RM) $(LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION)
 	$(AR) $(LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION) $(OBJECTS)
@@ -40,6 +40,4 @@ $(LIB_DIR)/%.o: %.c
 dirs:
 	mkdir -p $(LIB_DIR)
 clean:
-	$(RM) $(LIB_DIR)/*.o
-	$(RM) $(READ_APP_NAME) $(ISSUE_APP_NAME) $(ENABLE_BAC_APP_NAME) $(LOCK_APP_NAME) \
-	      $(STAT_APP_NAME) $(SOD_APP_NAME) $(AA_APP_NAME)
+	$(RM) $(LIB_DIR)/*
