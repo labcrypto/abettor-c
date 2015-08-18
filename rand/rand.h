@@ -1,5 +1,5 @@
-#ifndef _NAEEM_CORELIBS__RAND_H_
-#define _NAEEM_CORELIBS__RAND_H_
+#ifndef _NAEEM_CORELIBS__RAND_RAND_H_
+#define _NAEEM_CORELIBS__RAND_RAND_H_
 
 #include <naeem/types.h>
 

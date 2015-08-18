@@ -1,5 +1,5 @@
-#ifndef _NAEEM_CORELIBS__UTIL_H_
-#define _NAEEM_CORELIBS__UTIL_H_
+#ifndef _NAEEM_CORELIBS__UTIL_UTIL_H_
+#define _NAEEM_CORELIBS__UTIL_UTIL_H_
 
 #include <stdlib.h>
 #include <stdio.h>

@@ -1,9 +1,9 @@
-C = gcc -g -Wall -Wno-pointer-sign -Wno-comment -fPIC
+C = gcc -g -Wall -Wno-comment -fPIC
 CC = g++ -g -Wall
 AR = ar -cq
-CFLAGS = -I..
-LIBS = -lssl -lcrypto
-LIB_DIR=.lib
+CFLAGS = -I../naeem-win
+LIBS =
+LIB_DIR=.lib-win64
 SYMLINK = ln -s
 RM = rm -rfv
 
@@ -21,7 +21,7 @@ LIB_NAME = libnaeem-util
 MAJOR_VERSION = 1
 MINOR_VERSION = 1
 
-all: dirs $(OBJECTS) $(TEST_OBJECTS) static dynamic
+all: dirs $(OBJECTS) $(TEST_OBJECTS) static
 static:
 	$(RM) $(LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION)
 	$(AR) $(LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION) $(OBJECTS)
