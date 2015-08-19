@@ -11,6 +11,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-rand", "naee
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-unicode", "naeem-corelibs-unicode\naeem-corelibs-unicode.vcxproj", "{4D984F71-3A5D-49B1-A5D3-C9E941138F49}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-log", "naeem-corelibs-log\naeem-corelibs-log.vcxproj", "{8AE2B36F-B368-4D7D-A77F-9ECEDCECE7F3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-date", "naeem-corelibs-date\naeem-corelibs-date.vcxproj", "{B5BC6B21-F247-451D-88E9-9E9634D32519}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-bio", "naeem-corelibs-bio\naeem-corelibs-bio.vcxproj", "{752D7843-293A-4E03-97EC-3AEB1AF4F838}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-crypto", "naeem-corelibs-crypto\naeem-corelibs-crypto.vcxproj", "{179F3F6D-BF5E-4A04-B85E-FAD0C64A591D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-os", "naeem-corelibs-os\naeem-corelibs-os.vcxproj", "{747F07C9-858C-470F-9CF8-EC2FAB1D0939}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -33,6 +43,26 @@ Global
 		{4D984F71-3A5D-49B1-A5D3-C9E941138F49}.Debug|Win32.Build.0 = Debug|Win32
 		{4D984F71-3A5D-49B1-A5D3-C9E941138F49}.Release|Win32.ActiveCfg = Release|Win32
 		{4D984F71-3A5D-49B1-A5D3-C9E941138F49}.Release|Win32.Build.0 = Release|Win32
+		{8AE2B36F-B368-4D7D-A77F-9ECEDCECE7F3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8AE2B36F-B368-4D7D-A77F-9ECEDCECE7F3}.Debug|Win32.Build.0 = Debug|Win32
+		{8AE2B36F-B368-4D7D-A77F-9ECEDCECE7F3}.Release|Win32.ActiveCfg = Release|Win32
+		{8AE2B36F-B368-4D7D-A77F-9ECEDCECE7F3}.Release|Win32.Build.0 = Release|Win32
+		{B5BC6B21-F247-451D-88E9-9E9634D32519}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B5BC6B21-F247-451D-88E9-9E9634D32519}.Debug|Win32.Build.0 = Debug|Win32
+		{B5BC6B21-F247-451D-88E9-9E9634D32519}.Release|Win32.ActiveCfg = Release|Win32
+		{B5BC6B21-F247-451D-88E9-9E9634D32519}.Release|Win32.Build.0 = Release|Win32
+		{752D7843-293A-4E03-97EC-3AEB1AF4F838}.Debug|Win32.ActiveCfg = Debug|Win32
+		{752D7843-293A-4E03-97EC-3AEB1AF4F838}.Debug|Win32.Build.0 = Debug|Win32
+		{752D7843-293A-4E03-97EC-3AEB1AF4F838}.Release|Win32.ActiveCfg = Release|Win32
+		{752D7843-293A-4E03-97EC-3AEB1AF4F838}.Release|Win32.Build.0 = Release|Win32
+		{179F3F6D-BF5E-4A04-B85E-FAD0C64A591D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{179F3F6D-BF5E-4A04-B85E-FAD0C64A591D}.Debug|Win32.Build.0 = Debug|Win32
+		{179F3F6D-BF5E-4A04-B85E-FAD0C64A591D}.Release|Win32.ActiveCfg = Release|Win32
+		{179F3F6D-BF5E-4A04-B85E-FAD0C64A591D}.Release|Win32.Build.0 = Release|Win32
+		{747F07C9-858C-470F-9CF8-EC2FAB1D0939}.Debug|Win32.ActiveCfg = Debug|Win32
+		{747F07C9-858C-470F-9CF8-EC2FAB1D0939}.Debug|Win32.Build.0 = Debug|Win32
+		{747F07C9-858C-470F-9CF8-EC2FAB1D0939}.Release|Win32.ActiveCfg = Release|Win32
+		{747F07C9-858C-470F-9CF8-EC2FAB1D0939}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

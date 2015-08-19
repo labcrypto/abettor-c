@@ -1,8 +1,13 @@
 #include <stdio.h>
 #include <string.h>
+
+#ifdef _WIN32
+#include <Windows.h>
+#else
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#endif
 
 #include <naeem/os.h>
 
@@ -74,10 +79,16 @@ NAEEM_os__read_file_with_path (NAEEM_string base_dir,
 
 NAEEM_void
 NAEEM_os__mkdir(NAEEM_string dir_name) {
+#ifdef _WIN32
+	wchar_t wpath[1024] = { 0 };
+	mbstowcs(wpath, dir_name, strlen(dir_name) + 1);
+	CreateDirectory(wpath, NULL);
+#else
   struct stat st = {0};
   if (stat(dir_name, &st) == -1) {
     mkdir(dir_name, 0700);
   }
+#endif
 }
 
 
@@ -111,11 +122,23 @@ NAEEM_os__file_exists (NAEEM_path base_dir,
   strcat(path, base_dir);
   strcat(path, "/");
   strcat(path, file_name);
+#ifdef _WIN32
+  wchar_t wpath[1024] = { 0 };
+  mbstowcs(wpath, path, strlen(path) + 1);
+  GetFileAttributes(wpath);
+  if(INVALID_FILE_ATTRIBUTES == GetFileAttributes(wpath) && 
+	 GetLastError() == ERROR_FILE_NOT_FOUND) {
+	return FALSE;
+  }
+  return TRUE;
+#else
+  
   struct stat st = {0};
   if (stat(path, &st) == 0) {
     return TRUE;
   }
   return FALSE;
+#endif
 }
 
 

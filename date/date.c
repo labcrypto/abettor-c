@@ -15,7 +15,7 @@ NAEEM_date__get_epoch_from_gregorian_date(NAEEM_date__gregorian_date gregorian_d
   t.tm_sec = 0;
   t.tm_isdst = -1;
   t_of_day = mktime(&t);
-  return t_of_day;
+  return (NAEEM_unix_epoch)t_of_day;
 }
 
 

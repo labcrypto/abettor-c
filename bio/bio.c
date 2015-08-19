@@ -283,8 +283,8 @@ NAEEM_bio__get_CBEFF_data (NAEEM_bio__CBEFF_template_ptr CBEFF_record_ptr,
       buffer[c++] = FAC_biometric_data_block_ptr->facial_record_data.facial_information.pose_angle_uncertainty[2];
 
       NAEEM_uint32 cc = 0;
-      for (; cc < FAC_biometric_data_block_ptr->facial_record_data.facial_information.number_of_feature_points[0] * 256 + 
-                  FAC_biometric_data_block_ptr->facial_record_data.facial_information.number_of_feature_points[1]; cc++) {
+	  for (; cc < (NAEEM_uint32)(FAC_biometric_data_block_ptr->facial_record_data.facial_information.number_of_feature_points[0] * 256 +
+                  FAC_biometric_data_block_ptr->facial_record_data.facial_information.number_of_feature_points[1]); cc++) {
         buffer[c++] = FAC_biometric_data_block_ptr->facial_record_data.feature_points[cc].feature_point_type;
         buffer[c++] = FAC_biometric_data_block_ptr->facial_record_data.feature_points[cc].feature_point_code;
         buffer[c++] = FAC_biometric_data_block_ptr->facial_record_data.feature_points[cc].horizantal_position[0];

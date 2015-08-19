@@ -2,3 +2,13 @@
 /naeem-win/naeem
 /naeem-corelibs-win/*.suo
 /naeem-corelibs-win/Debug
+/naeem-corelibs-win/naeem-corelibs-bio/Debug
+/naeem-corelibs-win/naeem-corelibs-util/Debug
+/naeem-corelibs-win/naeem-corelibs-unicode/Debug
+/naeem-corelibs-win/naeem-corelibs-test/Debug
+/naeem-corelibs-win/naeem-corelibs-rand/Debug
+/naeem-corelibs-win/naeem-corelibs-os/Debug
+/naeem-corelibs-win/naeem-corelibs-log/Debug
+/naeem-corelibs-win/naeem-corelibs-date/Debug
+/naeem-corelibs-win/naeem-corelibs-crypto/Debug
+/naeem-corelibs-win/*.opensdf
