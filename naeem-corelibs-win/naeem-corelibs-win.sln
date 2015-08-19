@@ -5,6 +5,12 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-util", "naeem-corelibs-util\naeem-corelibs-util.vcxproj", "{C1AD8362-CF6F-4D7F-9872-3B8DFEB1272F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-test", "naeem-corelibs-test\naeem-corelibs-test.vcxproj", "{A6E9AB8F-C961-4D25-8DA0-8FB9C5B4D5F0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-rand", "naeem-corelibs-rand\naeem-corelibs-rand.vcxproj", "{B29B1107-E88E-4B96-803D-AC4199FBA630}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-unicode", "naeem-corelibs-unicode\naeem-corelibs-unicode.vcxproj", "{4D984F71-3A5D-49B1-A5D3-C9E941138F49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -15,6 +21,18 @@ Global
 		{C1AD8362-CF6F-4D7F-9872-3B8DFEB1272F}.Debug|Win32.Build.0 = Debug|Win32
 		{C1AD8362-CF6F-4D7F-9872-3B8DFEB1272F}.Release|Win32.ActiveCfg = Release|Win32
 		{C1AD8362-CF6F-4D7F-9872-3B8DFEB1272F}.Release|Win32.Build.0 = Release|Win32
+		{A6E9AB8F-C961-4D25-8DA0-8FB9C5B4D5F0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A6E9AB8F-C961-4D25-8DA0-8FB9C5B4D5F0}.Debug|Win32.Build.0 = Debug|Win32
+		{A6E9AB8F-C961-4D25-8DA0-8FB9C5B4D5F0}.Release|Win32.ActiveCfg = Release|Win32
+		{A6E9AB8F-C961-4D25-8DA0-8FB9C5B4D5F0}.Release|Win32.Build.0 = Release|Win32
+		{B29B1107-E88E-4B96-803D-AC4199FBA630}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B29B1107-E88E-4B96-803D-AC4199FBA630}.Debug|Win32.Build.0 = Debug|Win32
+		{B29B1107-E88E-4B96-803D-AC4199FBA630}.Release|Win32.ActiveCfg = Release|Win32
+		{B29B1107-E88E-4B96-803D-AC4199FBA630}.Release|Win32.Build.0 = Release|Win32
+		{4D984F71-3A5D-49B1-A5D3-C9E941138F49}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4D984F71-3A5D-49B1-A5D3-C9E941138F49}.Debug|Win32.Build.0 = Debug|Win32
+		{4D984F71-3A5D-49B1-A5D3-C9E941138F49}.Release|Win32.ActiveCfg = Release|Win32
+		{4D984F71-3A5D-49B1-A5D3-C9E941138F49}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

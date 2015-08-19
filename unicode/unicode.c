@@ -1,11 +1,17 @@
-#include <iconv.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
 
+#include <iconv.h>
+
 #include <naeem/unicode.h>
 
+#ifdef _WIN32
+#define FUNCTION_MACRO __FUNCTION__
+#else
+#define FUNCTION_MACRO __func__
+#endif
 
 NAEEM_result
 NAEEM_unicode__utf8_to_utf16(NAEEM_string utf8,
@@ -17,13 +23,13 @@ NAEEM_unicode__utf8_to_utf16(NAEEM_string utf8,
 
     cd = iconv_open("UTF16LE", "UTF8");
     if (cd == (iconv_t)-1) {
-        printf("!%s: iconv_open failed: %d\n", __func__, errno);
+		printf("iconv_open failed: %d\n", FUNCTION_MACRO, errno);
         return -1;
     }
 
     inbytesleft = strlen(utf8);
     if (inbytesleft == 0) {
-        printf("!%s: empty string\n", __func__);
+		printf("!%s: empty string\n", FUNCTION_MACRO);
         iconv_close(cd);
         return -1;
     }
@@ -31,7 +37,7 @@ NAEEM_unicode__utf8_to_utf16(NAEEM_string utf8,
     utf16_buf_len = 2 * inbytesleft; 
     *utf16 = malloc(utf16_buf_len);
     if (!*utf16) {
-        printf("!%s: malloc failed\n", __func__);
+		printf("!%s: malloc failed\n", FUNCTION_MACRO);
         iconv_close(cd);
         return -1;
     }
@@ -46,7 +52,7 @@ NAEEM_unicode__utf8_to_utf16(NAEEM_string utf8,
         outbytesleft += increase;
         ptr = realloc(*utf16, utf16_buf_len);
         if (!ptr) {
-            printf("!%s: realloc failed\n", __func__);
+			printf("!%s: realloc failed\n", FUNCTION_MACRO);
             free(*utf16);
             iconv_close(cd);
             return -1;
@@ -57,14 +63,14 @@ NAEEM_unicode__utf8_to_utf16(NAEEM_string utf8,
         nchars = iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
     }
     if (nchars == (size_t)-1) {
-        printf("!%s: iconv failed: %d\n", __func__, errno);
+		printf("!%s: iconv failed: %d\n", FUNCTION_MACRO, errno);
         free(*utf16);
         iconv_close(cd);
         return -1;
     }
     iconv_close(cd);
     *utf16_len = utf16_buf_len - outbytesleft;
-    int i = 0;
+    NAEEM_uint32 i = 0;
     for (; i < *utf16_len; i += 2) {
       char temp = (*utf16)[i];
       (*utf16)[i] = (*utf16)[i + 1];
