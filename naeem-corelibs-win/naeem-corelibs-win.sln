@@ -23,6 +23,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-os", "naeem-
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-scard", "naeem-corelibs-scard\naeem-corelibs-scard.vcxproj", "{BF79F2C6-98AF-46E3-8870-27DFBBE27976}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-pkcs11", "naeem-corelibs-pkcs11\naeem-corelibs-pkcs11.vcxproj", "{919ECC39-1532-47CA-A0A0-ADB30209289E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-image", "naeem-corelibs-image\naeem-corelibs-image.vcxproj", "{F8AF1A19-28A9-43A1-B075-8207FF39DD10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -69,6 +73,14 @@ Global
 		{BF79F2C6-98AF-46E3-8870-27DFBBE27976}.Debug|Win32.Build.0 = Debug|Win32
 		{BF79F2C6-98AF-46E3-8870-27DFBBE27976}.Release|Win32.ActiveCfg = Release|Win32
 		{BF79F2C6-98AF-46E3-8870-27DFBBE27976}.Release|Win32.Build.0 = Release|Win32
+		{919ECC39-1532-47CA-A0A0-ADB30209289E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{919ECC39-1532-47CA-A0A0-ADB30209289E}.Debug|Win32.Build.0 = Debug|Win32
+		{919ECC39-1532-47CA-A0A0-ADB30209289E}.Release|Win32.ActiveCfg = Release|Win32
+		{919ECC39-1532-47CA-A0A0-ADB30209289E}.Release|Win32.Build.0 = Release|Win32
+		{F8AF1A19-28A9-43A1-B075-8207FF39DD10}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F8AF1A19-28A9-43A1-B075-8207FF39DD10}.Debug|Win32.Build.0 = Debug|Win32
+		{F8AF1A19-28A9-43A1-B075-8207FF39DD10}.Release|Win32.ActiveCfg = Release|Win32
+		{F8AF1A19-28A9-43A1-B075-8207FF39DD10}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

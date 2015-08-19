@@ -4,8 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <dlfcn.h>
 #include <unistd.h>
+#endif
 
 // #include <naeem/pkcs11/pkcs11t.h>
 // #include <naeem/pkcs11/pkcs11.h>
