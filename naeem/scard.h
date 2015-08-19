@@ -1,17 +1,13 @@
 #ifndef _NAEEM_CORELIBS__SCARD_H_
 #define _NAEEM_CORELIBS__SCARD_H_
 
-#if defined _WIN32 || defined __CYGWIN__
-
+#if defined _WIN32
 #include <winscard.h>
 #include <scarderr.h>
-
 #else
-
 #include <PCSC/wintypes.h>
 #include <PCSC/winscard.h>
 #include <PCSC/reader.h>
-
 #endif
 
 #include <naeem/types.h>
