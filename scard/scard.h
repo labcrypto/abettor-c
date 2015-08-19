@@ -4,6 +4,7 @@
 #if defined _WIN32 || defined __CYGWIN__
 
 #include <winscard.h>
+#include <scarderr.h>
 
 #else
 
