@@ -3,7 +3,7 @@
 
 #include <naeem/types.h>
 
-#include <magick/MagickCore.h>
+// #include <magick/MagickCore.h>
 
 
 #ifdef __cplusplus
@@ -26,7 +26,7 @@ typedef NAEEM_image__dimension PTR NAEEM_image__dimension_ptr;
 
 
 typedef struct {
-  Image*                  image;
+  // Image*                  image;
   NAEEM_image__dimension  dimension;
 } NAEEM_image__image;
 typedef NAEEM_image__image PTR NAEEM_image__image_ptr;
