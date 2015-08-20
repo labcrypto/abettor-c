@@ -32,7 +32,33 @@ NAEEM_result
 NAEEM_scard__enumerate_smart_cards (NAEEM_scard__context scard_context,
                                     NAEEM_string_ptr_ptr scard_names,
                                     NAEEM_uint32_ptr number_of_scards) {
-  #ifndef SCARD_SIMULATION
+#ifndef SCARD_SIMULATION
+#ifdef _WIN32
+	LPTSTR          pmszReaders = NULL;
+	LPTSTR          pReader;
+	LONG            lReturn, lReturn2;
+	DWORD           cch = SCARD_AUTOALLOCATE;
+	lReturn = SCardListReaders(scard_context, NULL, (LPTSTR)&pmszReaders, &cch);
+	if (lReturn != SCARD_S_SUCCESS) {
+		printf("INTERNAL SCARD ERROR: 0x%x\n", lReturn);
+		return NAEEM_RESULT_SCARD_LIST_NOT_OBTAINED;
+	}
+	*scard_names = (NAEEM_string_ptr)malloc(10 * sizeof(NAEEM_string));
+	pReader = pmszReaders;
+	NAEEM_uint32 i = 0;
+	while ('\0' != *pReader) {
+		(*scard_names)[i] = (unsigned char*)malloc(128 * sizeof(unsigned char));
+		WideCharToMultiByte(CP_UTF8, 0, pReader, -1, (*scard_names)[i], 128, NULL, NULL);
+		printf("Reader: %S\n", pReader);
+		pReader = pReader + wcslen((wchar_t*)pReader) + 1;
+		i++;
+	}
+	*number_of_scards = i;
+	lReturn2 = SCardFreeMemory(scard_context, pmszReaders);
+	if (SCARD_S_SUCCESS != lReturn2) {
+		printf("Failed SCardFreeMemory\n");
+	}
+#else
   unsigned char sc_names[256];
   DWORD num_sc_names = 256;
   NAEEM_uint32 result = SCardListReaders(scard_context, NULL, sc_names, &num_sc_names);
@@ -53,11 +79,12 @@ NAEEM_scard__enumerate_smart_cards (NAEEM_scard__context scard_context,
     i++;
   }
   *number_of_scards = i;
-  #else
+#endif
+#else
   *number_of_scards = 1;
   *scard_names = (NAEEM_string_ptr)malloc(sizeof(NAEEM_string));
   (*scard_names)[0] = "Simulated Smart Card";
-  #endif
+#endif
   return NAEEM_RESULT_SUCCESS;
 }
 
