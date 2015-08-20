@@ -5,6 +5,25 @@
 NAEEM_result
 NAEEM_pkcs11__load_shared_object(NAEEM_path shared_object_path, 
                                  NAEEM_pkcs11__function_list_ptr_ptr function_list_ptr_ptr) {
+#ifdef _WIN32
+  wchar_t wpath[1024] = { 0 };
+  mbstowcs(wpath, shared_object_path, strlen(shared_object_path) + 1);
+  HINSTANCE lib = LoadLibrary(wpath);
+  if (lib == NULL) {
+	  return NAEEM_RESULT_PKCS11__SHARED_LIBRARY_NOT_FOUND;
+  }
+  CK_C_GetFunctionList getFunctionListFunc = NULL;
+  getFunctionListFunc = (CK_C_GetFunctionList)GetProcAddress(lib, "C_GetFunctionList");
+  if (getFunctionListFunc == NULL) {
+	FreeLibrary(lib);
+	return NAEEM_RESULT_PKCS11__C_GET_FUNCTION_LIST_FAILED;
+  }
+  int result = getFunctionListFunc(function_list_ptr_ptr);
+  if (result) {
+	FreeLibrary(lib);
+	return NAEEM_RESULT_PKCS11__C_GET_FUNCTION_LIST_FAILED;
+  }
+#else
   NAEEM_void_ptr lib;
   NAEEM_void (*lib_func)(CK_FUNCTION_LIST_PTR_PTR);
   lib = dlopen(shared_object_path, RTLD_LAZY);
@@ -20,6 +39,7 @@ NAEEM_pkcs11__load_shared_object(NAEEM_path shared_object_path,
     return NAEEM_RESULT_PKCS11__C_GET_FUNCTION_LIST_FAILED;
   }
   (*lib_func)(function_list_ptr_ptr);
+#endif
   return NAEEM_RESULT_SUCCESS;
 }
 

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 
 #include <naeem/image.h>
@@ -6,13 +7,13 @@
 NAEEM_void
 NAEEM_image__start_library(NAEEM_int32 argc, 
                            NAEEM_string_ptr argv) {
-  MagickCoreGenesis(*argv, MagickTrue);
+  // MagickCoreGenesis(*argv, MagickTrue);
 }
 
 
 NAEEM_void
 NAEEM_image__shutdown_library() {
-  MagickCoreTerminus();
+  // MagickCoreTerminus();
 }
 
 
@@ -20,7 +21,7 @@ NAEEM_result
 NAEEM_image__load_image(NAEEM_path path,
                         NAEEM_image__image_ptr image_ptr) {
   printf(">>>>> %s\n", path);
-  ExceptionInfo *exception;
+  /*ExceptionInfo *exception;
   Image *images;
   ImageInfo *image_info;
   exception = AcquireExceptionInfo();
@@ -37,7 +38,9 @@ NAEEM_image__load_image(NAEEM_path path,
   printf ("Dim: %dx%d\n", (int)images->columns, (int)images->rows);
   image_ptr->image = images;
   image_ptr->dimension.width = images->columns;
-  image_ptr->dimension.height = images->rows;
+  image_ptr->dimension.height = images->rows;*/
+  image_ptr->dimension.width = 200;
+  image_ptr->dimension.height = 400;
   return NAEEM_RESULT_SUCCESS;
 }
 

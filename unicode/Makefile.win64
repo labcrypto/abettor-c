@@ -1,8 +1,8 @@
 C = gcc -g -Wall -Wno-comment -fPIC
 CC = g++ -g -Wall
 AR = ar -cq
-CFLAGS = -I../naeem-win
-LIBS = -liconv
+CFLAGS = -I../naeem-win -I"C:\MinGW\include"
+LIBS = -L"C:\MinGW\lib" -liconv
 LIB_DIR=.lib-win64
 SYMLINK = ln -s
 RM = rm -rfv

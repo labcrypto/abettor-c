@@ -1,7 +1,7 @@
-C = gcc -g -Wall -Wno-comment -fPIC
+C = gcc -g  -Wno-comment -fPIC
 CC = g++ -g -Wall
 AR = ar -cq
-CFLAGS = -I../naeem-win
+CFLAGS = -I../naeem-win -I"C:\Program Files\Microsoft SDKs\Windows\v7.1\Include" -I"C:\MinGW\include"
 LIBS = 
 LIB_DIR=.lib-win64
 SYMLINK = ln -s
