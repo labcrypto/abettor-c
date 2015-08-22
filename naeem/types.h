@@ -25,6 +25,11 @@ extern "C" {
 #endif
 
 
+#define IN
+#define OUT
+#define INPUT
+
+
 typedef void NAEEM_void;
 typedef int NAEEM_int32;
 typedef long int NAEEM_int64;
