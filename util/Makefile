@@ -1,8 +1,8 @@
 C = gcc -g -Wall -Wno-pointer-sign -Wno-comment -fPIC
 CC = g++ -g -Wall
 AR = ar -cq
-CFLAGS = -I..
-LIBS = -lssl -lcrypto
+CFLAGS =
+LIBS =
 LIB_DIR=.lib
 SYMLINK = ln -s
 RM = rm -rfv
