@@ -1,8 +1,8 @@
 C = gcc -g -Wall -Wno-pointer-sign -Wno-comment -fPIC
 CC = g++ -g -Wall
 AR = ar -cq
-CFLAGS = -I.. `pkg-config --cflags libpcsclite` `pkg-config --cflags libopenjpeg1`
-LIBS = -lssl -lcrypto `pkg-config --libs libpcsclite` `pkg-config --libs libopenjpeg1`
+CFLAGS =
+LIBS =
 LIB_DIR=.lib
 SYMLINK = ln -s
 RM = rm -rfv
