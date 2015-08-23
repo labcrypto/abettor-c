@@ -23,13 +23,13 @@ NAEEM_unicode__utf8_to_utf16(NAEEM_string utf8,
 
     cd = iconv_open("UTF16LE", "UTF8");
     if (cd == (iconv_t)-1) {
-		printf("iconv_open failed: %d\n", FUNCTION_MACRO, errno);
+	printf("!%s: iconv_open failed: %d\n", FUNCTION_MACRO, errno);
         return -1;
     }
 
     inbytesleft = strlen(utf8);
     if (inbytesleft == 0) {
-		printf("!%s: empty string\n", FUNCTION_MACRO);
+	printf("!%s: empty string\n", FUNCTION_MACRO);
         iconv_close(cd);
         return -1;
     }
@@ -37,7 +37,7 @@ NAEEM_unicode__utf8_to_utf16(NAEEM_string utf8,
     utf16_buf_len = 2 * inbytesleft; 
     *utf16 = malloc(utf16_buf_len);
     if (!*utf16) {
-		printf("!%s: malloc failed\n", FUNCTION_MACRO);
+	printf("!%s: malloc failed\n", FUNCTION_MACRO);
         iconv_close(cd);
         return -1;
     }
@@ -52,7 +52,7 @@ NAEEM_unicode__utf8_to_utf16(NAEEM_string utf8,
         outbytesleft += increase;
         ptr = realloc(*utf16, utf16_buf_len);
         if (!ptr) {
-			printf("!%s: realloc failed\n", FUNCTION_MACRO);
+            printf("!%s: realloc failed\n", FUNCTION_MACRO);
             free(*utf16);
             iconv_close(cd);
             return -1;
