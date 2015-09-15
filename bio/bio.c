@@ -56,8 +56,8 @@ NAEEM_bio__create_CBEFF_record_from_facial_image_data (NAEEM_data image_data,
   FAC_biometric_data_block->facial_record_data.feature_points[0].vertical_position[0] = 0x00;
   FAC_biometric_data_block->facial_record_data.feature_points[0].vertical_position[1] = 0x90;
 
-  FAC_biometric_data_block->facial_record_data.image_information.face_image_type = 0x01; // Full frontal
-  FAC_biometric_data_block->facial_record_data.image_information.image_data_type = 0x00;
+  FAC_biometric_data_block->facial_record_data.image_information.face_image_type = 0x02; // Token frontal
+  FAC_biometric_data_block->facial_record_data.image_information.image_data_type = 0x01;
   FAC_biometric_data_block->facial_record_data.image_information.width[0] = width / 256;
   FAC_biometric_data_block->facial_record_data.image_information.width[1] = width % 256;
   FAC_biometric_data_block->facial_record_data.image_information.height[0] = height / 256;
