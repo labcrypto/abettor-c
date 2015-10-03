@@ -19,6 +19,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-log", "naeem
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-date", "naeem-corelibs-date\naeem-corelibs-date.vcproj", "{DB30119E-B7F0-49CB-96F6-85682A670672}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-crypto", "naeem-corelibs-crypto\naeem-corelibs-crypto.vcproj", "{69A1081B-DCCC-4209-9FE1-045B140B0E35}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "naeem-corelibs-bio", "naeem-corelibs-bio\naeem-corelibs-bio.vcproj", "{11C3A75E-C9D0-4825-93FB-8210292A6B87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -61,6 +65,14 @@ Global
 		{DB30119E-B7F0-49CB-96F6-85682A670672}.Debug|Win32.Build.0 = Debug|Win32
 		{DB30119E-B7F0-49CB-96F6-85682A670672}.Release|Win32.ActiveCfg = Release|Win32
 		{DB30119E-B7F0-49CB-96F6-85682A670672}.Release|Win32.Build.0 = Release|Win32
+		{69A1081B-DCCC-4209-9FE1-045B140B0E35}.Debug|Win32.ActiveCfg = Debug|Win32
+		{69A1081B-DCCC-4209-9FE1-045B140B0E35}.Debug|Win32.Build.0 = Debug|Win32
+		{69A1081B-DCCC-4209-9FE1-045B140B0E35}.Release|Win32.ActiveCfg = Release|Win32
+		{69A1081B-DCCC-4209-9FE1-045B140B0E35}.Release|Win32.Build.0 = Release|Win32
+		{11C3A75E-C9D0-4825-93FB-8210292A6B87}.Debug|Win32.ActiveCfg = Debug|Win32
+		{11C3A75E-C9D0-4825-93FB-8210292A6B87}.Debug|Win32.Build.0 = Debug|Win32
+		{11C3A75E-C9D0-4825-93FB-8210292A6B87}.Release|Win32.ActiveCfg = Release|Win32
+		{11C3A75E-C9D0-4825-93FB-8210292A6B87}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

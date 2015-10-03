@@ -44,24 +44,23 @@ NAEEM_crypto__DES_cbc_encrypt (NAEEM_data data,
                                NAEEM_uint32_ptr cipher_length_ptr,
                                NAEEM_DES_key key) {
   NAEEM_uint32 i = 0;
+  DES_cblock iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+  DES_key_schedule ks;
+  NAEEM_uint32 cipher_length;
+  NAEEM_data internal_cipher;
   DES_cblock cb;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
     cb[i] = key[i];
   }
   DES_set_odd_parity(&cb);
-
-  DES_cblock iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-  
-  DES_key_schedule ks;
   if (DES_set_key_checked(&cb, &ks)) {
       return NAEEM_RESULT_INVALID_DES_KEY;
    }
-
-   NAEEM_uint32 cipher_length = (data_length / DES_KEY_LENGTH + ((data_length % DES_KEY_LENGTH) == 0 ? 0 : 1)) * 8;
+   cipher_length = (data_length / DES_KEY_LENGTH + ((data_length % DES_KEY_LENGTH) == 0 ? 0 : 1)) * 8;
    if (cipher_length_ptr) {
      *cipher_length_ptr = cipher_length;
    }
-   NAEEM_data internal_cipher = (NAEEM_data)malloc(cipher_length * sizeof(NAEEM_byte));
+   internal_cipher = (NAEEM_data)malloc(cipher_length * sizeof(NAEEM_byte));
    memset(internal_cipher, 0x00, cipher_length * sizeof(NAEEM_byte));
    DES_cbc_encrypt(data, internal_cipher, data_length, &ks, &iv, DES_ENCRYPT);
 
@@ -81,23 +80,22 @@ NAEEM_crypto__DES_cbc_decrypt (NAEEM_data cipher,
                                NAEEM_DES_key key) {
   NAEEM_uint32 i = 0;
   DES_cblock cb;
+  DES_cblock iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+  DES_key_schedule ks;
+  NAEEM_data internal_data;
+  NAEEM_uint32 data_length;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
     cb[i] = key[i];
   }
   DES_set_odd_parity(&cb);
-
-  DES_cblock iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-  
-  DES_key_schedule ks;
   if (DES_set_key_checked(&cb, &ks)) {
       return NAEEM_RESULT_INVALID_DES_KEY;
    }
-
-   NAEEM_uint32 data_length = cipher_length;
+   data_length = cipher_length;
    if (data_length_ptr) {
      *data_length_ptr = data_length;
    }
-   NAEEM_data internal_data = (NAEEM_data)malloc(data_length * sizeof(NAEEM_byte));
+   internal_data = (NAEEM_data)malloc(data_length * sizeof(NAEEM_byte));
    memset(internal_data, 0x00, data_length * sizeof(NAEEM_byte));
    DES_cbc_encrypt(cipher, internal_data, cipher_length, &ks, &iv, DES_DECRYPT);
 
@@ -119,36 +117,34 @@ NAEEM_crypto__3DES_cbc_encrypt (NAEEM_data data,
                                 NAEEM_DES_key thrid_key) {
   NAEEM_uint32 i = 0;
   DES_cblock cb1;
+  DES_cblock cb2;
+  DES_cblock cb3;
+  DES_cblock iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+  DES_key_schedule ks1, ks2, ks3;
+  NAEEM_uint32 cipher_length;
+  NAEEM_data internal_cipher;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
     cb1[i] = first_key[i];
   }
-  DES_cblock cb2;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
     cb2[i] = second_key[i];
   }
-  DES_cblock cb3;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
     cb3[i] = thrid_key[i];
   }
-  
   DES_set_odd_parity(&cb1);
   DES_set_odd_parity(&cb2);
   DES_set_odd_parity(&cb3);
-
-  DES_cblock iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-  
-  DES_key_schedule ks1, ks2, ks3;
   if (DES_set_key_checked(&cb1, &ks1) ||
       DES_set_key_checked(&cb2, &ks2) ||
       DES_set_key_checked(&cb3, &ks3)) {
       return NAEEM_RESULT_INVALID_DES_KEY;
    }
-
-   NAEEM_uint32 cipher_length = (data_length / DES_KEY_LENGTH + ((data_length % DES_KEY_LENGTH) == 0 ? 0 : 1)) * 8;
+   cipher_length = (data_length / DES_KEY_LENGTH + ((data_length % DES_KEY_LENGTH) == 0 ? 0 : 1)) * 8;
    if (cipher_length_ptr) {
      *cipher_length_ptr = cipher_length;
    }
-   NAEEM_data internal_cipher = (NAEEM_data)malloc(cipher_length * sizeof(NAEEM_byte));
+   internal_cipher = (NAEEM_data)malloc(cipher_length * sizeof(NAEEM_byte));
    memset(internal_cipher, 0x00, cipher_length * sizeof(NAEEM_byte));
    DES_ede3_cbc_encrypt(data, internal_cipher, data_length, &ks1, &ks2, &ks3, &iv, DES_ENCRYPT);
  
@@ -170,36 +166,34 @@ NAEEM_crypto__3DES_cbc_decrypt (NAEEM_data cipher,
                                 NAEEM_DES_key thrid_key) {
   NAEEM_uint32 i = 0;
   DES_cblock cb1;
+  DES_cblock cb2;
+  DES_cblock cb3;
+  DES_cblock iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+  DES_key_schedule ks1,ks2,ks3;
+  NAEEM_uint32 data_length;
+  NAEEM_data internal_data;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
     cb1[i] = first_key[i];
   }
-  DES_cblock cb2;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
     cb2[i] = second_key[i];
   }
-  DES_cblock cb3;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
     cb3[i] = thrid_key[i];
   }
-
   DES_set_odd_parity(&cb1);
   DES_set_odd_parity(&cb2);
   DES_set_odd_parity(&cb3);
-  
-  DES_cblock iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-  
-  DES_key_schedule ks1,ks2,ks3;
   if (DES_set_key_checked(&cb1, &ks1) ||
       DES_set_key_checked(&cb2, &ks2) ||
       DES_set_key_checked(&cb3, &ks3)) {
       return NAEEM_RESULT_INVALID_DES_KEY;
    }
-
-   NAEEM_uint32 data_length = cipher_length;
+   data_length = cipher_length;
    if (data_length_ptr) {
      *data_length_ptr = data_length;
    }
-   NAEEM_data internal_data = (NAEEM_data)malloc(data_length * sizeof(NAEEM_byte));
+   internal_data = (NAEEM_data)malloc(data_length * sizeof(NAEEM_byte));
    memset(internal_data, 0x00, data_length);
    DES_ede3_cbc_encrypt(cipher, internal_data, cipher_length, &ks1, &ks2, &ks3, &iv, DES_DECRYPT);
  
@@ -219,10 +213,11 @@ NAEEM_crypto__MAC_v3 (NAEEM_data message,
                       NAEEM_bool padded,
                       NAEEM_DES_key key1,
                       NAEEM_DES_key key2) {
-  NAEEM_test__assert((message_length % 8) == 0, "Message length is not a product of 8 bytes.");
   // TODO (kamran) Use NAEEM_util_pad function.
   NAEEM_uint32 i = 0, j = 0;
   NAEEM_byte check_block[8];
+  NAEEM_byte decipher[8];
+  NAEEM_test__assert((message_length % 8) == 0, "Message length is not a product of 8 bytes.");
   if (initial_check_block) {
     for (i = 0; i < 8; i++) {
       check_block[i] = initial_check_block[i];
@@ -235,10 +230,9 @@ NAEEM_crypto__MAC_v3 (NAEEM_data message,
   i = 0;
   while (i < message_length) {
     NAEEM_byte block[8];
+	NAEEM_byte cipher[8];
     NAEEM_util__copy_array(block, message, i, 8);
     NAEEM_util__xor(check_block, 8, block);
-    // NAEEM_util_print_array("CBLOCK    ", check_block, 8); 
-    NAEEM_byte cipher[8];
     NAEEM_crypto__DES_cbc_encrypt(check_block, 8, cipher, NULL, key1);
     for (j = 0; j < 8; j++) {
       check_block[j] = cipher[j];
@@ -247,16 +241,15 @@ NAEEM_crypto__MAC_v3 (NAEEM_data message,
   }
   if (!padded) {
     NAEEM_byte padding[8];
+	NAEEM_byte cipher[8];
     padding[0] = 0x80;
     padding[1] = padding[2] = padding[3] = padding[4] = padding[5] = padding[6] = padding[7] = 0x00;
     NAEEM_util__xor(check_block, 8, padding);
-    NAEEM_byte cipher[8];
     NAEEM_crypto__DES_cbc_encrypt(check_block, 8, cipher, NULL, key1);  
     for (j = 0; j < 8; j++) {
       check_block[j] = cipher[j];
     }
   }
-  NAEEM_byte decipher[8];
   NAEEM_crypto__DES_cbc_decrypt(check_block, 8, decipher, NULL, key2);
   for (j = 0; j < 8; j++) {
     check_block[j] = decipher[j];
@@ -328,6 +321,15 @@ NAEEM_void
 NAEEM_crypto__calculate_public_key(NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
   NAEEM_byte n_and_e[500];
   NAEEM_counter c = 0, i = 0;
+  NAEEM_length n_and_e_length;
+  NAEEM_length n_and_e_wrapper_data_length;
+  NAEEM_length n_and_e_wrapper2_data_length;
+  NAEEM_length n_and_e_wrapper3_data_length;
+  NAEEM_length public_key_data_length;
+  NAEEM_byte n_and_e_wrapper_data[500];
+  NAEEM_byte n_and_e_wrapper2_data[500];
+  NAEEM_byte n_and_e_wrapper3_data[500];
+  NAEEM_byte public_key_data[500];
   n_and_e[c++] = 0x02;
   if ((RSA_key_pair_ptr->N_length + 1) > 255) {
     n_and_e[c++] = 0x82;
@@ -346,9 +348,8 @@ NAEEM_crypto__calculate_public_key(NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_p
   for (i = 0; i < RSA_key_pair_ptr->E_length; i++) {
     n_and_e[c++] = RSA_key_pair_ptr->E_data[i];
   }
-  NAEEM_length n_and_e_length = c;
+  n_and_e_length = c;
   //--------------------------------
-  NAEEM_byte n_and_e_wrapper_data[500];
   c = 0;
   n_and_e_wrapper_data[c++] = 0x00;
   n_and_e_wrapper_data[c++] = 0x30;
@@ -363,9 +364,8 @@ NAEEM_crypto__calculate_public_key(NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_p
   for (i = 0; i < n_and_e_length; i++) {
     n_and_e_wrapper_data[c++] = n_and_e[i];
   }
-  NAEEM_length n_and_e_wrapper_data_length = c;
+  n_and_e_wrapper_data_length = c;
   //--------------------------------
-  NAEEM_byte n_and_e_wrapper2_data[500];
   c = 0;
   n_and_e_wrapper2_data[c++] = 0x03;
   if (n_and_e_wrapper_data_length > 255) {
@@ -379,9 +379,8 @@ NAEEM_crypto__calculate_public_key(NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_p
   for (i = 0; i < n_and_e_wrapper_data_length; i++) {
     n_and_e_wrapper2_data[c++] = n_and_e_wrapper_data[i];
   }
-  NAEEM_length n_and_e_wrapper2_data_length = c;
+  n_and_e_wrapper2_data_length = c;
   //--------------------------------
-  NAEEM_byte n_and_e_wrapper3_data[500];
   c = 0;
   n_and_e_wrapper3_data[c++] = 0x30;
   n_and_e_wrapper3_data[c++] = 0x0d;
@@ -401,9 +400,8 @@ NAEEM_crypto__calculate_public_key(NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_p
   for (i = 0; i < n_and_e_wrapper2_data_length; i++) {
     n_and_e_wrapper3_data[c++] = n_and_e_wrapper2_data[i];
   }
-  NAEEM_length n_and_e_wrapper3_data_length = c;
+  n_and_e_wrapper3_data_length = c;
   //--------------------------------
-  NAEEM_byte public_key_data[500];
   c = 0;  
   public_key_data[c++] = 0x30;
   if (n_and_e_wrapper3_data_length > 255) {
@@ -417,7 +415,7 @@ NAEEM_crypto__calculate_public_key(NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_p
   for (i = 0; i < n_and_e_wrapper3_data_length; i++) {
     public_key_data[c++] = n_and_e_wrapper3_data[i];
   }
-  NAEEM_length public_key_data_length = c;
+  public_key_data_length = c;
   //--------------------------------
   RSA_key_pair_ptr->public_key_length = public_key_data_length;
   RSA_key_pair_ptr->public_key = (NAEEM_data)malloc(RSA_key_pair_ptr->public_key_length * sizeof(NAEEM_byte));
