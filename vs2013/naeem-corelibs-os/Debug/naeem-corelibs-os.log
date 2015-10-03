@@ -1,0 +1,13 @@
+﻿Build started 9/19/2015 11:53:19 AM.
+Project "Z:\data\prj\corelibs\naeem-corelibs-win\naeem-corelibs-os\naeem-corelibs-os.vcxproj" on node 2 (Rebuild target(s)).
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"..\..\..\corelibs-api\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\os\os.c
+  os.c
+Lib:
+  C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"Z:\data\prj\corelibs\naeem-corelibs-win\Debug\naeem-corelibs-os.lib" /NOLOGO Debug\os.obj
+  naeem-corelibs-os.vcxproj -> Z:\data\prj\corelibs\naeem-corelibs-win\Debug\naeem-corelibs-os.lib
+Done Building Project "Z:\data\prj\corelibs\naeem-corelibs-win\naeem-corelibs-os\naeem-corelibs-os.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.59

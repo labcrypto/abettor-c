@@ -1,0 +1,16 @@
+﻿Build started 9/19/2015 11:53:18 AM.
+Project "Z:\data\prj\corelibs\naeem-corelibs-win\naeem-corelibs-crypto\naeem-corelibs-crypto.vcxproj" on node 2 (Rebuild target(s)).
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"..\..\..\corelibs-api\include" /I"..\libs\openssl-0.9.8h-1-lib\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\crypto\crypto.c ..\..\crypto\crypto_tests.c
+  crypto_tests.c
+  crypto.c
+  Generating Code...
+Lib:
+  C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"Z:\data\prj\corelibs\naeem-corelibs-win\Debug\naeem-corelibs-crypto.lib" /NOLOGO Debug\crypto.obj
+  Debug\crypto_tests.obj
+  naeem-corelibs-crypto.vcxproj -> Z:\data\prj\corelibs\naeem-corelibs-win\Debug\naeem-corelibs-crypto.lib
+Done Building Project "Z:\data\prj\corelibs\naeem-corelibs-win\naeem-corelibs-crypto\naeem-corelibs-crypto.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.61

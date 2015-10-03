@@ -1,0 +1,13 @@
+﻿Build started 9/23/2015 3:12:55 PM.
+Project "Z:\data\prj\corelibs\naeem-corelibs-win\naeem-corelibs-scard\naeem-corelibs-scard.vcxproj" on node 2 (Rebuild target(s)).
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"..\..\..\corelibs-api\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\scard\scard.c
+  scard.c
+Lib:
+  C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"Z:\data\prj\corelibs\naeem-corelibs-win\Debug\naeem-corelibs-scard.lib" /NOLOGO Debug\scard.obj
+  naeem-corelibs-scard.vcxproj -> Z:\data\prj\corelibs\naeem-corelibs-win\Debug\naeem-corelibs-scard.lib
+Done Building Project "Z:\data\prj\corelibs\naeem-corelibs-win\naeem-corelibs-scard\naeem-corelibs-scard.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.14
