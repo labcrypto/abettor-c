@@ -6,19 +6,20 @@ NAEEM_result
 NAEEM_pkcs11__load_shared_object(NAEEM_path shared_object_path, 
                                  NAEEM_pkcs11__function_list_ptr_ptr function_list_ptr_ptr) {
 #ifdef _WIN32
+  int result = 0;
   wchar_t wpath[1024] = { 0 };
-  mbstowcs(wpath, shared_object_path, strlen(shared_object_path) + 1);
   HINSTANCE lib = LoadLibrary(wpath);
+  CK_C_GetFunctionList getFunctionListFunc = NULL;
+  mbstowcs(wpath, shared_object_path, strlen(shared_object_path) + 1);
   if (lib == NULL) {
 	  return NAEEM_RESULT_PKCS11__SHARED_LIBRARY_NOT_FOUND;
   }
-  CK_C_GetFunctionList getFunctionListFunc = NULL;
   getFunctionListFunc = (CK_C_GetFunctionList)GetProcAddress(lib, "C_GetFunctionList");
   if (getFunctionListFunc == NULL) {
 	FreeLibrary(lib);
 	return NAEEM_RESULT_PKCS11__C_GET_FUNCTION_LIST_FAILED;
   }
-  int result = getFunctionListFunc(function_list_ptr_ptr);
+  result = getFunctionListFunc(function_list_ptr_ptr);
   if (result) {
 	FreeLibrary(lib);
 	return NAEEM_RESULT_PKCS11__C_GET_FUNCTION_LIST_FAILED;
@@ -61,6 +62,8 @@ NAEEM_pkcs11__get_slots(NAEEM_pkcs11__function_list_ptr function_list_ptr,
                         NAEEM_length_ptr slots_length_ptr) {
   NAEEM_pkcs11__slot_id slot_ids[10];
   NAEEM_pkcs11__pkcs11_uint64 num_slots = 10;
+  NAEEM_counter i = 0, j = 0;
+  NAEEM_pkcs11__token_info token_info;
   NAEEM_pkcs11__pkcs11_result result = function_list_ptr->C_GetSlotList(1, slot_ids, &num_slots);
   if (result) {
     printf("Error in init: C_GetSlotList failed %s\n", get_pkcs11_error_name(result));
@@ -71,7 +74,6 @@ NAEEM_pkcs11__get_slots(NAEEM_pkcs11__function_list_ptr function_list_ptr,
     return NAEEM_RESULT_SUCCESS;
   }
   *slots = (NAEEM_pkcs11__slot_ptr)malloc(num_slots * sizeof(NAEEM_pkcs11__slot));
-  NAEEM_counter i = 0, j = 0;
   for (; i < num_slots; i++) {
     NAEEM_pkcs11__slot_info slot_info;
     result = function_list_ptr->C_GetSlotInfo(slot_ids[i], &slot_info);
@@ -84,7 +86,6 @@ NAEEM_pkcs11__get_slots(NAEEM_pkcs11__function_list_ptr function_list_ptr,
       (*slots)[i].description[j] = slot_info.slotDescription[j];
     }
     (*slots)[i].description[31] = '\0';
-    NAEEM_pkcs11__token_info token_info;
     result = function_list_ptr->C_GetTokenInfo(slot_ids[i], &token_info);
     if (result) {
       printf("Error in init: C_GetTokenInfo failed %s\n", get_pkcs11_error_name(result));
@@ -161,6 +162,11 @@ NAEEM_pkcs11__get_all_des3_keys(NAEEM_pkcs11__function_list_ptr function_list_pt
                                 NAEEM_pkcs11__session session,
                                 NAEEM_pkcs11__object_ptr_ptr objects,
                                 NAEEM_length_ptr length_ptr) {
+  NAEEM_pkcs11__pkcs11_result result;
+  CK_ULONG num_objects;
+  CK_OBJECT_HANDLE object_handles[2048];
+  NAEEM_counter i = 0;
+
   CK_ATTRIBUTE object_template[2];
 
   object_template[0].type = CKA_CLASS;
@@ -173,15 +179,15 @@ NAEEM_pkcs11__get_all_des3_keys(NAEEM_pkcs11__function_list_ptr function_list_pt
   object_template[1].ulValueLen = sizeof(CK_ULONG);
   *((CK_ULONG *) (object_template[1].pValue)) = CKK_DES3;
 
-  NAEEM_pkcs11__pkcs11_result result = function_list_ptr->C_FindObjectsInit(session, 
-                                                                            object_template, 
-                                                                            2);
+  result = function_list_ptr->C_FindObjectsInit(session, 
+                                                object_template, 
+                                                2);
   if (result) {
     printf("Error in init: C_FindObjectsInit failed %s\n", get_pkcs11_error_name(result));
     return NAEEM_RESULT_PKCS11__C_FIND_OBJECTS_INIT_FAILED;
   }
-  CK_ULONG num_objects = 2048;
-  CK_OBJECT_HANDLE object_handles[2048];
+  num_objects = 2048;
+  
   result = function_list_ptr->C_FindObjects(session, 
                                             object_handles, 
                                             2048, 
@@ -197,7 +203,7 @@ NAEEM_pkcs11__get_all_des3_keys(NAEEM_pkcs11__function_list_ptr function_list_pt
   }
   *length_ptr = num_objects;
   *objects = (NAEEM_pkcs11__object_ptr)malloc(num_objects * sizeof(NAEEM_pkcs11__object));
-  NAEEM_counter i = 0;
+  
   for (i = 0; i < num_objects; i++) {
     (*objects)[i] = object_handles[i];
   }
@@ -210,6 +216,9 @@ NAEEM_pkcs11__find_object_by_label(NAEEM_pkcs11__function_list_ptr function_list
                                    NAEEM_pkcs11__session session,
                                    NAEEM_pkcs11__object_ptr object_ptr,
                                    NAEEM_string label) {
+  CK_ULONG num_objects;
+  CK_OBJECT_HANDLE object_handles[1];
+  NAEEM_pkcs11__pkcs11_result result;
   CK_ATTRIBUTE object_template[3];
 
   object_template[0].type = CKA_CLASS;
@@ -227,15 +236,14 @@ NAEEM_pkcs11__find_object_by_label(NAEEM_pkcs11__function_list_ptr function_list
   object_template[2].ulValueLen = strlen(label);
   strcpy(object_template[2].pValue, label);
 
-  NAEEM_pkcs11__pkcs11_result result = function_list_ptr->C_FindObjectsInit(session, 
-                                                                            object_template, 
-                                                                            3);
+  result = function_list_ptr->C_FindObjectsInit(session, 
+                                                object_template, 
+                                                3);
   if (result) {
     printf("Error in init: C_FindObjectsInit failed %s\n", get_pkcs11_error_name(result));
     return NAEEM_RESULT_PKCS11__C_FIND_OBJECTS_INIT_FAILED;
   }
-  CK_ULONG num_objects = 1;
-  CK_OBJECT_HANDLE object_handles[1];
+  num_objects = 1;
   result = function_list_ptr->C_FindObjects(session, 
                                             object_handles, 
                                             1, 
@@ -265,6 +273,8 @@ NAEEM_pkcs11__encrypt_des3(NAEEM_pkcs11__function_list_ptr function_list_ptr,
                            NAEEM_length data_length,
                            NAEEM_data_ptr cipher,
                            NAEEM_length_ptr cipher_length_ptr) {
+  NAEEM_byte temp[8];
+  NAEEM_length temp_length;
   CK_BYTE iv[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
   CK_MECHANISM mechanism = {CKM_DES3_CBC, iv, 8};
   NAEEM_pkcs11__pkcs11_result result = function_list_ptr->C_EncryptInit(session, 
@@ -274,8 +284,7 @@ NAEEM_pkcs11__encrypt_des3(NAEEM_pkcs11__function_list_ptr function_list_ptr,
     printf("Error in init: C_EncryptInit failed %s\n", get_pkcs11_error_name(result));
     return NAEEM_RESULT_PKCS11__C_ENCRYPT_INIT_FAILED;
   }
-  NAEEM_byte temp[8];
-  NAEEM_length temp_length;
+  
   result = function_list_ptr->C_Encrypt(session, 
                                         data, 
                                         data_length, 

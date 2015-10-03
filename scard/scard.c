@@ -38,6 +38,7 @@ NAEEM_scard__enumerate_smart_cards (NAEEM_scard__context scard_context,
 	LPTSTR          pReader;
 	LONG            lReturn, lReturn2;
 	DWORD           cch = SCARD_AUTOALLOCATE;
+	NAEEM_uint32    i = 0;
 	lReturn = SCardListReaders(scard_context, NULL, (LPTSTR)&pmszReaders, &cch);
 	if (lReturn != SCARD_S_SUCCESS) {
 		printf("INTERNAL SCARD ERROR: 0x%x\n", lReturn);
@@ -45,7 +46,6 @@ NAEEM_scard__enumerate_smart_cards (NAEEM_scard__context scard_context,
 	}
 	*scard_names = (NAEEM_string_ptr)malloc(10 * sizeof(NAEEM_string));
 	pReader = pmszReaders;
-	NAEEM_uint32 i = 0;
 	while ('\0' != *pReader) {
 		(*scard_names)[i] = (unsigned char*)malloc(128 * sizeof(unsigned char));
 		WideCharToMultiByte(CP_UTF8, 0, pReader, -1, (*scard_names)[i], 128, NULL, NULL);
@@ -99,11 +99,12 @@ NAEEM_scard__connect_card (NAEEM_scard__context scard_context,
   NAEEM_uint32 result = SCardConnect(scard_context, scard_name, SCARD_SHARE_EXCLUSIVE, 
     SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, scard_handle_ptr, &dwProtocol);
 #else
+  DWORD dwProtocol = 0;
+  NAEEM_uint32 result = 0;
   int wchars_num = MultiByteToWideChar(CP_UTF8, 0, scard_name, -1, NULL, 0);
   wchar_t* wstr = malloc(wchars_num * sizeof(wchar_t));
   MultiByteToWideChar(CP_UTF8, 0, scard_name, -1, wstr, wchars_num);
-  DWORD dwProtocol = 0;
-  NAEEM_uint32 result = SCardConnect(scard_context, wstr, SCARD_SHARE_EXCLUSIVE,
+  result = SCardConnect(scard_context, wstr, SCARD_SHARE_EXCLUSIVE,
 	SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, scard_handle_ptr, &dwProtocol);
   free(wstr);
 #endif
@@ -135,6 +136,7 @@ NAEEM_scard__transmit (NAEEM_scard__handle scard_handle,
                        NAEEM_data recv_buffer,
                        NAEEM_uint32_ptr recv_buffer_length) {
   #ifndef SCARD_SIMULATION
+  NAEEM_char error[128];
   SCARD_IO_REQUEST send_io = {SCARD_PROTOCOL_T1, sizeof(SCARD_IO_REQUEST)};
   SCARD_IO_REQUEST recv_io = {SCARD_PROTOCOL_T1, sizeof(SCARD_IO_REQUEST)};
   DWORD buffer_length = *recv_buffer_length;
@@ -148,7 +150,6 @@ NAEEM_scard__transmit (NAEEM_scard__handle scard_handle,
   if (recv_buffer[buffer_length - 2] == 0x90 && recv_buffer[buffer_length - 1] == 0x00) {
     return NAEEM_RESULT_APDU_STATUS_90_00_SUCCESS;
   }
-  NAEEM_char error[128];
   sprintf(error, "Transmit error: 0x%02x 0x%02x.", (NAEEM_uint32)recv_buffer[buffer_length - 2], 
                                             (NAEEM_uint32)recv_buffer[buffer_length - 1]);
   NAEEM_log__error("epass-reader", error);

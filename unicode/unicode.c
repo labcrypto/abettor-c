@@ -17,6 +17,7 @@ NAEEM_result
 NAEEM_unicode__utf8_to_utf16(NAEEM_string utf8,
                              NAEEM_string_ptr utf16,
                              NAEEM_length_ptr utf16_len) {
+    NAEEM_uint32 i = 0;
     iconv_t cd;
     char *inbuf, *outbuf;
     size_t inbytesleft, outbytesleft, nchars, utf16_buf_len;
@@ -70,7 +71,6 @@ NAEEM_unicode__utf8_to_utf16(NAEEM_string utf8,
     }
     iconv_close(cd);
     *utf16_len = utf16_buf_len - outbytesleft;
-    NAEEM_uint32 i = 0;
     for (; i < *utf16_len; i += 2) {
       char temp = (*utf16)[i];
       (*utf16)[i] = (*utf16)[i + 1];

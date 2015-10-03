@@ -105,20 +105,22 @@ NAEEM_date__convert_jalali_to_gregorian(NAEEM_date__jalali_date jalali_date,
     gy = year + 622;
     gd = doy_j - a;
   }
-  NAEEM_uint32 months[] = {
-    0, 31, gy % 4 == 0 ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
-  };
-  NAEEM_uint32 i = 0;
-  for (i = 0; i < 13; i++) {
-    gm = i;
-    v = months[i];
-    if (gd <= v)
-        break;
-    gd -= v;
+  {
+	  NAEEM_uint32 months[] = {
+		0, 31, gy % 4 == 0 ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+	  };
+	  NAEEM_uint32 i = 0;
+	  for (i = 0; i < 13; i++) {
+		gm = i;
+		v = months[i];
+		if (gd <= v)
+			break;
+		gd -= v;
+	  }
+	  gregorian_date_ptr->year = gy;
+	  gregorian_date_ptr->month = gm;
+	  gregorian_date_ptr->day = gd;
   }
-  gregorian_date_ptr->year = gy;
-  gregorian_date_ptr->month = gm;
-  gregorian_date_ptr->day = gd;
 }
 
 
@@ -126,12 +128,12 @@ NAEEM_void
 NAEEM_date__convert_gregorian_to_jalali(NAEEM_date__gregorian_date gregorian_date,
                                         NAEEM_date__jalali_date_ptr jalali_date_ptr) {
   NAEEM_uint32 year, month, day, d_4, d_33, a, b, doy_j;
+  NAEEM_uint32 doy_g, jm, jd, jy;
+  NAEEM_uint32 g_a[] = {0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
   year = gregorian_date.year;
   month = gregorian_date.month;
-  day = gregorian_date.day;
-  NAEEM_uint32 doy_g, jm, jd, jy;
+  day = gregorian_date.day;  
   d_4 = year % 4;
-  NAEEM_uint32 g_a[] = {0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
   doy_g = g_a[month] + day;
   if (d_4 == 0 && month > 2) {
     doy_g += 1;

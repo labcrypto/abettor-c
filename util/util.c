@@ -20,11 +20,11 @@ NAEEM_util__print_array (NAEEM_string title,
                          NAEEM_data data, 
                          NAEEM_uint32 data_length) {
   NAEEM_uint32 title_length = 0;
+  NAEEM_uint32 i = 0, j = 0;
   if (title) {
     printf("%s: ", title);
     title_length = strlen((const char*)title) + 2;
   }
-  NAEEM_uint32 i = 0, j = 0;
   for (;i < data_length; i++) {
     printf("0x%02x ", data[i] & 0xff);
     if (((i + 1) % 8) == 0 && (i + 1) < data_length) {
@@ -45,10 +45,10 @@ NAEEM_util__compare_data (NAEEM_data first_data,
                           NAEEM_uint32 first_data_length, 
                           NAEEM_data second_data,
                           NAEEM_uint32 second_data_length) {
+  NAEEM_uint32 i = 0;
   if (first_data_length != second_data_length) {
     return FALSE;
   }
-  NAEEM_uint32 i = 0;
   for (; i < first_data_length; i++) {
     if (first_data[i] != second_data[i]) {
       return FALSE;
@@ -130,10 +130,11 @@ NAEEM_util__pad (NAEEM_data buffer,
                  NAEEM_uint32 buffer_length,
                  NAEEM_data_ptr padded_buffer,
                  NAEEM_uint32_ptr padded_buffer_length) {
+  NAEEM_uint32 i = 0;
   NAEEM_uint32 new_length = (buffer_length % 8) == 0 ? buffer_length + 8 : ((buffer_length / 8) + 1) * 8;
   *padded_buffer = (NAEEM_data)malloc(new_length * sizeof(NAEEM_byte));
   NAEEM_util__make_zero(*padded_buffer, new_length);
-  NAEEM_uint32 i = 0;
+  
   for (; i < buffer_length; i++) {
     (*padded_buffer)[i] = buffer[i];
   }
@@ -148,9 +149,9 @@ NAEEM_string
 NAEEM_util__array_to_string (NAEEM_data array, 
                              NAEEM_uint32 length) {
   NAEEM_char temp[3];
+  NAEEM_uint32 i = 0;
   NAEEM_string result = (NAEEM_string)malloc((2 * length + 1) * sizeof(NAEEM_char));
   strcpy(result, "");
-  NAEEM_uint32 i = 0;
   for (; i < length; i++) {
     sprintf(temp, "%02x", array[i]);
     strcat(result, temp);
