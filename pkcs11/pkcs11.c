@@ -8,9 +8,10 @@ NAEEM_pkcs11__load_shared_object(NAEEM_path shared_object_path,
 #ifdef _WIN32
   int result = 0;
   wchar_t wpath[1024] = { 0 };
-  HINSTANCE lib = LoadLibrary(wpath);
+  HINSTANCE lib;
   CK_C_GetFunctionList getFunctionListFunc = NULL;
   mbstowcs(wpath, shared_object_path, strlen(shared_object_path) + 1);
+  lib = LoadLibrary(wpath);
   if (lib == NULL) {
 	  return NAEEM_RESULT_PKCS11__SHARED_LIBRARY_NOT_FOUND;
   }
