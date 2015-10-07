@@ -40,6 +40,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="&quot;..\..\..\corelibs-api\include&quot;"
 				RuntimeLibrary="3"
+				BufferSecurityCheck="true"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -96,6 +97,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="&quot;..\..\..\corelibs-api\include&quot;"
 				RuntimeLibrary="0"
+				BufferSecurityCheck="true"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

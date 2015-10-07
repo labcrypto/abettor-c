@@ -55,7 +55,11 @@ NAEEM_void
 NAEEM_os__read_file2 (NAEEM_path file_path, 
                       NAEEM_data_ptr data, 
                       NAEEM_uint32_ptr data_length) {
+#ifdef _WIN32
+  FILE *file = fopen(file_path, "rb");
+#else
   FILE *file = fopen(file_path, "r");
+#endif
   NAEEM_os__read_file(file, data, data_length);
   fclose(file);
 }
@@ -72,7 +76,11 @@ NAEEM_os__read_file_with_path (NAEEM_string base_dir,
   strcat(path, base_dir);
   strcat(path, "/");
   strcat(path, file_name);
+#ifdef _WIN32
+  f = fopen(path, "rb");
+#else
   f = fopen(path, "r");
+#endif
   NAEEM_os__read_file(f, buffer, buffer_length);
   fclose(f);
 }

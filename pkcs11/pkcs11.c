@@ -286,6 +286,7 @@ NAEEM_pkcs11__encrypt_des3(NAEEM_pkcs11__function_list_ptr function_list_ptr,
     return NAEEM_RESULT_PKCS11__C_ENCRYPT_INIT_FAILED;
   }
   
+  temp_length = 8;
   result = function_list_ptr->C_Encrypt(session, 
                                         data, 
                                         data_length, 
