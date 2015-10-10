@@ -262,7 +262,7 @@ NAEEM_crypto__MAC_v3 (NAEEM_data message,
 
 NAEEM_void
 NAEEM_crypto__generate_RSA (NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
-  RSA *keypair = RSA_generate_key(1024, 257, NULL, NULL);
+  RSA *keypair = RSA_generate_key(512, 127, NULL, NULL);
   NAEEM_byte buffer[512];
   NAEEM_uint32 copied = 0;
 

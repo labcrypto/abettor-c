@@ -118,7 +118,11 @@ NAEEM_os__write_to_file (NAEEM_path base_dir,
   strcat(path, base_dir);
   strcat(path, "/");
   strcat(path, file_name);
+#ifdef _WIN32
+  f = fopen(path, "wb");
+#else
   f = fopen(path, "w");
+#endif
   fwrite(buffer, buffer_length, sizeof(NAEEM_char), f);
   fclose(f);
 }
@@ -163,7 +167,11 @@ NAEEM_os__create_file (NAEEM_path base_dir,
   strcat(path, base_dir);
   strcat(path, "/");
   strcat(path, file_name);
+#ifdef _WIN32
+  f = fopen(path, "wb");
+#else
   f = fopen(path, "w");
+#endif
   // NAEEM_byte buffer[1] = {0};
   // fwrite(buffer, 1, sizeof(NAEEM_char), f);
   fclose(f);
