@@ -22,10 +22,14 @@ NAEEM_unicode__utf8_to_utf16(NAEEM_string utf8,
     char *inbuf, *outbuf;
     size_t inbytesleft, outbytesleft, nchars, utf16_buf_len;
 
-    cd = iconv_open("UTF16LE", "UTF8");
-    if (cd == (iconv_t)-1) {
-	printf("!%s: iconv_open failed: %d\n", FUNCTION_MACRO, errno);
-        return -1;
+#if _WIN32
+    cd = iconv_open("UTF-16LE", "UTF-8");
+#else
+	cd = iconv_open("UTF16LE", "UTF8");
+#endif
+    if (cd == (iconv_t) - 1) {
+	  printf("iconv_open failed: %d\n", errno);
+      return -1;
     }
 
     inbytesleft = strlen(utf8);
