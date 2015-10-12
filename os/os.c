@@ -148,7 +148,6 @@ NAEEM_os__file_exists (NAEEM_path base_dir,
   }
   return TRUE;
 #else
-  
   struct stat st = {0};
   if (stat(path, &st) == 0) {
     return TRUE;

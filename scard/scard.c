@@ -94,7 +94,7 @@ NAEEM_scard__connect_card (NAEEM_scard__context scard_context,
                            NAEEM_string scard_name,
                            NAEEM_scard__handle_ptr scard_handle_ptr) {
   #ifndef SCARD_SIMULATION
-#ifndef WIN32
+#ifndef _WIN32
   DWORD dwProtocol = 0;
   NAEEM_uint32 result = SCardConnect(scard_context, scard_name, SCARD_SHARE_EXCLUSIVE, 
     SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, scard_handle_ptr, &dwProtocol);
@@ -110,7 +110,8 @@ NAEEM_scard__connect_card (NAEEM_scard__context scard_context,
 #endif
   if (result != SCARD_S_SUCCESS) {
     printf ("INTERNAL SCARD ERROR: 0x%x\n", result);
-    return NAEEM_RESULT_SCARD_CAN_NOT_BE_CONNECTED;
+    // return NAEEM_RESULT_SCARD_CAN_NOT_BE_CONNECTED;
+	return result;
   }
   #endif
   return NAEEM_RESULT_SUCCESS;
