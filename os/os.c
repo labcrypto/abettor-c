@@ -30,7 +30,7 @@ NAEEM_os__read_file (FILE *fd,
     }
     if (*data_length + n > current_limit) {
       NAEEM_uint32 old_limit = current_limit;
-	  NAEEM_data temp = *data;
+	    NAEEM_data temp = *data;
       current_limit += (NAEEM_uint32)(current_limit * 1.5);
       *data = (NAEEM_data)malloc(current_limit * sizeof(NAEEM_char));
       for (i = 0; i < old_limit; i++) {
