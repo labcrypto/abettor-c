@@ -38,7 +38,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\..\corelibs-api\openssl\include&quot;;&quot;..\..\..\corelibs-api\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\..\external-apis\openssl\include&quot;;&quot;..\..\..\corelibs-api\include&quot;"
+				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE,_DEBUG"
 				RuntimeLibrary="3"
 			/>
 			<Tool
@@ -94,7 +95,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\..\corelibs-api\openssl\include&quot;;&quot;..\..\..\corelibs-api\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\..\external-apis\openssl\include&quot;;&quot;..\..\..\corelibs-api\include&quot;"
+				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="0"
 			/>
 			<Tool

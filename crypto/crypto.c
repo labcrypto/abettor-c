@@ -261,9 +261,10 @@ NAEEM_crypto__MAC_v3 (NAEEM_data message,
 }
 
 NAEEM_void
-NAEEM_crypto__generate_RSA (NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
-  RSA *keypair = RSA_generate_key(512, 127, NULL, NULL);
-  NAEEM_byte buffer[512];
+NAEEM_crypto__generate_RSA (NAEEM_uint32 modulus_size,
+                            NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
+  RSA *keypair = RSA_generate_key(modulus_size, 65537, NULL, NULL);
+  NAEEM_data buffer = (NAEEM_data)malloc(modulus_size * sizeof(NAEEM_byte));
   NAEEM_uint32 copied = 0;
 
   copied = BN_bn2bin(keypair->n, buffer);
@@ -315,6 +316,7 @@ NAEEM_crypto__generate_RSA (NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
   // NAEEM_util__print_array("C           ", RSA_key_pair_ptr->C_data, RSA_key_pair_ptr->C_length);
 
   NAEEM_crypto__calculate_public_key(RSA_key_pair_ptr);
+  free(buffer);
 }
 
 NAEEM_void
