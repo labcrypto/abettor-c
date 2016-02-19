@@ -137,7 +137,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\bio\bio.c"
+				RelativePath="..\..\bio\cbeff.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\bio\face.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\bio\finger.c"
 				>
 			</File>
 		</Filter>
@@ -147,9 +155,25 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\corelibs-api\include\naeem\bio.h"
+				RelativePath="..\..\..\corelibs-api\include\naeem\types.h"
 				>
 			</File>
+			<Filter
+				Name="bio"
+				>
+				<File
+					RelativePath="..\..\..\corelibs-api\include\naeem\bio\cbeff.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\corelibs-api\include\naeem\bio\face.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\corelibs-api\include\naeem\bio\finger.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
