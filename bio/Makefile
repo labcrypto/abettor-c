@@ -7,7 +7,9 @@ LIB_DIR=.lib
 SYMLINK = ln -s
 RM = rm -rfv
 
-SRCS = bio.c
+SRCS = cbeff.c \
+       face.c \
+       finger.c
 
 TEST_SRCS = 
 
