@@ -1,3 +1,7 @@
+#include <stdlib.h>
+
+#include <naeem/test.h>
+#include <naeem/util.h>
 #include <naeem/bio/face.h>
 
 
@@ -73,10 +77,10 @@ NAEEM_bio__serialize_FAC_BDB (
   NAEEM_data_ptr buffer_ptr,
   NAEEM_uint32_ptr buffer_length_ptr
 ) {
-  NAEEM_uint32 i = 0;
+  // NAEEM_uint32 i = 0;
   NAEEM_uint32 c = 0, cc = 0;
   NAEEM_data buffer;
-  NAEEM_uint32 a1_block_length;
+  // NAEEM_uint32 a1_block_length;
   NAEEM_uint32 overal_length = 0;
   overal_length += FAC_biometric_data_block_ptr->facial_record_header.length_of_record;
   *buffer_length_ptr = overal_length;

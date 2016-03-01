@@ -1,9 +1,12 @@
-C = gcc -g -Wall -Wno-pointer-sign -Wno-comment -fPIC
+PWD=$(shell pwd)
+C = gcc -g -Wall -Wno-pointer-sign -Wno-comment -fPIC -I../../corelibs-api/include
 CC = g++ -g -Wall
+CP = cp -rfv
 AR = ar -cq
 CFLAGS =
 LIBS =
 LIB_DIR=.lib
+API_LIB_DIR=../../corelibs-api/lib
 SYMLINK = ln -s
 RM = rm -rfv
 
@@ -19,22 +22,27 @@ TEST_OBJECTS = $(addprefix $(LIB_DIR)/, $(TEST_OBJS))
 
 LIB_NAME = libnaeem-rand
 MAJOR_VERSION = 1
-MINOR_VERSION = 1
+MINOR_VERSION = 0
 
 all: dirs $(OBJECTS) $(TEST_OBJECTS) static dynamic
 static:
 	$(RM) $(LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION)
 	$(AR) $(LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION) $(OBJECTS)
-	$(RM) $(LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION)    
-	$(SYMLINK) $(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION) $(LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION)
-	$(RM) $(LIB_DIR)/$(LIB_NAME).a
-	$(SYMLINK) $(LIB_NAME).a.$(MAJOR_VERSION) $(LIB_DIR)/$(LIB_NAME).a
+	$(RM) $(API_LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION)
+	$(CP) $(LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION) $(API_LIB_DIR)
+	$(RM) $(API_LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION)    
+	$(SYMLINK) $(PWD)/$(API_LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION) $(API_LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION)
+	$(RM) $(API_LIB_DIR)/$(LIB_NAME).a
+	$(SYMLINK) $(PWD)/$(API_LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION) $(API_LIB_DIR)/$(LIB_NAME).a
 dynamic:
+	$(RM) $(LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION)
 	$(C) -shared -Wl,-soname,$(LIB_NAME).so.$(MAJOR_VERSION) -o $(LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION) $(OBJECTS) $(LIBS)
-	$(RM) $(LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION)
-	$(SYMLINK) $(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION) $(LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION)
-	$(RM) $(LIB_DIR)/$(LIB_NAME).so
-	$(SYMLINK) $(LIB_NAME).so.$(MAJOR_VERSION) $(LIB_DIR)/$(LIB_NAME).so
+	$(RM) $(API_LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION)
+	$(CP) $(LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION) $(API_LIB_DIR)
+	$(RM) $(API_LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION)    
+	$(SYMLINK) $(PWD)/$(API_LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION) $(API_LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION)
+	$(RM) $(API_LIB_DIR)/$(LIB_NAME).so
+	$(SYMLINK) $(PWD)/$(API_LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION) $(API_LIB_DIR)/$(LIB_NAME).so
 $(LIB_DIR)/%.o: %.c
 	$(C) -c $(CFLAGS) $< -o $@
 dirs:

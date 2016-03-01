@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include <naeem/test.h>
 #include <naeem/util.h>
 #include <naeem/bio/cbeff.h>
