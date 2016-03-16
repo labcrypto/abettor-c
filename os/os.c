@@ -128,6 +128,21 @@ NAEEM_os__write_to_file (NAEEM_path base_dir,
 }
 
 
+NAEEM_void
+NAEEM_os__write_to_file2 (NAEEM_path file_path,
+                         NAEEM_data buffer,
+                         NAEEM_uint32 buffer_length) {
+  FILE *f;
+#ifdef _WIN32
+  f = fopen(file_path, "wb");
+#else
+  f = fopen(file_path, "w");
+#endif
+  fwrite(buffer, buffer_length, sizeof(NAEEM_char), f);
+  fclose(f);
+}
+
+
 NAEEM_bool
 NAEEM_os__file_exists (NAEEM_path base_dir,
                        NAEEM_string file_name) {
@@ -143,13 +158,34 @@ NAEEM_os__file_exists (NAEEM_path base_dir,
   mbstowcs(wpath, path, strlen(path) + 1);
   GetFileAttributes(wpath);
   if(INVALID_FILE_ATTRIBUTES == GetFileAttributes(wpath) && 
-	 GetLastError() == ERROR_FILE_NOT_FOUND) {
-	return FALSE;
+	   GetLastError() == ERROR_FILE_NOT_FOUND) {
+	  return FALSE;
   }
   return TRUE;
 #else
   struct stat st = {0};
   if (stat(path, &st) == 0) {
+    return TRUE;
+  }
+  return FALSE;
+#endif
+}
+
+
+NAEEM_bool
+NAEEM_os__file_exists2 (NAEEM_path file_path) {
+#ifdef _WIN32
+  wchar_t wpath[1024] = { 0 };
+  mbstowcs(wpath, file_path, strlen(file_path) + 1);
+  GetFileAttributes(wpath);
+  if(INVALID_FILE_ATTRIBUTES == GetFileAttributes(wpath) && 
+     GetLastError() == ERROR_FILE_NOT_FOUND) {
+    return FALSE;
+  }
+  return TRUE;
+#else
+  struct stat st = {0};
+  if (stat(file_path, &st) == 0) {
     return TRUE;
   }
   return FALSE;
@@ -171,7 +207,43 @@ NAEEM_os__create_file (NAEEM_path base_dir,
 #else
   f = fopen(path, "w");
 #endif
-  // NAEEM_byte buffer[1] = {0};
-  // fwrite(buffer, 1, sizeof(NAEEM_char), f);
   fclose(f);
+}
+
+
+NAEEM_void
+NAEEM_os__create_file2 (NAEEM_path file_path) {
+  FILE *f;
+#ifdef _WIN32
+  f = fopen(file_path, "wb");
+#else
+  f = fopen(file_path, "w");
+#endif
+  fclose(f);
+}
+
+
+NAEEM_void
+NAEEM_os__delete_file (NAEEM_path base_dir,
+                       NAEEM_string file_name) {
+  NAEEM_char path[512];
+  strcpy(path, "");
+  strcat(path, base_dir);
+  strcat(path, "/");
+  strcat(path, file_name);
+#ifdef _WIN32
+  // TODO
+#else
+  // TODO
+#endif
+}
+
+
+NAEEM_void
+NAEEM_os__delete_file2 (NAEEM_path file_path) {
+#ifdef _WIN32
+  // TODO
+#else
+  // TODO
+#endif
 }
