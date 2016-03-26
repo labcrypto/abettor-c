@@ -44,8 +44,10 @@ NAEEM_os__read_file (FILE *fd,
       j++;
     }
   }
+  free(buffer);
   if (j != *data_length) {
     printf("Error in reading from pipe\r\n");
+    free(buffer);
     exit(1);
   }
 }
