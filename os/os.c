@@ -7,28 +7,31 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <dirent.h> 
 #endif
 
 #include <naeem/os.h>
 
 
 NAEEM_void
-NAEEM_os__read_file (FILE *fd, 
-                     NAEEM_data_ptr data, 
-                     NAEEM_uint32_ptr data_length) {
+NAEEM_os__read_file (
+  FILE *fd, 
+  NAEEM_data_ptr data, 
+  NAEEM_uint32_ptr data_length
+) {
   NAEEM_uint32 current_limit = 128;  
   NAEEM_uint32 buffer_size = 64;
   NAEEM_data buffer = (NAEEM_data)malloc(buffer_size * sizeof(NAEEM_byte));
   NAEEM_uint32 j = 0, i = 0;
   NAEEM_uint32 n = 0;
-  *data_length = 0;
+  NAEEM_uint32 length = 0;
   *data = (NAEEM_data)malloc(current_limit * sizeof(NAEEM_byte));
   while (1) {
     n = fread(buffer, sizeof(NAEEM_byte), buffer_size, fd);
     if (n == 0) {
       break;
     }
-    if (*data_length + n > current_limit) {
+    if (length + n > current_limit) {
       NAEEM_uint32 old_limit = current_limit;
 	    NAEEM_data temp = *data;
       current_limit += (NAEEM_uint32)(current_limit * 1.5);
@@ -38,14 +41,17 @@ NAEEM_os__read_file (FILE *fd,
       }
       free(temp);
     }
-    *data_length += n;
+    length += n;
     for(i = 0; i < n; i++) {
       (*data)[j] = buffer[i];
       j++;
     }
   }
+  if (data_length) {
+    *data_length = length;
+  }
   free(buffer);
-  if (j != *data_length) {
+  if (j != length) {
     printf("Error in reading from pipe\r\n");
     free(buffer);
     exit(1);
@@ -54,9 +60,11 @@ NAEEM_os__read_file (FILE *fd,
 
 
 NAEEM_void
-NAEEM_os__read_file2 (NAEEM_path file_path, 
-                      NAEEM_data_ptr data, 
-                      NAEEM_uint32_ptr data_length) {
+NAEEM_os__read_file2 (
+  NAEEM_path file_path, 
+  NAEEM_data_ptr data, 
+  NAEEM_uint32_ptr data_length
+) {
 #ifdef _WIN32
   FILE *file = fopen(file_path, "rb");
 #else
@@ -68,10 +76,32 @@ NAEEM_os__read_file2 (NAEEM_path file_path,
 
 
 NAEEM_void
-NAEEM_os__read_file_with_path (NAEEM_string base_dir,
-                               NAEEM_string file_name,
-                               NAEEM_data_ptr buffer,
-                               NAEEM_uint32_ptr buffer_length) {
+NAEEM_os__read_file3 (
+  NAEEM_path file_path, 
+  NAEEM_data buffer, 
+  NAEEM_uint32 start_index
+) {
+  NAEEM_counter i = 0;
+  NAEEM_data data;
+  NAEEM_length data_length;
+  NAEEM_os__read_file2(file_path, &data, &data_length);
+  if (data_length == 0) {
+    return;
+  }
+  for (i = 0; i < data_length; i++) {
+    buffer[start_index + i] = data[i];
+  }
+  free(data);
+}
+
+
+NAEEM_void
+NAEEM_os__read_file_with_path (
+  NAEEM_string base_dir,
+  NAEEM_string file_name,
+  NAEEM_data_ptr buffer,
+  NAEEM_uint32_ptr buffer_length
+) {
   FILE *f;
   NAEEM_char path[512];
   strcpy(path, "");
@@ -89,7 +119,9 @@ NAEEM_os__read_file_with_path (NAEEM_string base_dir,
 
 
 NAEEM_void
-NAEEM_os__mkdir(NAEEM_string dir_name) {
+NAEEM_os__mkdir (
+  NAEEM_string dir_name
+) {
 #ifdef _WIN32
 	wchar_t wpath[1024] = { 0 };
 	mbstowcs(wpath, dir_name, strlen(dir_name) + 1);
@@ -104,16 +136,20 @@ NAEEM_os__mkdir(NAEEM_string dir_name) {
 
 
 NAEEM_void
-NAEEM_os__rmdir (NAEEM_path dir_name) {
+NAEEM_os__rmdir (
+  NAEEM_path dir_name
+) {
   // TODO
 }
 
 
 NAEEM_void
-NAEEM_os__write_to_file (NAEEM_path base_dir,
-                         NAEEM_string file_name,
-                         NAEEM_data buffer,
-                         NAEEM_uint32 buffer_length) {
+NAEEM_os__write_to_file (
+  NAEEM_path base_dir,
+  NAEEM_string file_name,
+  NAEEM_data buffer,
+  NAEEM_uint32 buffer_length
+) {
   FILE *f;
   NAEEM_char path[512];
   strcpy(path, "");
@@ -131,9 +167,11 @@ NAEEM_os__write_to_file (NAEEM_path base_dir,
 
 
 NAEEM_void
-NAEEM_os__write_to_file2 (NAEEM_path file_path,
-                         NAEEM_data buffer,
-                         NAEEM_uint32 buffer_length) {
+NAEEM_os__write_to_file2 (
+  NAEEM_path file_path,
+  NAEEM_data buffer,
+  NAEEM_uint32 buffer_length
+) {
   FILE *f;
 #ifdef _WIN32
   f = fopen(file_path, "wb");
@@ -144,10 +182,19 @@ NAEEM_os__write_to_file2 (NAEEM_path file_path,
   fclose(f);
 }
 
+NAEEM_bool
+NAEEM_os__dir_exists (
+  NAEEM_path dir_path
+) {
+  return NAEEM_os__file_exists2(dir_path);
+}
+
 
 NAEEM_bool
-NAEEM_os__file_exists (NAEEM_path base_dir,
-                       NAEEM_string file_name) {
+NAEEM_os__file_exists (
+  NAEEM_path base_dir,
+  NAEEM_string file_name
+) {
 #ifdef _WIN32
   wchar_t wpath[1024] = { 0 };
 #endif
@@ -175,7 +222,9 @@ NAEEM_os__file_exists (NAEEM_path base_dir,
 
 
 NAEEM_bool
-NAEEM_os__file_exists2 (NAEEM_path file_path) {
+NAEEM_os__file_exists2 (
+  NAEEM_path file_path
+) {
 #ifdef _WIN32
   wchar_t wpath[1024] = { 0 };
   mbstowcs(wpath, file_path, strlen(file_path) + 1);
@@ -196,8 +245,10 @@ NAEEM_os__file_exists2 (NAEEM_path file_path) {
 
 
 NAEEM_void
-NAEEM_os__create_file (NAEEM_path base_dir,
-                       NAEEM_string file_name) {
+NAEEM_os__create_file (
+  NAEEM_path base_dir,
+  NAEEM_string file_name
+) {
   FILE *f;
   NAEEM_char path[512];
   strcpy(path, "");
@@ -214,7 +265,9 @@ NAEEM_os__create_file (NAEEM_path base_dir,
 
 
 NAEEM_void
-NAEEM_os__create_file2 (NAEEM_path file_path) {
+NAEEM_os__create_file2 (
+  NAEEM_path file_path
+) {
   FILE *f;
 #ifdef _WIN32
   f = fopen(file_path, "wb");
@@ -226,8 +279,10 @@ NAEEM_os__create_file2 (NAEEM_path file_path) {
 
 
 NAEEM_void
-NAEEM_os__delete_file (NAEEM_path base_dir,
-                       NAEEM_string file_name) {
+NAEEM_os__delete_file (
+  NAEEM_path base_dir,
+  NAEEM_string file_name
+) {
   NAEEM_char path[512];
   strcpy(path, "");
   strcat(path, base_dir);
@@ -242,10 +297,70 @@ NAEEM_os__delete_file (NAEEM_path base_dir,
 
 
 NAEEM_void
-NAEEM_os__delete_file2 (NAEEM_path file_path) {
+NAEEM_os__delete_file2 (
+  NAEEM_path file_path
+) {
 #ifdef _WIN32
   // TODO
 #else
   // TODO
 #endif
+}
+
+
+NAEEM_void
+NAEEM_os__enum_file_names (
+  NAEEM_path dir_path,
+  NAEEM_string_ptr_ptr filenames_ptr,
+  NAEEM_length_ptr length_ptr
+) {
+#ifdef _WIN32
+  // TODO
+#else
+  NAEEM_counter i = 0, c = 0;
+  DIR *d;
+  struct dirent *dir;
+  d = opendir(dir_path);
+  if (d) {
+    while ((dir = readdir(d)) != NULL) {
+      if (dir->d_type == DT_REG) {
+        c++;
+      }
+    }
+    closedir(d);
+    *length_ptr = c;
+    if (c == 0) {
+      return;
+    }
+    *filenames_ptr = (NAEEM_string_ptr) malloc(c * sizeof(NAEEM_string));
+    d = opendir(dir_path);
+    i = 0;
+    while ((dir = readdir(d)) != NULL) {
+      if (dir->d_type == DT_REG) {
+        (*filenames_ptr)[i] = (NAEEM_string)malloc(256 * sizeof(NAEEM_char));
+        strcpy((*filenames_ptr)[i], dir->d_name);
+        i++;
+      }
+    }
+    if (i != c) {
+      printf("libnaeem-os::NAEEM_os__enum_file_names: WARNING > Inconsistency in number of files.");
+    }
+    closedir(d);
+  } else {
+    *length_ptr = 0;
+  }
+#endif
+}
+
+
+NAEEM_void
+NAEEM_os__free_file_names (
+  NAEEM_string_ptr filenames,
+  NAEEM_length length
+) {
+  NAEEM_counter i = 0;
+  for (; i < length; i++) {
+    free(filenames[i]);
+  }
+  free(filenames);
 }
