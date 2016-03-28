@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h> 
+#include <fcntl.h>
 #endif
 
 #include <naeem/os.h>
@@ -278,7 +279,7 @@ NAEEM_os__create_file2 (
 }
 
 
-NAEEM_void
+NAEEM_bool
 NAEEM_os__delete_file (
   NAEEM_path base_dir,
   NAEEM_string file_name
@@ -288,22 +289,21 @@ NAEEM_os__delete_file (
   strcat(path, base_dir);
   strcat(path, "/");
   strcat(path, file_name);
-#ifdef _WIN32
-  // TODO
-#else
-  // TODO
-#endif
+  return NAEEM_os__delete_file2(path);
 }
 
 
-NAEEM_void
+NAEEM_bool
 NAEEM_os__delete_file2 (
   NAEEM_path file_path
 ) {
 #ifdef _WIN32
   // TODO
 #else
-  // TODO
+  if (unlink(file_path) == 0) {
+    return TRUE;
+  }
+  return FALSE;
 #endif
 }
 
@@ -362,5 +362,86 @@ NAEEM_os__free_file_names (
   for (; i < length; i++) {
     free(filenames[i]);
   }
-  free(filenames);
+  if (length > 0) {
+    free(filenames);
+  }
+}
+
+
+NAEEM_bool
+NAEEM_os__copy_file (
+  NAEEM_path first_base_dir_path,
+  NAEEM_string first_filename,
+  NAEEM_path second_base_dir_path,
+  NAEEM_string second_filename
+) {
+  NAEEM_char path1[512];
+  strcpy(path1, "");
+  strcat(path1, first_base_dir_path);
+  strcat(path1, "/");
+  strcat(path1, first_filename);
+  NAEEM_char path2[512];
+  strcpy(path2, "");
+  strcat(path2, second_base_dir_path);
+  strcat(path2, "/");
+  if (second_filename) {
+    strcat(path2, second_filename);
+  } else {
+    strcat(path2, first_filename);
+  }
+#ifdef _WIN32
+  // TODO
+#else
+  int fd_to, fd_from;
+  char buf[4096];
+  ssize_t nread;
+  fd_from = open(path1, O_RDONLY);
+  if (fd_from < 0) {
+    return FALSE;
+  }
+  fd_to = open(path2, O_WRONLY | O_CREAT | O_EXCL, 0666);
+  if (fd_to < 0) {
+    return FALSE;
+  }
+  while (nread = read(fd_from, buf, sizeof buf), nread > 0) {
+    char *out_ptr = buf;
+    ssize_t nwritten;
+    do {
+      nwritten = write(fd_to, out_ptr, nread);
+      if (nwritten >= 0) {
+          nread -= nwritten;
+          out_ptr += nwritten;
+      }
+    } while (nread > 0);
+  }
+  if (nread == 0) {
+    close(fd_to);
+    close(fd_from);
+    return TRUE;
+  } else {
+    printf("libnaeem-os::NAEEM_os__copy_file: WARNING > Inconsistency in copy operation.");
+  }
+  return FALSE;
+#endif
+}
+
+
+NAEEM_bool
+NAEEM_os__move_file (
+  NAEEM_path first_base_dir_path,
+  NAEEM_string first_filename,
+  NAEEM_path second_base_dir_path,
+  NAEEM_string second_filename
+) {
+  return 
+    NAEEM_os__copy_file (
+      first_base_dir_path,
+      first_filename,
+      second_base_dir_path,
+      second_filename
+    ) &&
+    NAEEM_os__delete_file (
+      first_base_dir_path,
+      first_filename
+    );
 }
