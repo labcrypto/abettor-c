@@ -10,7 +10,7 @@ API_LIB_DIR=../../corelibs-api/lib
 SYMLINK = ln -s
 RM = rm -rfv
 
-SRCS = crypto.c
+SRCS = crypto.c base64.c
 
 TEST_SRCS = crypto_tests.c 
 
