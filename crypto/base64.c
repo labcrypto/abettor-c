@@ -45,7 +45,7 @@ NAEEM_crypto_base64__encode (
   NAEEM_uint32 triple;
   __base64_setup_decoding_table__();
   *length_ptr = 4 * ((data_length + 2) / 3);
-  encoded_data = malloc(*length_ptr);
+  encoded_data = malloc(*length_ptr + 1);
   if (encoded_data == NULL) {
     return NULL;
   }
@@ -62,6 +62,7 @@ NAEEM_crypto_base64__encode (
   for (i = 0; i < mod_table[data_length % 3]; i++) {
     encoded_data[*length_ptr - 1 - i] = '=';
   }
+  encoded_data[*length_ptr] = 0;
   __base64_cleanup__();
   return encoded_data;
 }
@@ -69,8 +70,8 @@ NAEEM_crypto_base64__encode (
   
 NAEEM_data
 NAEEM_crypto_base64__decode (
-  NAEEM_data data,
-  NAEEM_length data_length,
+  NAEEM_data str,
+  NAEEM_length string_length,
   NAEEM_length_ptr length_ptr
 ) {
   NAEEM_data decoded_data;
@@ -81,25 +82,25 @@ NAEEM_crypto_base64__decode (
   NAEEM_uint32 sxtet_d;
   NAEEM_uint32 triple;
   __base64_setup_decoding_table__();
-  if (data_length % 4 != 0) {
+  if (string_length % 4 != 0) {
     return NULL;
   }
-  *length_ptr = data_length / 4 * 3;
-  if (data[data_length - 1] == '=') {
+  *length_ptr = string_length / 4 * 3;
+  if (str[string_length - 1] == '=') {
     (*length_ptr)--;
   }
-  if (data[data_length - 2] == '=') {
+  if (str[string_length - 2] == '=') {
     (*length_ptr)--;
   }
   decoded_data = malloc(*length_ptr);
   if (decoded_data == NULL) {
     return NULL;
   }
-  for (i = 0, j = 0; i < data_length;) {
-    sxtet_a = data[i] == '=' ? 0 & i++ : decoding_table[data[i++]];
-    sxtet_b = data[i] == '=' ? 0 & i++ : decoding_table[data[i++]];
-    sxtet_c = data[i] == '=' ? 0 & i++ : decoding_table[data[i++]];
-    sxtet_d = data[i] == '=' ? 0 & i++ : decoding_table[data[i++]];
+  for (i = 0, j = 0; i < string_length;) {
+    sxtet_a = str[i] == '=' ? 0 & i++ : decoding_table[str[i++]];
+    sxtet_b = str[i] == '=' ? 0 & i++ : decoding_table[str[i++]];
+    sxtet_c = str[i] == '=' ? 0 & i++ : decoding_table[str[i++]];
+    sxtet_d = str[i] == '=' ? 0 & i++ : decoding_table[str[i++]];
     triple = (sxtet_a << 3 * 6)
     + (sxtet_b << 2 * 6)
     + (sxtet_c << 1 * 6)

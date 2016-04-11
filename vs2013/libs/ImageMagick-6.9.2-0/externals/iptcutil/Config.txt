@@ -1,6 +1,0 @@
-[EXE]
-
-[OPTIONAL]
-
-[DIRECTORIES]
-..\..\contrib\utilities
