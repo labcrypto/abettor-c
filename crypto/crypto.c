@@ -339,6 +339,7 @@ NAEEM_crypto__generate_RSA (NAEEM_uint32 modulus_size,
   // NAEEM_util__print_array("C           ", RSA_key_pair_ptr->C_data, RSA_key_pair_ptr->C_length);
 
   NAEEM_crypto__calculate_public_key(RSA_key_pair_ptr);
+  RSA_free(keypair);
   free(buffer);
 }
 
