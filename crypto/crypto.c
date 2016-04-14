@@ -343,6 +343,21 @@ NAEEM_crypto__generate_RSA (NAEEM_uint32 modulus_size,
 }
 
 NAEEM_void
+NAEEM_crypto__free_RSA_key (
+  NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr
+) {
+  free(RSA_key_pair_ptr->N_data);
+  free(RSA_key_pair_ptr->E_data);
+  free(RSA_key_pair_ptr->D_data);
+  free(RSA_key_pair_ptr->P_data);
+  free(RSA_key_pair_ptr->Q_data);
+  free(RSA_key_pair_ptr->EXP1_data);
+  free(RSA_key_pair_ptr->EXP2_data);
+  free(RSA_key_pair_ptr->C_data);
+  free(RSA_key_pair_ptr->public_key);
+}
+
+NAEEM_void
 NAEEM_crypto__calculate_public_key(NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
   NAEEM_byte n_and_e[500];
   NAEEM_counter c = 0, i = 0;
