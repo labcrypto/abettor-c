@@ -354,6 +354,33 @@ NAEEM_os__enum_file_names (
 
 
 NAEEM_void
+NAEEM_os__num_files_in_dir (
+  NAEEM_path dir_path,
+  NAEEM_length_ptr length_ptr
+) {
+#ifdef _WIN32
+  // TODO
+#else
+  NAEEM_counter c = 0;
+  DIR *d;
+  struct dirent *dir;
+  d = opendir(dir_path);
+  if (d) {
+    while ((dir = readdir(d)) != NULL) {
+      if (dir->d_type == DT_REG) {
+        c++;
+      }
+    }
+    closedir(d);
+    *length_ptr = c;
+  } else {
+    *length_ptr = 0;
+  }
+#endif
+}
+
+
+NAEEM_void
 NAEEM_os__free_file_names (
   NAEEM_string_ptr filenames,
   NAEEM_length length
