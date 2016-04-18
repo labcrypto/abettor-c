@@ -1,0 +1,53 @@
+PWD=$(shell pwd)
+C = gcc -g -Wall -Wno-pointer-sign -Wno-comment -fPIC -I../../corelibs-api/include
+CC = g++ -g -Wall
+CP = cp -rfv
+AR = ar -cq
+CFLAGS = 
+LIBS =
+LIB_DIR=.lib
+API_LIB_DIR=../../corelibs-api/lib
+SYMLINK = ln -s
+RM = rm -rfv
+
+SRCS = udp.c
+
+TEST_SRCS = 
+
+OBJS = $(SRCS:.c=.o)
+TEST_OBJS = $(TEST_SRCS:.c=.o)
+
+OBJECTS = $(addprefix $(LIB_DIR)/, $(OBJS))
+TEST_OBJECTS = $(addprefix $(LIB_DIR)/, $(TEST_OBJS))
+
+LIB_NAME = libnaeem-net
+MAJOR_VERSION = 1
+MINOR_VERSION = 0
+
+all: dirs $(OBJECTS) $(TEST_OBJECTS) static dynamic
+static:
+	$(RM) $(LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION)
+	$(AR) $(LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION) $(OBJECTS)
+	$(RM) $(API_LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION)
+	$(CP) $(LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION) $(API_LIB_DIR)
+	$(RM) $(API_LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION)    
+	$(SYMLINK) $(PWD)/$(API_LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION) $(API_LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION)
+	$(RM) $(API_LIB_DIR)/$(LIB_NAME).a
+	$(SYMLINK) $(PWD)/$(API_LIB_DIR)/$(LIB_NAME).a.$(MAJOR_VERSION).$(MINOR_VERSION) $(API_LIB_DIR)/$(LIB_NAME).a
+dynamic:
+	$(RM) $(LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION)
+	$(C) -shared -Wl,-soname,$(LIB_NAME).so.$(MAJOR_VERSION) -o $(LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION) $(OBJECTS) $(LIBS)
+	$(RM) $(API_LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION)
+	$(CP) $(LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION) $(API_LIB_DIR)
+	$(RM) $(API_LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION)    
+	$(SYMLINK) $(PWD)/$(API_LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION) $(API_LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION)
+	$(RM) $(API_LIB_DIR)/$(LIB_NAME).so
+	$(SYMLINK) $(PWD)/$(API_LIB_DIR)/$(LIB_NAME).so.$(MAJOR_VERSION).$(MINOR_VERSION) $(API_LIB_DIR)/$(LIB_NAME).so
+$(LIB_DIR)/%.o: %.c
+	$(C) -c $(CFLAGS) $< -o $@
+dirs:
+	mkdir -p $(LIB_DIR)
+clean:
+	$(RM) $(LIB_DIR)/*.o
+	$(RM) $(READ_APP_NAME) $(ISSUE_APP_NAME) $(ENABLE_BAC_APP_NAME) $(LOCK_APP_NAME) \
+	      $(STAT_APP_NAME) $(SOD_APP_NAME) $(AA_APP_NAME)
