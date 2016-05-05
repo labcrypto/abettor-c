@@ -23,32 +23,32 @@
  
 #include <stdlib.h>
 
-#include <naeem/test.h>
-#include <naeem/util.h>
-#include <naeem/bio/face.h>
+#include <org/labcrypto/abettor/test.h>
+#include <org/labcrypto/abettor/util.h>
+#include <org/labcrypto/abettor/bio/face.h>
 
 
-NAEEM_void
-NAEEM_bio__create_FAC_biometric_data_block_from_jpeg2000_data (
-  NAEEM_data jpeg2000_image_data,
-  NAEEM_uint32 jpeg2000_image_data_length,
-  NAEEM_pixel width,
-  NAEEM_pixel height,
-  NAEEM_bio__FAC_biometric_data_block_ptr FAC_biometric_data_block_ptr
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__bio__create_FAC_biometric_data_block_from_jpeg2000_data (
+  ORG_LABCRYPTO_ABETTOR_data jpeg2000_image_data,
+  ORG_LABCRYPTO_ABETTOR_uint32 jpeg2000_image_data_length,
+  ORG_LABCRYPTO_ABETTOR_pixel width,
+  ORG_LABCRYPTO_ABETTOR_pixel height,
+  ORG_LABCRYPTO_ABETTOR__bio__FAC_biometric_data_block_ptr FAC_biometric_data_block_ptr
 ) {
   // Copy JPEG2000 image data into FAC BDB
   FAC_biometric_data_block_ptr->facial_record_data.jpeg_image.data = 
-    (NAEEM_data)malloc(jpeg2000_image_data_length * sizeof(NAEEM_byte));
-  NAEEM_util__copy_array(
+    (ORG_LABCRYPTO_ABETTOR_data)malloc(jpeg2000_image_data_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+  ORG_LABCRYPTO_ABETTOR__util__copy_array(
     FAC_biometric_data_block_ptr->facial_record_data.jpeg_image.data, 
     jpeg2000_image_data,
     0,
     jpeg2000_image_data_length
   );
   FAC_biometric_data_block_ptr->facial_record_data.jpeg_image.length = jpeg2000_image_data_length;
-  FAC_biometric_data_block_ptr->facial_record_data.jpeg_image.type = NAEEM_BIO__FACE__JPEG_TYPE__JPEG2000;
+  FAC_biometric_data_block_ptr->facial_record_data.jpeg_image.type = ORG_LABCRYPTO_ABETTOR__BIO__FACE__JPEG_TYPE__JPEG2000;
   // Fill Image Information
-  FAC_biometric_data_block_ptr->facial_record_data.image_information.face_image_type = NAEEM_BIO__FACE__IMAGE_TYPE__TOKEN_FRONTAL;
+  FAC_biometric_data_block_ptr->facial_record_data.image_information.face_image_type = ORG_LABCRYPTO_ABETTOR__BIO__FACE__IMAGE_TYPE__TOKEN_FRONTAL;
   FAC_biometric_data_block_ptr->facial_record_data.image_information.image_data_type = 0x01; // TODO
   FAC_biometric_data_block_ptr->facial_record_data.image_information.width = width;
   FAC_biometric_data_block_ptr->facial_record_data.image_information.height = height;
@@ -58,7 +58,7 @@ NAEEM_bio__create_FAC_biometric_data_block_from_jpeg2000_data (
   FAC_biometric_data_block_ptr->facial_record_data.image_information.quality = 0x00; // TODO
   // Create and fill Feature Point struct
   FAC_biometric_data_block_ptr->facial_record_data.feature_points = 
-    (NAEEM_bio__feature_point_ptr)malloc(sizeof(NAEEM_bio__feature_point));
+    (ORG_LABCRYPTO_ABETTOR__bio__feature_point_ptr)malloc(sizeof(ORG_LABCRYPTO_ABETTOR__bio__feature_point));
   FAC_biometric_data_block_ptr->facial_record_data.feature_points[0].feature_point_type = 0x01; // TODO
   FAC_biometric_data_block_ptr->facial_record_data.feature_points[0].feature_point_code = 0xc1; // TODO
   FAC_biometric_data_block_ptr->facial_record_data.feature_points[0].horizantal_position = 0x59;
@@ -94,20 +94,20 @@ NAEEM_bio__create_FAC_biometric_data_block_from_jpeg2000_data (
 }
 
 
-NAEEM_void
-NAEEM_bio__serialize_FAC_BDB (
-  NAEEM_bio__FAC_biometric_data_block_ptr FAC_biometric_data_block_ptr,
-  NAEEM_data_ptr buffer_ptr,
-  NAEEM_uint32_ptr buffer_length_ptr
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__bio__serialize_FAC_BDB (
+  ORG_LABCRYPTO_ABETTOR__bio__FAC_biometric_data_block_ptr FAC_biometric_data_block_ptr,
+  ORG_LABCRYPTO_ABETTOR_data_ptr buffer_ptr,
+  ORG_LABCRYPTO_ABETTOR_uint32_ptr buffer_length_ptr
 ) {
-  // NAEEM_uint32 i = 0;
-  NAEEM_uint32 c = 0, cc = 0;
-  NAEEM_data buffer;
-  // NAEEM_uint32 a1_block_length;
-  NAEEM_uint32 overal_length = 0;
+  // ORG_LABCRYPTO_ABETTOR_uint32 i = 0;
+  ORG_LABCRYPTO_ABETTOR_uint32 c = 0, cc = 0;
+  ORG_LABCRYPTO_ABETTOR_data buffer;
+  // ORG_LABCRYPTO_ABETTOR_uint32 a1_block_length;
+  ORG_LABCRYPTO_ABETTOR_uint32 overal_length = 0;
   overal_length += FAC_biometric_data_block_ptr->facial_record_header.length_of_record;
   *buffer_length_ptr = overal_length;
-  buffer = *buffer_ptr = (NAEEM_data)malloc(overal_length * sizeof(NAEEM_byte));
+  buffer = *buffer_ptr = (ORG_LABCRYPTO_ABETTOR_data)malloc(overal_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
   c = 0;
   buffer[c++] = 'F';
   buffer[c++] = 'A';
@@ -178,25 +178,25 @@ NAEEM_bio__serialize_FAC_BDB (
     buffer[c++] = FAC_biometric_data_block_ptr->facial_record_data.jpeg_image.data[cc];
   }
 
-  NAEEM_test__assert(c == overal_length, "Inconsistency in bio structure.");
+  ORG_LABCRYPTO_ABETTOR__test__assert(c == overal_length, "Inconsistency in bio structure.");
 }
 
 
-NAEEM_void
-NAEEM_bio__deserialize_FAC_BDB (
-  NAEEM_data buffer,
-  NAEEM_uint32 buffer_length,
-  NAEEM_bio__FAC_biometric_data_block_ptr FAC_biometric_data_block_ptr
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__bio__deserialize_FAC_BDB (
+  ORG_LABCRYPTO_ABETTOR_data buffer,
+  ORG_LABCRYPTO_ABETTOR_uint32 buffer_length,
+  ORG_LABCRYPTO_ABETTOR__bio__FAC_biometric_data_block_ptr FAC_biometric_data_block_ptr
 ) {
   // TODO
 }
 
 
-NAEEM_void
-NAEEM_bio__exract_face_image (
-  NAEEM_bio__FAC_biometric_data_block_ptr FAC_biometric_data_block_ptr,
-  NAEEM_data_ptr buffer_ptr,
-  NAEEM_uint32_ptr buffer_length_ptr
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__bio__exract_face_image (
+  ORG_LABCRYPTO_ABETTOR__bio__FAC_biometric_data_block_ptr FAC_biometric_data_block_ptr,
+  ORG_LABCRYPTO_ABETTOR_data_ptr buffer_ptr,
+  ORG_LABCRYPTO_ABETTOR_uint32_ptr buffer_length_ptr
 ) {
   // TODO
 }
