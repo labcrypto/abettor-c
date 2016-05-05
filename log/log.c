@@ -1,54 +1,68 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <naeem/log.h>
+#include <org/labcrypto/abettor/log.h>
 
 
-NAEEM_void
-__NAEEM_log__ (NAEEM_string severity,
-               NAEEM_string title,
-               NAEEM_string message) {
+ORG_LABCRYPTO_ABETTOR_void
+__ORG_LABCRYPTO_ABETTOR__log__ (
+  ORG_LABCRYPTO_ABETTOR_string severity,
+  ORG_LABCRYPTO_ABETTOR_string title,
+  ORG_LABCRYPTO_ABETTOR_string message
+) {
   printf("[%s]  %s:        %s\n", severity, title, message);
 }
 
 
-NAEEM_void
-NAEEM_log__trace (NAEEM_string title,
-                  NAEEM_string message) {
-  __NAEEM_log__("TRACE", title, message);
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__log__trace (
+  ORG_LABCRYPTO_ABETTOR_string title,
+  ORG_LABCRYPTO_ABETTOR_string message
+) {
+  __ORG_LABCRYPTO_ABETTOR__log__("TRACE", title, message);
 }
 
 
-NAEEM_void
-NAEEM_log__debug (NAEEM_string title,
-                  NAEEM_string message) {
-  __NAEEM_log__("DEBUG", title, message);
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__log__debug (
+  ORG_LABCRYPTO_ABETTOR_string title,
+  ORG_LABCRYPTO_ABETTOR_string message
+) {
+  __ORG_LABCRYPTO_ABETTOR__log__("DEBUG", title, message);
 }
 
 
-NAEEM_void
-NAEEM_log__info (NAEEM_string title,
-                 NAEEM_string message) {
-  __NAEEM_log__("INFO", title, message);
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__log__info (
+  ORG_LABCRYPTO_ABETTOR_string title,
+  ORG_LABCRYPTO_ABETTOR_string message
+) {
+  __ORG_LABCRYPTO_ABETTOR__log__("INFO", title, message);
 }
 
 
-NAEEM_void
-NAEEM_log__warning (NAEEM_string title,
-                    NAEEM_string message) {
-  __NAEEM_log__("WARNING", title, message);
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__log__warning (
+  ORG_LABCRYPTO_ABETTOR_string title,
+  ORG_LABCRYPTO_ABETTOR_string message
+) {
+  __ORG_LABCRYPTO_ABETTOR__log__("WARNING", title, message);
 }
 
 
-NAEEM_void
-NAEEM_log__error (NAEEM_string title,
-                  NAEEM_string message) {
-  __NAEEM_log__("ERROR", title, message);
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__log__error (
+  ORG_LABCRYPTO_ABETTOR_string title,
+  ORG_LABCRYPTO_ABETTOR_string message
+) {
+  __ORG_LABCRYPTO_ABETTOR__log__("ERROR", title, message);
 }
 
 
-NAEEM_void
-NAEEM_log__fatal (NAEEM_string title,
-                  NAEEM_string message) {
-  __NAEEM_log__("FATAL", title, message);
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__log__fatal (
+  ORG_LABCRYPTO_ABETTOR_string title,
+  ORG_LABCRYPTO_ABETTOR_string message
+) {
+  __ORG_LABCRYPTO_ABETTOR__log__("FATAL", title, message);
 }
