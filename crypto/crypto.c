@@ -1,6 +1,6 @@
 /*  The MIT License (MIT)
  *
- *  Copyright (c) 2015 Noavaran Tejarat Gostar NAEEM Co.
+ *  Copyright (c) 2015 Noavaran Tejarat Gostar ORG_LABCRYPTO_ABETTOR Co.
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -30,122 +30,122 @@
 #include <openssl/bn.h>
 #include <openssl/rsa.h>
 
-#include <naeem/crypto.h>
-#include <naeem/util.h>
-#include <naeem/test.h>
-#include <naeem/error.h>
+#include <org/labcrypto/abettor/crypto.h>
+#include <org/labcrypto/abettor/util.h>
+#include <org/labcrypto/abettor/test.h>
+#include <org/labcrypto/abettor/error.h>
 
 
-NAEEM_result
-NAEEM_crypto__SHA1 (NAEEM_data data,
-                    NAEEM_uint32 data_length,
-                    NAEEM_data hash) {
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__crypto__SHA1 (ORG_LABCRYPTO_ABETTOR_data data,
+                    ORG_LABCRYPTO_ABETTOR_uint32 data_length,
+                    ORG_LABCRYPTO_ABETTOR_data hash) {
   SHA_CTX ctx;
   SHA1_Init(&ctx);
   SHA1_Update(&ctx, data, data_length);
   SHA1_Final(hash, &ctx);
-  return NAEEM_RESULT_SUCCESS;
+  return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
 }
 
 
-NAEEM_result
-NAEEM_crypto__SHA256 (NAEEM_data data,
-                      NAEEM_uint32 data_length,
-                      NAEEM_data hash) {
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__crypto__SHA256 (ORG_LABCRYPTO_ABETTOR_data data,
+                      ORG_LABCRYPTO_ABETTOR_uint32 data_length,
+                      ORG_LABCRYPTO_ABETTOR_data hash) {
   SHA256_CTX ctx;
   SHA256_Init(&ctx);
   SHA256_Update(&ctx, data, data_length);
   SHA256_Final(hash, &ctx);
-  return NAEEM_RESULT_SUCCESS;
+  return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
 }
 
 
-NAEEM_result
-NAEEM_crypto__DES_cbc_encrypt (NAEEM_data data,
-                               NAEEM_uint32 data_length,
-                               NAEEM_data cipher,
-                               NAEEM_uint32_ptr cipher_length_ptr,
-                               NAEEM_DES_key key) {
-  NAEEM_uint32 i = 0;
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__crypto__DES_cbc_encrypt (ORG_LABCRYPTO_ABETTOR_data data,
+                               ORG_LABCRYPTO_ABETTOR_uint32 data_length,
+                               ORG_LABCRYPTO_ABETTOR_data cipher,
+                               ORG_LABCRYPTO_ABETTOR_uint32_ptr cipher_length_ptr,
+                               ORG_LABCRYPTO_ABETTOR_DES_key key) {
+  ORG_LABCRYPTO_ABETTOR_uint32 i = 0;
   DES_cblock iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
   DES_key_schedule ks;
-  NAEEM_uint32 cipher_length;
-  NAEEM_data internal_cipher;
+  ORG_LABCRYPTO_ABETTOR_uint32 cipher_length;
+  ORG_LABCRYPTO_ABETTOR_data internal_cipher;
   DES_cblock cb;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
     cb[i] = key[i];
   }
   DES_set_odd_parity(&cb);
   if (DES_set_key_checked(&cb, &ks)) {
-      return NAEEM_RESULT_INVALID_DES_KEY;
+      return ORG_LABCRYPTO_ABETTOR_RESULT__INVALID_DES_KEY;
    }
    cipher_length = (data_length / DES_KEY_LENGTH + ((data_length % DES_KEY_LENGTH) == 0 ? 0 : 1)) * 8;
    if (cipher_length_ptr) {
      *cipher_length_ptr = cipher_length;
    }
-   internal_cipher = (NAEEM_data)malloc(cipher_length * sizeof(NAEEM_byte));
-   memset(internal_cipher, 0x00, cipher_length * sizeof(NAEEM_byte));
+   internal_cipher = (ORG_LABCRYPTO_ABETTOR_data)malloc(cipher_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+   memset(internal_cipher, 0x00, cipher_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
    DES_cbc_encrypt(data, internal_cipher, data_length, &ks, &iv, DES_ENCRYPT);
 
   for (i = 0; i < cipher_length; i++) {
     cipher[i] = internal_cipher[i];
   } 
   free(internal_cipher);
-  return NAEEM_RESULT_SUCCESS;
+  return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
 }
 
 
-NAEEM_result
-NAEEM_crypto__DES_cbc_decrypt (NAEEM_data cipher,
-                               NAEEM_uint32 cipher_length,
-                               NAEEM_data data,
-                               NAEEM_uint32_ptr data_length_ptr,
-                               NAEEM_DES_key key) {
-  NAEEM_uint32 i = 0;
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__crypto__DES_cbc_decrypt (ORG_LABCRYPTO_ABETTOR_data cipher,
+                               ORG_LABCRYPTO_ABETTOR_uint32 cipher_length,
+                               ORG_LABCRYPTO_ABETTOR_data data,
+                               ORG_LABCRYPTO_ABETTOR_uint32_ptr data_length_ptr,
+                               ORG_LABCRYPTO_ABETTOR_DES_key key) {
+  ORG_LABCRYPTO_ABETTOR_uint32 i = 0;
   DES_cblock cb;
   DES_cblock iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
   DES_key_schedule ks;
-  NAEEM_data internal_data;
-  NAEEM_uint32 data_length;
+  ORG_LABCRYPTO_ABETTOR_data internal_data;
+  ORG_LABCRYPTO_ABETTOR_uint32 data_length;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
     cb[i] = key[i];
   }
   DES_set_odd_parity(&cb);
   if (DES_set_key_checked(&cb, &ks)) {
-      return NAEEM_RESULT_INVALID_DES_KEY;
+      return ORG_LABCRYPTO_ABETTOR_RESULT__INVALID_DES_KEY;
    }
    data_length = cipher_length;
    if (data_length_ptr) {
      *data_length_ptr = data_length;
    }
-   internal_data = (NAEEM_data)malloc(data_length * sizeof(NAEEM_byte));
-   memset(internal_data, 0x00, data_length * sizeof(NAEEM_byte));
+   internal_data = (ORG_LABCRYPTO_ABETTOR_data)malloc(data_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+   memset(internal_data, 0x00, data_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
    DES_cbc_encrypt(cipher, internal_data, cipher_length, &ks, &iv, DES_DECRYPT);
 
   for (i = 0; i < data_length; i++) {
     data[i] = internal_data[i];
   } 
   free(internal_data);
-  return NAEEM_RESULT_SUCCESS;
+  return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
 }
 
 
-NAEEM_result
-NAEEM_crypto__3DES_cbc_encrypt (NAEEM_data data,
-                                NAEEM_uint32 data_length,
-                                NAEEM_data cipher,
-                                NAEEM_uint32_ptr cipher_length_ptr,
-                                NAEEM_DES_key first_key,
-                                NAEEM_DES_key second_key,
-                                NAEEM_DES_key thrid_key) {
-  NAEEM_uint32 i = 0;
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__crypto__3DES_cbc_encrypt (ORG_LABCRYPTO_ABETTOR_data data,
+                                ORG_LABCRYPTO_ABETTOR_uint32 data_length,
+                                ORG_LABCRYPTO_ABETTOR_data cipher,
+                                ORG_LABCRYPTO_ABETTOR_uint32_ptr cipher_length_ptr,
+                                ORG_LABCRYPTO_ABETTOR_DES_key first_key,
+                                ORG_LABCRYPTO_ABETTOR_DES_key second_key,
+                                ORG_LABCRYPTO_ABETTOR_DES_key thrid_key) {
+  ORG_LABCRYPTO_ABETTOR_uint32 i = 0;
   DES_cblock cb1;
   DES_cblock cb2;
   DES_cblock cb3;
   DES_cblock iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
   DES_key_schedule ks1, ks2, ks3;
-  NAEEM_uint32 cipher_length;
-  NAEEM_data internal_cipher;
+  ORG_LABCRYPTO_ABETTOR_uint32 cipher_length;
+  ORG_LABCRYPTO_ABETTOR_data internal_cipher;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
     cb1[i] = first_key[i];
   }
@@ -161,40 +161,40 @@ NAEEM_crypto__3DES_cbc_encrypt (NAEEM_data data,
   if (DES_set_key_checked(&cb1, &ks1) ||
       DES_set_key_checked(&cb2, &ks2) ||
       DES_set_key_checked(&cb3, &ks3)) {
-      return NAEEM_RESULT_INVALID_DES_KEY;
+      return ORG_LABCRYPTO_ABETTOR_RESULT__INVALID_DES_KEY;
    }
    cipher_length = (data_length / DES_KEY_LENGTH + ((data_length % DES_KEY_LENGTH) == 0 ? 0 : 1)) * 8;
    if (cipher_length_ptr) {
      *cipher_length_ptr = cipher_length;
    }
-   internal_cipher = (NAEEM_data)malloc(cipher_length * sizeof(NAEEM_byte));
-   memset(internal_cipher, 0x00, cipher_length * sizeof(NAEEM_byte));
+   internal_cipher = (ORG_LABCRYPTO_ABETTOR_data)malloc(cipher_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+   memset(internal_cipher, 0x00, cipher_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
    DES_ede3_cbc_encrypt(data, internal_cipher, data_length, &ks1, &ks2, &ks3, &iv, DES_ENCRYPT);
  
   for (i = 0; i < cipher_length; i++) {
     cipher[i] = internal_cipher[i];
   } 
   free(internal_cipher);
-  return NAEEM_RESULT_SUCCESS;
+  return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
 }
 
 
-NAEEM_result
-NAEEM_crypto__3DES_cbc_decrypt (NAEEM_data cipher,
-                                NAEEM_uint32 cipher_length,
-                                NAEEM_data data,
-                                NAEEM_uint32_ptr data_length_ptr,
-                                NAEEM_DES_key first_key,
-                                NAEEM_DES_key second_key,
-                                NAEEM_DES_key thrid_key) {
-  NAEEM_uint32 i = 0;
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__crypto__3DES_cbc_decrypt (ORG_LABCRYPTO_ABETTOR_data cipher,
+                                ORG_LABCRYPTO_ABETTOR_uint32 cipher_length,
+                                ORG_LABCRYPTO_ABETTOR_data data,
+                                ORG_LABCRYPTO_ABETTOR_uint32_ptr data_length_ptr,
+                                ORG_LABCRYPTO_ABETTOR_DES_key first_key,
+                                ORG_LABCRYPTO_ABETTOR_DES_key second_key,
+                                ORG_LABCRYPTO_ABETTOR_DES_key thrid_key) {
+  ORG_LABCRYPTO_ABETTOR_uint32 i = 0;
   DES_cblock cb1;
   DES_cblock cb2;
   DES_cblock cb3;
   DES_cblock iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
   DES_key_schedule ks1,ks2,ks3;
-  NAEEM_uint32 data_length;
-  NAEEM_data internal_data;
+  ORG_LABCRYPTO_ABETTOR_uint32 data_length;
+  ORG_LABCRYPTO_ABETTOR_data internal_data;
   for (i = 0; i < DES_KEY_LENGTH; i++) {
     cb1[i] = first_key[i];
   }
@@ -210,13 +210,13 @@ NAEEM_crypto__3DES_cbc_decrypt (NAEEM_data cipher,
   if (DES_set_key_checked(&cb1, &ks1) ||
       DES_set_key_checked(&cb2, &ks2) ||
       DES_set_key_checked(&cb3, &ks3)) {
-      return NAEEM_RESULT_INVALID_DES_KEY;
+      return ORG_LABCRYPTO_ABETTOR_RESULT__INVALID_DES_KEY;
    }
    data_length = cipher_length;
    if (data_length_ptr) {
      *data_length_ptr = data_length;
    }
-   internal_data = (NAEEM_data)malloc(data_length * sizeof(NAEEM_byte));
+   internal_data = (ORG_LABCRYPTO_ABETTOR_data)malloc(data_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
    memset(internal_data, 0x00, data_length);
    DES_ede3_cbc_encrypt(cipher, internal_data, cipher_length, &ks1, &ks2, &ks3, &iv, DES_DECRYPT);
  
@@ -224,23 +224,23 @@ NAEEM_crypto__3DES_cbc_decrypt (NAEEM_data cipher,
     data[i] = internal_data[i];
   } 
   free(internal_data);
-  return NAEEM_RESULT_SUCCESS;
+  return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
 }
 
 
-NAEEM_result
-NAEEM_crypto__MAC_v3 (NAEEM_data message,
-                      NAEEM_uint32 message_length,
-                      NAEEM_data mac,
-                      NAEEM_data initial_check_block,
-                      NAEEM_bool padded,
-                      NAEEM_DES_key key1,
-                      NAEEM_DES_key key2) {
-  // TODO (kamran) Use NAEEM_util_pad function.
-  NAEEM_uint32 i = 0, j = 0;
-  NAEEM_byte check_block[8];
-  NAEEM_byte decipher[8];
-  NAEEM_test__assert((message_length % 8) == 0, "Message length is not a product of 8 bytes.");
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__crypto__MAC_v3 (ORG_LABCRYPTO_ABETTOR_data message,
+                      ORG_LABCRYPTO_ABETTOR_uint32 message_length,
+                      ORG_LABCRYPTO_ABETTOR_data mac,
+                      ORG_LABCRYPTO_ABETTOR_data initial_check_block,
+                      ORG_LABCRYPTO_ABETTOR_bool padded,
+                      ORG_LABCRYPTO_ABETTOR_DES_key key1,
+                      ORG_LABCRYPTO_ABETTOR_DES_key key2) {
+  // TODO (kamran) Use ORG_LABCRYPTO_ABETTOR__util_pad function.
+  ORG_LABCRYPTO_ABETTOR_uint32 i = 0, j = 0;
+  ORG_LABCRYPTO_ABETTOR_byte check_block[8];
+  ORG_LABCRYPTO_ABETTOR_byte decipher[8];
+  ORG_LABCRYPTO_ABETTOR__test__assert((message_length % 8) == 0, "Message length is not a product of 8 bytes.");
   if (initial_check_block) {
     for (i = 0; i < 8; i++) {
       check_block[i] = initial_check_block[i];
@@ -252,100 +252,100 @@ NAEEM_crypto__MAC_v3 (NAEEM_data message,
   }
   i = 0;
   while (i < message_length) {
-    NAEEM_byte block[8];
-	NAEEM_byte cipher[8];
-    NAEEM_util__copy_array(block, message, i, 8);
-    NAEEM_util__xor(check_block, 8, block);
-    NAEEM_crypto__DES_cbc_encrypt(check_block, 8, cipher, NULL, key1);
+    ORG_LABCRYPTO_ABETTOR_byte block[8];
+	ORG_LABCRYPTO_ABETTOR_byte cipher[8];
+    ORG_LABCRYPTO_ABETTOR__util__copy_array(block, message, i, 8);
+    ORG_LABCRYPTO_ABETTOR__util__xor(check_block, 8, block);
+    ORG_LABCRYPTO_ABETTOR__crypto__DES_cbc_encrypt(check_block, 8, cipher, NULL, key1);
     for (j = 0; j < 8; j++) {
       check_block[j] = cipher[j];
     }
     i += 8;
   }
   if (!padded) {
-    NAEEM_byte padding[8];
-	NAEEM_byte cipher[8];
+    ORG_LABCRYPTO_ABETTOR_byte padding[8];
+	ORG_LABCRYPTO_ABETTOR_byte cipher[8];
     padding[0] = 0x80;
     padding[1] = padding[2] = padding[3] = padding[4] = padding[5] = padding[6] = padding[7] = 0x00;
-    NAEEM_util__xor(check_block, 8, padding);
-    NAEEM_crypto__DES_cbc_encrypt(check_block, 8, cipher, NULL, key1);  
+    ORG_LABCRYPTO_ABETTOR__util__xor(check_block, 8, padding);
+    ORG_LABCRYPTO_ABETTOR__crypto__DES_cbc_encrypt(check_block, 8, cipher, NULL, key1);  
     for (j = 0; j < 8; j++) {
       check_block[j] = cipher[j];
     }
   }
-  NAEEM_crypto__DES_cbc_decrypt(check_block, 8, decipher, NULL, key2);
+  ORG_LABCRYPTO_ABETTOR__crypto__DES_cbc_decrypt(check_block, 8, decipher, NULL, key2);
   for (j = 0; j < 8; j++) {
     check_block[j] = decipher[j];
   }
-  // NAEEM_util_print_array("DECIPHER    ", check_block, 8); 
-  NAEEM_crypto__DES_cbc_encrypt(check_block, 8, mac, NULL, key1);
-  // NAEEM_util_print_array("CIPHER    ", check_block, 8);
-  return NAEEM_RESULT_SUCCESS;
+  // ORG_LABCRYPTO_ABETTOR__util_print_array("DECIPHER    ", check_block, 8); 
+  ORG_LABCRYPTO_ABETTOR__crypto__DES_cbc_encrypt(check_block, 8, mac, NULL, key1);
+  // ORG_LABCRYPTO_ABETTOR__util_print_array("CIPHER    ", check_block, 8);
+  return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
 }
 
-NAEEM_void
-NAEEM_crypto__generate_RSA (NAEEM_uint32 modulus_size,
-                            NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__crypto__generate_RSA (ORG_LABCRYPTO_ABETTOR_uint32 modulus_size,
+                            ORG_LABCRYPTO_ABETTOR__crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
   RSA *keypair = RSA_generate_key(modulus_size, 65537, NULL, NULL);
-  NAEEM_data buffer = (NAEEM_data)malloc(modulus_size * sizeof(NAEEM_byte));
-  NAEEM_uint32 copied = 0;
+  ORG_LABCRYPTO_ABETTOR_data buffer = (ORG_LABCRYPTO_ABETTOR_data)malloc(modulus_size * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+  ORG_LABCRYPTO_ABETTOR_uint32 copied = 0;
 
   copied = BN_bn2bin(keypair->n, buffer);
   RSA_key_pair_ptr->N_length = copied;
-  RSA_key_pair_ptr->N_data = malloc(RSA_key_pair_ptr->N_length * sizeof(NAEEM_byte));
-  NAEEM_util__copy_array(RSA_key_pair_ptr->N_data, buffer, 0, RSA_key_pair_ptr->N_length);
-  // NAEEM_util__print_array("N           ", RSA_key_pair_ptr->N_data, RSA_key_pair_ptr->N_length);
+  RSA_key_pair_ptr->N_data = malloc(RSA_key_pair_ptr->N_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+  ORG_LABCRYPTO_ABETTOR__util__copy_array(RSA_key_pair_ptr->N_data, buffer, 0, RSA_key_pair_ptr->N_length);
+  // ORG_LABCRYPTO_ABETTOR__util__print_array("N           ", RSA_key_pair_ptr->N_data, RSA_key_pair_ptr->N_length);
 
   copied = BN_bn2bin(keypair->e, buffer);
   RSA_key_pair_ptr->E_length = copied;
-  RSA_key_pair_ptr->E_data = malloc(RSA_key_pair_ptr->E_length * sizeof(NAEEM_byte));
-  NAEEM_util__copy_array(RSA_key_pair_ptr->E_data, buffer, 0, RSA_key_pair_ptr->E_length);
-  // NAEEM_util__print_array("E           ", RSA_key_pair_ptr->E_data, RSA_key_pair_ptr->E_length);
+  RSA_key_pair_ptr->E_data = malloc(RSA_key_pair_ptr->E_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+  ORG_LABCRYPTO_ABETTOR__util__copy_array(RSA_key_pair_ptr->E_data, buffer, 0, RSA_key_pair_ptr->E_length);
+  // ORG_LABCRYPTO_ABETTOR__util__print_array("E           ", RSA_key_pair_ptr->E_data, RSA_key_pair_ptr->E_length);
 
   copied = BN_bn2bin(keypair->d, buffer);
   RSA_key_pair_ptr->D_length = copied;
-  RSA_key_pair_ptr->D_data = malloc(RSA_key_pair_ptr->D_length * sizeof(NAEEM_byte));
-  NAEEM_util__copy_array(RSA_key_pair_ptr->D_data, buffer, 0, RSA_key_pair_ptr->D_length);
-  // NAEEM_util__print_array("D           ", RSA_key_pair_ptr->D_data, RSA_key_pair_ptr->D_length);
+  RSA_key_pair_ptr->D_data = malloc(RSA_key_pair_ptr->D_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+  ORG_LABCRYPTO_ABETTOR__util__copy_array(RSA_key_pair_ptr->D_data, buffer, 0, RSA_key_pair_ptr->D_length);
+  // ORG_LABCRYPTO_ABETTOR__util__print_array("D           ", RSA_key_pair_ptr->D_data, RSA_key_pair_ptr->D_length);
 
   copied = BN_bn2bin(keypair->p, buffer);
   RSA_key_pair_ptr->P_length = copied;
-  RSA_key_pair_ptr->P_data = malloc(RSA_key_pair_ptr->P_length * sizeof(NAEEM_byte));
-  NAEEM_util__copy_array(RSA_key_pair_ptr->P_data, buffer, 0, RSA_key_pair_ptr->P_length);
-  // NAEEM_util__print_array("P           ", RSA_key_pair_ptr->P_data, RSA_key_pair_ptr->P_length);
+  RSA_key_pair_ptr->P_data = malloc(RSA_key_pair_ptr->P_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+  ORG_LABCRYPTO_ABETTOR__util__copy_array(RSA_key_pair_ptr->P_data, buffer, 0, RSA_key_pair_ptr->P_length);
+  // ORG_LABCRYPTO_ABETTOR__util__print_array("P           ", RSA_key_pair_ptr->P_data, RSA_key_pair_ptr->P_length);
 
   copied = BN_bn2bin(keypair->q, buffer);
   RSA_key_pair_ptr->Q_length = copied;
-  RSA_key_pair_ptr->Q_data = malloc(RSA_key_pair_ptr->Q_length * sizeof(NAEEM_byte));
-  NAEEM_util__copy_array(RSA_key_pair_ptr->Q_data, buffer, 0, RSA_key_pair_ptr->Q_length);
-  // NAEEM_util__print_array("Q           ", RSA_key_pair_ptr->Q_data, RSA_key_pair_ptr->Q_length);
+  RSA_key_pair_ptr->Q_data = malloc(RSA_key_pair_ptr->Q_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+  ORG_LABCRYPTO_ABETTOR__util__copy_array(RSA_key_pair_ptr->Q_data, buffer, 0, RSA_key_pair_ptr->Q_length);
+  // ORG_LABCRYPTO_ABETTOR__util__print_array("Q           ", RSA_key_pair_ptr->Q_data, RSA_key_pair_ptr->Q_length);
 
   copied = BN_bn2bin(keypair->dmp1, buffer);
   RSA_key_pair_ptr->EXP1_length = copied;
-  RSA_key_pair_ptr->EXP1_data = malloc(RSA_key_pair_ptr->EXP1_length * sizeof(NAEEM_byte));
-  NAEEM_util__copy_array(RSA_key_pair_ptr->EXP1_data, buffer, 0, RSA_key_pair_ptr->EXP1_length);
-  // NAEEM_util__print_array("EXP1        ", RSA_key_pair_ptr->EXP1_data, RSA_key_pair_ptr->EXP1_length);
+  RSA_key_pair_ptr->EXP1_data = malloc(RSA_key_pair_ptr->EXP1_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+  ORG_LABCRYPTO_ABETTOR__util__copy_array(RSA_key_pair_ptr->EXP1_data, buffer, 0, RSA_key_pair_ptr->EXP1_length);
+  // ORG_LABCRYPTO_ABETTOR__util__print_array("EXP1        ", RSA_key_pair_ptr->EXP1_data, RSA_key_pair_ptr->EXP1_length);
 
   copied = BN_bn2bin(keypair->dmq1, buffer);
   RSA_key_pair_ptr->EXP2_length = copied;
-  RSA_key_pair_ptr->EXP2_data = malloc(RSA_key_pair_ptr->EXP2_length * sizeof(NAEEM_byte));
-  NAEEM_util__copy_array(RSA_key_pair_ptr->EXP2_data, buffer, 0, RSA_key_pair_ptr->EXP2_length);
-  // NAEEM_util__print_array("EXP2        ", RSA_key_pair_ptr->EXP2_data, RSA_key_pair_ptr->EXP2_length);
+  RSA_key_pair_ptr->EXP2_data = malloc(RSA_key_pair_ptr->EXP2_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+  ORG_LABCRYPTO_ABETTOR__util__copy_array(RSA_key_pair_ptr->EXP2_data, buffer, 0, RSA_key_pair_ptr->EXP2_length);
+  // ORG_LABCRYPTO_ABETTOR__util__print_array("EXP2        ", RSA_key_pair_ptr->EXP2_data, RSA_key_pair_ptr->EXP2_length);
 
   copied = BN_bn2bin(keypair->iqmp, buffer);
   RSA_key_pair_ptr->C_length = copied;
-  RSA_key_pair_ptr->C_data = malloc(RSA_key_pair_ptr->C_length * sizeof(NAEEM_byte));
-  NAEEM_util__copy_array(RSA_key_pair_ptr->C_data, buffer, 0, RSA_key_pair_ptr->C_length);
-  // NAEEM_util__print_array("C           ", RSA_key_pair_ptr->C_data, RSA_key_pair_ptr->C_length);
+  RSA_key_pair_ptr->C_data = malloc(RSA_key_pair_ptr->C_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+  ORG_LABCRYPTO_ABETTOR__util__copy_array(RSA_key_pair_ptr->C_data, buffer, 0, RSA_key_pair_ptr->C_length);
+  // ORG_LABCRYPTO_ABETTOR__util__print_array("C           ", RSA_key_pair_ptr->C_data, RSA_key_pair_ptr->C_length);
 
-  NAEEM_crypto__calculate_public_key(RSA_key_pair_ptr);
+  ORG_LABCRYPTO_ABETTOR__crypto__calculate_public_key(RSA_key_pair_ptr);
   RSA_free(keypair);
   free(buffer);
 }
 
-NAEEM_void
-NAEEM_crypto__free_RSA_key (
-  NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__crypto__free_RSA_key (
+  ORG_LABCRYPTO_ABETTOR__crypto__RSA_key_pair_ptr RSA_key_pair_ptr
 ) {
   free(RSA_key_pair_ptr->N_data);
   free(RSA_key_pair_ptr->E_data);
@@ -358,19 +358,19 @@ NAEEM_crypto__free_RSA_key (
   free(RSA_key_pair_ptr->public_key);
 }
 
-NAEEM_void
-NAEEM_crypto__calculate_public_key(NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
-  NAEEM_byte n_and_e[500];
-  NAEEM_counter c = 0, i = 0;
-  NAEEM_length n_and_e_length;
-  NAEEM_length n_and_e_wrapper_data_length;
-  NAEEM_length n_and_e_wrapper2_data_length;
-  NAEEM_length n_and_e_wrapper3_data_length;
-  NAEEM_length public_key_data_length;
-  NAEEM_byte n_and_e_wrapper_data[500];
-  NAEEM_byte n_and_e_wrapper2_data[500];
-  NAEEM_byte n_and_e_wrapper3_data[500];
-  NAEEM_byte public_key_data[500];
+ORG_LABCRYPTO_ABETTOR_void
+ORG_LABCRYPTO_ABETTOR__crypto__calculate_public_key(ORG_LABCRYPTO_ABETTOR__crypto__RSA_key_pair_ptr RSA_key_pair_ptr) {
+  ORG_LABCRYPTO_ABETTOR_byte n_and_e[500];
+  ORG_LABCRYPTO_ABETTOR_counter c = 0, i = 0;
+  ORG_LABCRYPTO_ABETTOR_length n_and_e_length;
+  ORG_LABCRYPTO_ABETTOR_length n_and_e_wrapper_data_length;
+  ORG_LABCRYPTO_ABETTOR_length n_and_e_wrapper2_data_length;
+  ORG_LABCRYPTO_ABETTOR_length n_and_e_wrapper3_data_length;
+  ORG_LABCRYPTO_ABETTOR_length public_key_data_length;
+  ORG_LABCRYPTO_ABETTOR_byte n_and_e_wrapper_data[500];
+  ORG_LABCRYPTO_ABETTOR_byte n_and_e_wrapper2_data[500];
+  ORG_LABCRYPTO_ABETTOR_byte n_and_e_wrapper3_data[500];
+  ORG_LABCRYPTO_ABETTOR_byte public_key_data[500];
   n_and_e[c++] = 0x02;
   if ((RSA_key_pair_ptr->N_length + 1) > 255) {
     n_and_e[c++] = 0x82;
@@ -459,6 +459,6 @@ NAEEM_crypto__calculate_public_key(NAEEM_crypto__RSA_key_pair_ptr RSA_key_pair_p
   public_key_data_length = c;
   //--------------------------------
   RSA_key_pair_ptr->public_key_length = public_key_data_length;
-  RSA_key_pair_ptr->public_key = (NAEEM_data)malloc(RSA_key_pair_ptr->public_key_length * sizeof(NAEEM_byte));
-  NAEEM_util__copy_array(RSA_key_pair_ptr->public_key, public_key_data, 0, RSA_key_pair_ptr->public_key_length);
+  RSA_key_pair_ptr->public_key = (ORG_LABCRYPTO_ABETTOR_data)malloc(RSA_key_pair_ptr->public_key_length * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
+  ORG_LABCRYPTO_ABETTOR__util__copy_array(RSA_key_pair_ptr->public_key, public_key_data, 0, RSA_key_pair_ptr->public_key_length);
 }
