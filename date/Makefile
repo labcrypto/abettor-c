@@ -22,14 +22,14 @@
 #
 
 PWD=$(shell pwd)
-C = gcc -g -Wall -Wno-pointer-sign -Wno-comment -fPIC -I../../corelibs-api/include
+C = gcc -g -Wall -Wno-pointer-sign -Wno-comment -fPIC -I../../LabCryptoOrg-abettor-c-api/include
 CC = g++ -g -Wall
 CP = cp -rfv
 AR = ar -cq
 CFLAGS =
 LIBS =
 LIB_DIR=.lib
-API_LIB_DIR=../../corelibs-api/lib
+API_LIB_DIR=../../LabCryptoOrg-abettor-c-api/lib
 SYMLINK = ln -s
 RM = rm -rfv
 
@@ -43,7 +43,7 @@ TEST_OBJS = $(TEST_SRCS:.c=.o)
 OBJECTS = $(addprefix $(LIB_DIR)/, $(OBJS))
 TEST_OBJECTS = $(addprefix $(LIB_DIR)/, $(TEST_OBJS))
 
-LIB_NAME = libnaeem-date
+LIB_NAME = libabettor-date
 MAJOR_VERSION = 1
 MINOR_VERSION = 0
 
