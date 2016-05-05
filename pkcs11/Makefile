@@ -29,7 +29,7 @@ AR = ar -cq
 CFLAGS =
 LIBS = -ldl
 LIB_DIR=.lib
-API_LIB_DIR=../../LabCryptoOrg-abettor-c-api/lib
+API_LIB_DIR=../../LabCryptoOrg-abettor-c-api/lib/gcc-amd64
 SYMLINK = ln -s
 RM = rm -rfv
 
