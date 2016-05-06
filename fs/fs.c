@@ -367,7 +367,7 @@ ORG_LABCRYPTO_ABETTOR__fs__enum_file_names (
       }
     }
     if (i != c) {
-      printf("libnaeem-os::ORG_LABCRYPTO_ABETTOR__fs__enum_file_names: WARNING > Inconsistency in number of files.");
+      printf("libabettor-fs::ORG_LABCRYPTO_ABETTOR__fs__enum_file_names: WARNING > Inconsistency in number of files.");
     }
     closedir(d);
   } else {
@@ -471,7 +471,7 @@ ORG_LABCRYPTO_ABETTOR__fs__copy_file (
     close(fd_from);
     return TRUE;
   } else {
-    printf("libnaeem-os::ORG_LABCRYPTO_ABETTOR__fs__copy_file: WARNING > Inconsistency in copy operation.");
+    printf("libabettor-fs::ORG_LABCRYPTO_ABETTOR__fs__copy_file: WARNING > Inconsistency in copy operation.");
   }
   return FALSE;
 #endif
