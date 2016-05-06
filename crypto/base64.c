@@ -21,7 +21,19 @@
  *  SOFTWARE.
  */
  
+#ifdef _MSC_VER
+typedef __int8 int8_t;
+typedef unsigned __int8 uint8_t;
+typedef __int16 int16_t;
+typedef unsigned __int16 uint16_t;
+typedef __int32 int32_t;
+typedef unsigned __int32 uint32_t;
+typedef __int64 int64_t;
+typedef unsigned __int64 uint64_t;
+#else
 #include <stdint.h>
+#endif
+
 #include <stdlib.h>
 
 #include <org/labcrypto/abettor/base64.h>
@@ -48,7 +60,6 @@ __base64_setup_decoding_table__() {
     decoding_table[(ORG_LABCRYPTO_ABETTOR_byte) encoding_table[i]] = i;
   }
 }
-
 
 void 
 __base64_cleanup__() {

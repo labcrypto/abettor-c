@@ -322,6 +322,7 @@ ORG_LABCRYPTO_ABETTOR__fs__delete_file2 (
 ) {
 #ifdef _WIN32
   // TODO
+  return FALSE;
 #else
   if (unlink(file_path) == 0) {
     return TRUE;
@@ -426,11 +427,11 @@ ORG_LABCRYPTO_ABETTOR__fs__copy_file (
   ORG_LABCRYPTO_ABETTOR_string second_filename
 ) {
   ORG_LABCRYPTO_ABETTOR_char path1[512];
+  ORG_LABCRYPTO_ABETTOR_char path2[512];
   strcpy(path1, "");
   strcat(path1, first_base_dir_path);
   strcat(path1, "/");
   strcat(path1, first_filename);
-  ORG_LABCRYPTO_ABETTOR_char path2[512];
   strcpy(path2, "");
   strcat(path2, second_base_dir_path);
   strcat(path2, "/");
@@ -441,6 +442,7 @@ ORG_LABCRYPTO_ABETTOR__fs__copy_file (
   }
 #ifdef _WIN32
   // TODO
+  return FALSE;
 #else
   int fd_to, fd_from;
   char buf[4096];

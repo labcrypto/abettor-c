@@ -38,7 +38,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\..\external-apis\openssl\include&quot;;&quot;..\..\..\corelibs-api\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\..\external-apis\openssl\include&quot;;&quot;..\..\..\LabCryptoOrg-abettor-c-api\include&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE,_DEBUG"
 				RuntimeLibrary="3"
 			/>
@@ -95,7 +95,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\..\external-apis\openssl\include&quot;;&quot;..\..\..\corelibs-api\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\..\external-apis\openssl\include&quot;;&quot;..\..\..\LabCryptoOrg-abettor-c-api\include&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="0"
 			/>
@@ -137,11 +137,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\crypto\crypto.c"
+				RelativePath="..\..\crypto\base64.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\crypto\crypto_tests.c"
+				RelativePath="..\..\crypto\crypto.c"
 				>
 			</File>
 		</Filter>
@@ -151,11 +151,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\corelibs-api\include\naeem\crypto.h"
+				RelativePath="..\..\..\LabCryptoOrg-abettor-c-api\include\org\labcrypto\abettor\base64.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\corelibs-api\include\naeem\crypto_tests.h"
+				RelativePath="..\..\..\LabCryptoOrg-abettor-c-api\include\org\labcrypto\abettor\crypto.h"
 				>
 			</File>
 		</Filter>

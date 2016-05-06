@@ -38,7 +38,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\..\corelibs-api\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\..\LabCryptoOrg-abettor-c-api\include&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE,_DEBUG"
 				RuntimeLibrary="3"
 			/>
@@ -95,7 +95,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\..\corelibs-api\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\..\LabCryptoOrg-abettor-c-api\include&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="0"
 			/>
@@ -147,7 +147,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\corelibs-api\include\naeem\date.h"
+				RelativePath="..\..\..\LabCryptoOrg-abettor-c-api\include\org\labcrypto\abettor\date.h"
 				>
 			</File>
 		</Filter>

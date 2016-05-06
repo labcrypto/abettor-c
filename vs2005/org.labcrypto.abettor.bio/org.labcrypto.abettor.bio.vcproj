@@ -38,7 +38,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\..\corelibs-api\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\..\LabCryptoOrg-abettor-c-api\include&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE,_DEBUG"
 				RuntimeLibrary="3"
 			/>
@@ -95,7 +95,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\..\corelibs-api\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\..\LabCryptoOrg-abettor-c-api\include&quot;"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="0"
 			/>
@@ -155,22 +155,22 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\corelibs-api\include\naeem\types.h"
+				RelativePath="..\..\..\LabCryptoOrg-abettor-c-api\include\org\labcrypto\abettor\types.h"
 				>
 			</File>
 			<Filter
 				Name="bio"
 				>
 				<File
-					RelativePath="..\..\..\corelibs-api\include\naeem\bio\cbeff.h"
+					RelativePath="..\..\..\LabCryptoOrg-abettor-c-api\include\org\labcrypto\abettor\bio\cbeff.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\corelibs-api\include\naeem\bio\face.h"
+					RelativePath="..\..\..\LabCryptoOrg-abettor-c-api\include\org\labcrypto\abettor\bio\face.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\corelibs-api\include\naeem\bio\finger.h"
+					RelativePath="..\..\..\LabCryptoOrg-abettor-c-api\include\org\labcrypto\abettor\bio\finger.h"
 					>
 				</File>
 			</Filter>
