@@ -84,7 +84,7 @@ ORG_LABCRYPTO_ABETTOR__fs__read_file (
 
 
 ORG_LABCRYPTO_ABETTOR_void
-ORG_LABCRYPTO_ABETTOR__fs__read_file_with_path (
+ORG_LABCRYPTO_ABETTOR__fs__read_file_with_full_path (
   ORG_LABCRYPTO_ABETTOR_path file_path, 
   ORG_LABCRYPTO_ABETTOR_data_ptr data, 
   ORG_LABCRYPTO_ABETTOR_uint32_ptr data_length
