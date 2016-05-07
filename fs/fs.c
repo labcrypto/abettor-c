@@ -108,7 +108,7 @@ ORG_LABCRYPTO_ABETTOR__fs__read_file_into_buffer (
   ORG_LABCRYPTO_ABETTOR_counter i = 0;
   ORG_LABCRYPTO_ABETTOR_data data;
   ORG_LABCRYPTO_ABETTOR_length data_length;
-  ORG_LABCRYPTO_ABETTOR__fs__read_file_with_path(file_path, &data, &data_length);
+  ORG_LABCRYPTO_ABETTOR__fs__read_file_with_full_path(file_path, &data, &data_length);
   if (data_length == 0) {
     return;
   }
