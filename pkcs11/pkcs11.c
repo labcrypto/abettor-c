@@ -83,6 +83,17 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__initialize (
   return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
 }
 
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__finalize (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr function_list_ptr
+) {
+  ORG_LABCRYPTO_ABETTOR__pkcs11__pkcs11_result result = function_list_ptr->C_Finalize(NULL);
+  if (result) {
+    printf("Error in init: C_Initialize failed %s\n", get_pkcs11_error_name(result));
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_INITIALIZE_FAILED;
+  }
+  return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
+}
 
 ORG_LABCRYPTO_ABETTOR_result
 ORG_LABCRYPTO_ABETTOR__pkcs11__get_slots (
