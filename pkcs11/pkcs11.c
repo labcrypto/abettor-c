@@ -183,12 +183,36 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__login (
   ORG_LABCRYPTO_ABETTOR__pkcs11__session session,
   ORG_LABCRYPTO_ABETTOR_password password
 ) {
-  ORG_LABCRYPTO_ABETTOR__pkcs11__pkcs11_result result = function_list_ptr->C_Login(session, 
-                                                                  CKU_USER, 
-                                                                  password,
-                                                                  strlen(password));
+  ORG_LABCRYPTO_ABETTOR__pkcs11__pkcs11_result result = 
+    function_list_ptr->C_Login (
+      session, 
+      CKU_USER, 
+      password,
+      strlen(password)
+    );
   if (result) {
     printf("Error in init: C_Login failed %s\n", get_pkcs11_error_name(result));
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_LOGIN_FAILED;
+  }
+  return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
+}
+
+
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__login_as_SO (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr function_list_ptr,
+  ORG_LABCRYPTO_ABETTOR__pkcs11__session session,
+  ORG_LABCRYPTO_ABETTOR_password password
+) {
+  ORG_LABCRYPTO_ABETTOR__pkcs11__pkcs11_result result = 
+    function_list_ptr->C_Login (
+      session, 
+      CKU_SO, 
+      password,
+      strlen(password)
+    );
+  if (result) {
+    printf("Error in init: C_Login as SO failed %s\n", get_pkcs11_error_name(result));
     return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_LOGIN_FAILED;
   }
   return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
@@ -359,5 +383,66 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__encrypt_des3 (
   *cipher = (ORG_LABCRYPTO_ABETTOR_data)malloc(8 * sizeof(ORG_LABCRYPTO_ABETTOR_byte));
   *cipher_length_ptr = 8;
   ORG_LABCRYPTO_ABETTOR__util__copy_array(*cipher, temp, 0, 8);
+  return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
+}
+
+
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__change_SO_pin (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr function_list_ptr,
+  ORG_LABCRYPTO_ABETTOR__pkcs11__slot slot,
+  ORG_LABCRYPTO_ABETTOR_password old_password,
+  ORG_LABCRYPTO_ABETTOR_password new_password
+) {
+  ORG_LABCRYPTO_ABETTOR__pkcs11__session session;
+  ORG_LABCRYPTO_ABETTOR__pkcs11__pkcs11_result result = 
+    function_list_ptr->C_OpenSession (
+      slot.id, 
+      CKF_RW_SESSION | CKF_SERIAL_SESSION,
+      NULL,
+      NULL,
+      &session
+    );
+  if (result) {
+    printf("Error in init: C_OpenSession failed %s\n", get_pkcs11_error_name(result));
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_OPEN_SESSION_FAILED;
+  }
+  result = 
+    function_list_ptr->C_Login (
+      session, 
+      CKU_SO, 
+      old_password,
+      strlen(old_password)
+    );
+  if (result) {
+    printf("Error in init: C_Login as SO failed %s\n", get_pkcs11_error_name(result));
+    function_list_ptr->C_CloseSession(session);
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_LOGIN_FAILED;
+  }
+  result =
+    function_list_ptr->C_SetPIN (
+      session,
+      old_password,
+      strlen(old_password),
+      new_password,
+      strlen(new_password)
+    );
+  if (result) {
+    printf("Error in init: C_SetPin failed %s\n", get_pkcs11_error_name(result));
+    function_list_ptr->C_Logout(session);
+    function_list_ptr->C_CloseSession(session);
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_SET_PIN_FAILED;
+  }
+  result = function_list_ptr->C_Logout(session);
+  if (result) {
+    printf("Error in init: C_Logout failed %s\n", get_pkcs11_error_name(result));
+    function_list_ptr->C_CloseSession(session);
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_LOGOUT_FAILED;
+  }
+  result = function_list_ptr->C_CloseSession(session);
+  if (result) {
+    printf("Error in init: C_CloseSession failed %s\n", get_pkcs11_error_name(result));
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_CLOSE_SESSION_FAILED;
+  }
   return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
 }

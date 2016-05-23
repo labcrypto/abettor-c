@@ -328,6 +328,9 @@ ORG_LABCRYPTO_ABETTOR_error_get_string (
     case ORG_LABCRYPTO_ABETTOR_RESULT___REMOTE_SIGN_FAILED:
       strcpy(*buffer, "Remote Sign failed.");
       break;
+    case ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_SET_PIN_FAILED:
+      strcpy(*bufferm "Set Pin failed.");
+      break;
   }
   switch(error_code) {
     case ORG_LABCRYPTO_ABETTOR_RESULT__APDU_STATUS__63_00_VERIFICATION_FAILED:
