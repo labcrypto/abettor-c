@@ -329,7 +329,10 @@ ORG_LABCRYPTO_ABETTOR_error_get_string (
       strcpy(*buffer, "Remote Sign failed.");
       break;
     case ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_SET_PIN_FAILED:
-      strcpy(*bufferm "Set Pin failed.");
+      strcpy(*bufferm "C_SetPIN failed.");
+      break;
+    case ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_CREATE_OBJECT_FAILED:
+      strcpy(*bufferm "C_CreateObject failed.");
       break;
   }
   switch(error_code) {
