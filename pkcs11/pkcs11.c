@@ -668,7 +668,6 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__list_of_3DES_keys (
     function_list_ptr->C_CloseSession(session);
     return 4;
   }
-  
   result = function_list_ptr->C_FindObjects(session, objects, 100, &num_objects);
   if (result) {
     printf("Error in init: C_FindObjects failed %s\n", get_pkcs11_error_name(result));
@@ -774,7 +773,6 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__delete_all_3DES_keys (
     function_list_ptr->C_CloseSession(session);
     return 4;
   }
-  
   result = function_list_ptr->C_FindObjects(session, objects, 100, &num_objects);
   if (result) {
     printf("Error in init: C_FindObjects failed %s\n", get_pkcs11_error_name(result));
@@ -821,8 +819,92 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__3DES_key_exists (
   ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr function_list_ptr,
   ORG_LABCRYPTO_ABETTOR__pkcs11__slot slot,
   ORG_LABCRYPTO_ABETTOR_password user_password,
-  ORG_LABCRYPTO_ABETTOR_string key_name,
-  ORG_LABCRYPTO_ABETTOR_bool_ptr result
+  ORG_LABCRYPTO_ABETTOR_string label,
+  ORG_LABCRYPTO_ABETTOR_bool_ptr exists
 ) {
-  return 0;
+  CK_ATTRIBUTE templates[3];
+  CK_ULONG num_objects = 100;
+  CK_OBJECT_HANDLE objects[100];
+  ORG_LABCRYPTO_ABETTOR__pkcs11__session session;
+  ORG_LABCRYPTO_ABETTOR__pkcs11__pkcs11_result result = 
+    function_list_ptr->C_OpenSession (
+      slot.id, 
+      CKF_RW_SESSION | CKF_SERIAL_SESSION,
+      NULL,
+      NULL,
+      &session
+    );
+  if (result) {
+    printf("Error in init: C_OpenSession failed %s\n", get_pkcs11_error_name(result));
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_OPEN_SESSION_FAILED;
+  }
+  result = 
+    function_list_ptr->C_Login (
+      session, 
+      CKU_USER, 
+      user_password,
+      strlen(user_password)
+    );
+  if (result) {
+    printf("Error in init: C_Login as USER failed %s\n", get_pkcs11_error_name(result));
+    function_list_ptr->C_CloseSession(session);
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_LOGIN_FAILED;
+  }
+  //====================
+  templates[0].type = CKA_CLASS;
+  templates[0].ulValueLen = sizeof(CKA_CLASS);
+  templates[0].pValue = (CK_ULONG *) malloc(sizeof(CK_ULONG *));
+  *((CK_ULONG *) (templates[0].pValue)) = CKO_SECRET_KEY;
+
+  templates[1].type = CKA_KEY_TYPE;
+  templates[1].pValue = (CK_ULONG *) malloc(sizeof(CK_ULONG *));
+  templates[1].ulValueLen = sizeof(CK_ULONG);
+  *((CK_ULONG *) (templates[1].pValue)) = CKK_DES3;
+
+  templates[2].type = CKA_LABEL;
+  templates[2].pValue = (CK_CHAR *) malloc((strlen(label) + 1) * sizeof(CK_CHAR));
+  templates[2].ulValueLen = strlen(label);
+  strcpy((CK_CHAR *) (templates[2].pValue), label);
+
+  result = function_list_ptr->C_FindObjectsInit(session, templates, 3);
+  if (result) {
+    printf("Error in init: C_FindObjectsInit failed %s\n", get_pkcs11_error_name(result));
+    result = function_list_ptr->C_Logout(session);
+    function_list_ptr->C_CloseSession(session);
+    return 4;
+  }
+  result = function_list_ptr->C_FindObjects(session, objects, 100, &num_objects);
+  if (result) {
+    printf("Error in init: C_FindObjects failed %s\n", get_pkcs11_error_name(result));
+    result = function_list_ptr->C_Logout(session);
+    function_list_ptr->C_CloseSession(session);
+    return 4;
+  }
+  result = function_list_ptr->C_FindObjectsFinal(session);
+  if (result) {
+    printf("Error in init: C_FindObjectsFinal failed %s\n", get_pkcs11_error_name(result));
+    result = function_list_ptr->C_Logout(session);
+    function_list_ptr->C_CloseSession(session);
+    return 4;
+  }
+  *exists = 0;
+  if (num_objects > 0) {
+    *exists = 1;
+  }
+  free(templates[0].pValue);
+  free(templates[1].pValue);
+  free(templates[2].pValue);
+  //====================
+  result = function_list_ptr->C_Logout(session);
+  if (result) {
+    printf("Error in init: C_Logout failed %s\n", get_pkcs11_error_name(result));
+    function_list_ptr->C_CloseSession(session);
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_LOGOUT_FAILED;
+  }
+  result = function_list_ptr->C_CloseSession(session);
+  if (result) {
+    printf("Error in init: C_CloseSession failed %s\n", get_pkcs11_error_name(result));
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_CLOSE_SESSION_FAILED;
+  }
+  return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
 }
