@@ -624,6 +624,112 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__list_of_3DES_keys (
   CK_ATTRIBUTE templates[2];
   CK_ULONG num_objects = 100;
   CK_OBJECT_HANDLE objects[100];
+  ORG_LABCRYPTO_ABETTOR_counter i = 0, j = 0;
+  ORG_LABCRYPTO_ABETTOR__pkcs11__session session;
+  ORG_LABCRYPTO_ABETTOR__pkcs11__pkcs11_result result = 
+    function_list_ptr->C_OpenSession (
+      slot.id, 
+      CKF_RW_SESSION | CKF_SERIAL_SESSION,
+      NULL,
+      NULL,
+      &session
+    );
+  if (result) {
+    printf("Error in init: C_OpenSession failed %s\n", get_pkcs11_error_name(result));
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_OPEN_SESSION_FAILED;
+  }
+  result = 
+    function_list_ptr->C_Login (
+      session, 
+      CKU_USER, 
+      user_password,
+      strlen(user_password)
+    );
+  if (result) {
+    printf("Error in init: C_Login as USER failed %s\n", get_pkcs11_error_name(result));
+    function_list_ptr->C_CloseSession(session);
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_LOGIN_FAILED;
+  }
+  //====================
+  templates[0].type = CKA_CLASS;
+  templates[0].ulValueLen = sizeof(CKA_CLASS);
+  templates[0].pValue = (CK_ULONG *) malloc(sizeof(CK_ULONG *));
+  *((CK_ULONG *) (templates[0].pValue)) = CKO_SECRET_KEY;
+
+  templates[1].type = CKA_KEY_TYPE;
+  templates[1].pValue = (CK_ULONG *) malloc(sizeof(CK_ULONG *));
+  templates[1].ulValueLen = sizeof(CK_ULONG);
+  *((CK_ULONG *) (templates[1].pValue)) = CKK_DES3;
+
+  result = function_list_ptr->C_FindObjectsInit(session, templates, 2);
+  if (result) {
+    printf("Error in init: C_FindObjectsInit failed %s\n", get_pkcs11_error_name(result));
+    result = function_list_ptr->C_Logout(session);
+    function_list_ptr->C_CloseSession(session);
+    return 4;
+  }
+  
+  result = function_list_ptr->C_FindObjects(session, objects, 100, &num_objects);
+  if (result) {
+    printf("Error in init: C_FindObjects failed %s\n", get_pkcs11_error_name(result));
+    result = function_list_ptr->C_Logout(session);
+    function_list_ptr->C_CloseSession(session);
+    return 4;
+  }
+  result = function_list_ptr->C_FindObjectsFinal(session);
+  if (result) {
+    printf("Error in init: C_FindObjectsFinal failed %s\n", get_pkcs11_error_name(result));
+    result = function_list_ptr->C_Logout(session);
+    function_list_ptr->C_CloseSession(session);
+    return 4;
+  }
+  *keys_length = num_objects;
+  (*keys) = (ORG_LABCRYPTO_ABETTOR_string_ptr)malloc(num_objects * sizeof(ORG_LABCRYPTO_ABETTOR_string));
+  for (i = 0; i < num_objects; i++) {
+    CK_ATTRIBUTE attrib;
+    attrib.type = CKA_LABEL;
+    attrib.ulValueLen = 256;
+    attrib.pValue = (CK_BYTE*)malloc(256 * sizeof(CK_BYTE));
+    for (j = 0; j < 256; j++) {
+      ((CK_BYTE*)attrib.pValue)[j] = 0;
+    }
+    result = function_list_ptr->C_GetAttributeValue(session, objects[i], &attrib, 1);
+    if (result) {
+      printf("Error in init: C_GetAttributeValue failed %s\n", get_pkcs11_error_name(result));
+      result = function_list_ptr->C_Logout(session);
+      function_list_ptr->C_CloseSession(session);
+      return 4;
+    }
+    (*keys)[i] = (ORG_LABCRYPTO_ABETTOR_string)malloc(256 * sizeof(ORG_LABCRYPTO_ABETTOR_char));
+    strcpy((*keys)[i], (CK_CHAR*)attrib.pValue);
+  }
+  free(templates[0].pValue);
+  free(templates[1].pValue);
+  //====================
+  result = function_list_ptr->C_Logout(session);
+  if (result) {
+    printf("Error in init: C_Logout failed %s\n", get_pkcs11_error_name(result));
+    function_list_ptr->C_CloseSession(session);
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_LOGOUT_FAILED;
+  }
+  result = function_list_ptr->C_CloseSession(session);
+  if (result) {
+    printf("Error in init: C_CloseSession failed %s\n", get_pkcs11_error_name(result));
+    return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_CLOSE_SESSION_FAILED;
+  }
+  return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
+}
+
+
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__delete_all_3DES_keys (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr function_list_ptr,
+  ORG_LABCRYPTO_ABETTOR__pkcs11__slot slot,
+  ORG_LABCRYPTO_ABETTOR_password user_password
+) {
+  CK_ATTRIBUTE templates[2];
+  CK_ULONG num_objects = 100;
+  CK_OBJECT_HANDLE objects[100];
   ORG_LABCRYPTO_ABETTOR_counter i = 0;
   ORG_LABCRYPTO_ABETTOR__pkcs11__session session;
   ORG_LABCRYPTO_ABETTOR__pkcs11__pkcs11_result result = 
@@ -683,21 +789,14 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__list_of_3DES_keys (
     function_list_ptr->C_CloseSession(session);
     return 4;
   }
-  (*keys) = (ORG_LABCRYPTO_ABETTOR_string_ptr)malloc(num_objects * sizeof(ORG_LABCRYPTO_ABETTOR_string));
   for (i = 0; i < num_objects; i++) {
-    CK_ATTRIBUTE attrib;
-    attrib.type = CKA_LABEL;
-    attrib.ulValueLen = 256;
-    attrib.pValue = (CK_BYTE*)malloc(256 * sizeof(CK_BYTE));
-    result = function_list_ptr->C_GetAttributeValue(session, objects[i], &attrib, 1);
+    result = function_list_ptr->C_DestroyObject(session, objects[i]);
     if (result) {
-      printf("Error in init: C_GetAttributeValue failed %s\n", get_pkcs11_error_name(result));
+      printf("Error in init: C_DestroyObject failed %s\n", get_pkcs11_error_name(result));
       result = function_list_ptr->C_Logout(session);
       function_list_ptr->C_CloseSession(session);
       return 4;
     }
-    (*keys)[i] = (ORG_LABCRYPTO_ABETTOR_string)malloc(256 * sizeof(ORG_LABCRYPTO_ABETTOR_char));
-    strcpy((*keys)[i], (CK_CHAR*)attrib.pValue);
   }
   free(templates[0].pValue);
   free(templates[1].pValue);
@@ -714,4 +813,16 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__list_of_3DES_keys (
     return ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_CLOSE_SESSION_FAILED;
   }
   return ORG_LABCRYPTO_ABETTOR_RESULT__SUCCESS;
+}
+
+
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__3DES_key_exists (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr function_list_ptr,
+  ORG_LABCRYPTO_ABETTOR__pkcs11__slot slot,
+  ORG_LABCRYPTO_ABETTOR_password user_password,
+  ORG_LABCRYPTO_ABETTOR_string key_name,
+  ORG_LABCRYPTO_ABETTOR_bool_ptr result
+) {
+  return 0;
 }
