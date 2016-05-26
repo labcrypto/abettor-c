@@ -618,7 +618,7 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__list_of_3DES_keys (
   ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr function_list_ptr,
   ORG_LABCRYPTO_ABETTOR__pkcs11__slot slot,
   ORG_LABCRYPTO_ABETTOR_password user_password,
-  ORG_LABCRYPTO_ABETTOR_string_ptr keys,
+  ORG_LABCRYPTO_ABETTOR_string_ptr_ptr keys,
   ORG_LABCRYPTO_ABETTOR_length_ptr keys_length
 ) {
   CK_ATTRIBUTE templates[2];
@@ -683,6 +683,7 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__list_of_3DES_keys (
     function_list_ptr->C_CloseSession(session);
     return 4;
   }
+  (*keys) = (ORG_LABCRYPTO_ABETTOR_string_ptr)malloc(num_objects * sizeof(ORG_LABCRYPTO_ABETTOR_string));
   for (i = 0; i < num_objects; i++) {
     CK_ATTRIBUTE attrib;
     attrib.type = CKA_LABEL;
@@ -695,7 +696,8 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__list_of_3DES_keys (
       function_list_ptr->C_CloseSession(session);
       return 4;
     }
-    printf("> %s\n", (CK_CHAR*)attrib.pValue);
+    (*keys)[i] = (ORG_LABCRYPTO_ABETTOR_string)malloc(256 * sizeof(ORG_LABCRYPTO_ABETTOR_char));
+    strcpy((*keys)[i], (CK_CHAR*)attrib.pValue);
   }
   free(templates[0].pValue);
   free(templates[1].pValue);
