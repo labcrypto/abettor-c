@@ -20,11 +20,12 @@ if (APPLE)
 endif()
 
 include_directories(${PROJECT_INCLUDE_DIR})
+include_directories("/usr/include/PCSC")
 
 if (APPLE)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-writable-strings -Wno-deprecated-register -Wno-unused-function")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-writable-strings -Wno-deprecated-register -Wno-unused-function")
 elseif (UNIX)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-function")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-attributes -Wno-write-strings -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-function")
 endif()
 
 add_library(abettor-c-bio SHARED 
@@ -75,6 +76,10 @@ add_library(abettor-c-test SHARED
 )
 target_link_libraries(abettor-c-test abettor-c-util)
 
+add_library(abettor-c-unicode SHARED 
+  ${PROJECT_SOURCE_DIR}/unicode/unicode.c
+)
+
 add_library(abettor-c-util SHARED 
   ${PROJECT_SOURCE_DIR}/util/util.c
 )
@@ -89,6 +94,17 @@ install(DIRECTORY
 
 install(TARGETS
   abettor-c-bio
+  abettor-c-crypto
+  abettor-c-date
+  abettor-c-fs
+  abettor-c-log
+  abettor-c-net
+  abettor-c-pkcs11
+  abettor-c-rand
+  abettor-c-scard
+  abettor-c-test
+  abettor-c-unicode
+  abettor-c-util
   DESTINATION
   ${LIB_INSTALL_DIR}
 )
