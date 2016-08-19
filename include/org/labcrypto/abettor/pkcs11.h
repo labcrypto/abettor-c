@@ -95,6 +95,12 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__initialize (
 
 
 ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__finalize (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr
+);
+
+
+ORG_LABCRYPTO_ABETTOR_result
 ORG_LABCRYPTO_ABETTOR__pkcs11__get_slots (
   ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr,
   ORG_LABCRYPTO_ABETTOR__pkcs11__slot_ptr_ptr,
@@ -119,6 +125,14 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__close_session (
 
 ORG_LABCRYPTO_ABETTOR_result
 ORG_LABCRYPTO_ABETTOR__pkcs11__login (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr,
+  ORG_LABCRYPTO_ABETTOR__pkcs11__session,
+  ORG_LABCRYPTO_ABETTOR_password
+);
+
+
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__login_as_SO (
   ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr,
   ORG_LABCRYPTO_ABETTOR__pkcs11__session,
   ORG_LABCRYPTO_ABETTOR_password
@@ -159,6 +173,63 @@ ORG_LABCRYPTO_ABETTOR__pkcs11__encrypt_des3 (
   ORG_LABCRYPTO_ABETTOR_length,
   ORG_LABCRYPTO_ABETTOR_data_ptr,
   ORG_LABCRYPTO_ABETTOR_length_ptr
+);
+
+
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__change_SO_pin (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr,
+  ORG_LABCRYPTO_ABETTOR__pkcs11__slot,
+  ORG_LABCRYPTO_ABETTOR_password,
+  ORG_LABCRYPTO_ABETTOR_password
+);
+
+
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__change_user_pin (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr,
+  ORG_LABCRYPTO_ABETTOR__pkcs11__slot,
+  ORG_LABCRYPTO_ABETTOR_password,
+  ORG_LABCRYPTO_ABETTOR_password
+);
+
+
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__create_3DES_key (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr,
+  ORG_LABCRYPTO_ABETTOR__pkcs11__slot,
+  ORG_LABCRYPTO_ABETTOR_password,
+  ORG_LABCRYPTO_ABETTOR_string,
+  ORG_LABCRYPTO_ABETTOR_data,
+  ORG_LABCRYPTO_ABETTOR_length
+);
+
+
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__list_of_3DES_keys (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr,
+  ORG_LABCRYPTO_ABETTOR__pkcs11__slot,
+  ORG_LABCRYPTO_ABETTOR_password,
+  ORG_LABCRYPTO_ABETTOR_string_ptr_ptr,
+  ORG_LABCRYPTO_ABETTOR_length_ptr
+);
+
+
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__delete_all_3DES_keys (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr,
+  ORG_LABCRYPTO_ABETTOR__pkcs11__slot,
+  ORG_LABCRYPTO_ABETTOR_password
+);
+
+
+ORG_LABCRYPTO_ABETTOR_result
+ORG_LABCRYPTO_ABETTOR__pkcs11__3DES_key_exists (
+  ORG_LABCRYPTO_ABETTOR__pkcs11__function_list_ptr,
+  ORG_LABCRYPTO_ABETTOR__pkcs11__slot,
+  ORG_LABCRYPTO_ABETTOR_password,
+  ORG_LABCRYPTO_ABETTOR_string,
+  ORG_LABCRYPTO_ABETTOR_bool_ptr
 );
 
 

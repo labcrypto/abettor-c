@@ -122,10 +122,13 @@ extern "C" {
 #define ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_FIND_OBJECTS_FAILED                                      0x8000005a
 #define ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_FIND_OBJECTS_FINAL_FAILED                                0x8000005b
 #define ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__OBJECT_NOT_FOUND                                           0x8000005c
-#define ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_LOGOUT_FAILED                                            0x80000056
-#define ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_ENCRYPT_INIT_FAILED                                      0x80000057
-#define ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_ENCRYPT_FAILED                                           0x80000058
-#define ORG_LABCRYPTO_ABETTOR_RESULT___REMOTE_SIGN_FAILED                                                0x80000059
+#define ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_LOGOUT_FAILED                                            0x8000005d
+#define ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_ENCRYPT_INIT_FAILED                                      0x8000005e
+#define ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_ENCRYPT_FAILED                                           0x8000005f
+#define ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_SET_PIN_FAILED                                           0x80000060
+#define ORG_LABCRYPTO_ABETTOR_RESULT__PKCS11__C_CREATE_OBJECT_FAILED                                     0x80000061
+
+#define ORG_LABCRYPTO_ABETTOR_RESULT__REMOTE_SIGN_FAILED                                                 0x80000200
 
 #define ORG_LABCRYPTO_ABETTOR_RESULT__GENERAL_ERROR                                                      0x80001000
 
