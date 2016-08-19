@@ -34,6 +34,42 @@ add_library(abettor-c-bio SHARED
 )
 target_link_libraries(abettor-c-bio abettor-c-test)
 
+add_library(abettor-c-crypto SHARED 
+  ${PROJECT_SOURCE_DIR}/crypto/base64.c
+  ${PROJECT_SOURCE_DIR}/crypto/crypto.c
+)
+
+add_library(abettor-c-date SHARED 
+  ${PROJECT_SOURCE_DIR}/date/date.c
+)
+
+add_library(abettor-c-fs SHARED 
+  ${PROJECT_SOURCE_DIR}/fs/fs.c
+)
+
+add_library(abettor-c-log SHARED 
+  ${PROJECT_SOURCE_DIR}/log/log.c
+)
+
+add_library(abettor-c-net SHARED 
+  ${PROJECT_SOURCE_DIR}/net/udp.c
+)
+
+add_library(abettor-c-pkcs11 SHARED 
+  ${PROJECT_SOURCE_DIR}/pkcs11/pkcs11.c
+  ${PROJECT_SOURCE_DIR}/pkcs11/pkcs11_errors.c
+)
+
+add_library(abettor-c-rand SHARED 
+  ${PROJECT_SOURCE_DIR}/rand/rand.c
+)
+
+if (NOT APPLE)
+add_library(abettor-c-scard SHARED 
+  ${PROJECT_SOURCE_DIR}/scard/scard.c
+)
+endif()
+
 add_library(abettor-c-test SHARED 
   ${PROJECT_SOURCE_DIR}/test/test.c
 )
