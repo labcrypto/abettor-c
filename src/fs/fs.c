@@ -147,9 +147,9 @@ ORG_LABCRYPTO_ABETTOR__fs__mkdir (
   ORG_LABCRYPTO_ABETTOR_string dir_name
 ) {
 #ifdef _WIN32
-	wchar_t wpath[1024] = { 0 };
-	mbstowcs(wpath, dir_name, strlen(dir_name) + 1);
-	CreateDirectory(wpath, NULL);
+  wchar_t wpath[1024] = { 0 };
+  mbstowcs(wpath, dir_name, strlen(dir_name) + 1);
+  CreateDirectory(wpath, NULL);
 #else
   struct stat st = {0};
   if (stat(dir_name, &st) == -1) {
