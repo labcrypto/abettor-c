@@ -9,3 +9,4 @@ release
 *.suo
 build
 win32-build
+unix-build
