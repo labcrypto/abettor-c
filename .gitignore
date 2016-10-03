@@ -8,3 +8,4 @@ release
 *.ncb
 *.suo
 build
+win32-build
