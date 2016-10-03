@@ -38,7 +38,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\..\LabCryptoOrg-abettor-c-api\include&quot;"
+				AdditionalIncludeDirectories="..\..\..\org.labcrypto.abettor-c\include"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE,_DEBUG"
 				RuntimeLibrary="3"
 			/>
@@ -137,15 +137,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\bio\cbeff.c"
+				RelativePath="..\..\src\bio\cbeff.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\bio\face.c"
+				RelativePath="..\..\src\bio\face.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\bio\finger.c"
+				RelativePath="..\..\src\bio\finger.c"
 				>
 			</File>
 		</Filter>
@@ -155,22 +155,22 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\LabCryptoOrg-abettor-c-api\include\org\labcrypto\abettor\types.h"
+				RelativePath="..\..\include\org\labcrypto\abettor\types.h"
 				>
 			</File>
 			<Filter
 				Name="bio"
 				>
 				<File
-					RelativePath="..\..\..\LabCryptoOrg-abettor-c-api\include\org\labcrypto\abettor\bio\cbeff.h"
+					RelativePath="..\..\include\org\labcrypto\abettor\bio\cbeff.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\LabCryptoOrg-abettor-c-api\include\org\labcrypto\abettor\bio\face.h"
+					RelativePath="..\..\include\org\labcrypto\abettor\bio\face.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\LabCryptoOrg-abettor-c-api\include\org\labcrypto\abettor\bio\finger.h"
+					RelativePath="..\..\include\org\labcrypto\abettor\bio\finger.h"
 					>
 				</File>
 			</Filter>

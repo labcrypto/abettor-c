@@ -24,14 +24,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef __LINUX__
 #include <unistd.h>
-
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#endif
 
 #include <org/labcrypto/abettor/net/udp.h>
 
@@ -41,6 +42,7 @@ ORG_LABCRYPTO_ABETTOR__net__UDP_server__bind_on_ipv4_address (
   ORG_LABCRYPTO_ABETTOR_ip_v4_address bind_ipv4_address,
   ORG_LABCRYPTO_ABETTOR_port bind_port
 ) {
+#ifdef __UNIX__
   int sockfd;
   struct sockaddr_in serveraddr;
   int optval;
@@ -61,6 +63,11 @@ ORG_LABCRYPTO_ABETTOR__net__UDP_server__bind_on_ipv4_address (
     return 0;
   }
   return sockfd;
+#endif
+#ifdef __WIN32__
+  // TODO
+  return 0;
+#endif
 }
 
 
