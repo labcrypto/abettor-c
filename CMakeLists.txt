@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 project(abettor-c)
 
 if (UNIX)
-  add_defnitions(-__UNIX__)
+  add_definitions(-D__UNIX__)
   set(BIN_INSTALL_DIR "/usr/bin/" CACHE PATH "")
   set(HEADERS_INSTALL_DIR "/usr/include")
   set(LIB_INSTALL_DIR "/usr/lib")
@@ -15,7 +15,7 @@ if (UNIX)
     link_directories("/opt/local/lib/")
   else()
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-attributes -Wno-write-strings -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-function")
-    add_defnitions(-D__LINUX__)
+    add_definitions(-D__LINUX__)
     link_directories("/usr/local/lib")
   endif()
 endif()
@@ -40,7 +40,15 @@ add_library(abettor-c-bio STATIC
   ${PROJECT_SOURCE_DIR}/bio/face.c
   ${PROJECT_SOURCE_DIR}/bio/finger.c
 )
-# target_link_libraries(abettor-c-bio)
+
+# if (UNIX)
+#   add_library(abettor-c-bio-shared SHARED 
+#     ${PROJECT_SOURCE_DIR}/bio/cbeff.c
+#     ${PROJECT_SOURCE_DIR}/bio/face.c
+#     ${PROJECT_SOURCE_DIR}/bio/finger.c
+#     )
+#   set_target_properties(abettor-c-bio-shared PROPERTIES OUTPUT_NAME abettor-c-bio)
+# endif()
 
 add_library(abettor-c-crypto STATIC 
   ${PROJECT_SOURCE_DIR}/crypto/base64.c
@@ -81,7 +89,6 @@ endif()
 add_library(abettor-c-test STATIC 
   ${PROJECT_SOURCE_DIR}/test/test.c
 )
-# target_link_libraries(abettor-c-test abettor-c-util)
 
 add_library(abettor-c-unicode STATIC 
   ${PROJECT_SOURCE_DIR}/unicode/unicode.c
@@ -90,8 +97,6 @@ add_library(abettor-c-unicode STATIC
 add_library(abettor-c-util STATIC 
   ${PROJECT_SOURCE_DIR}/util/util.c
 )
-
-# target_link_libraries(abettor-c-util)
 
 # install(DIRECTORY 
 #   ${PROJECT_INCLUDE_DIR}/org 
