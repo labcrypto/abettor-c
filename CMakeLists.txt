@@ -5,8 +5,8 @@ project(abettor-c)
 if (UNIX)
   add_definitions(-D__UNIX__)
   set(BIN_INSTALL_DIR "/usr/bin/" CACHE PATH "")
-  set(HEADERS_INSTALL_DIR "/usr/include")
-  set(LIB_INSTALL_DIR "/usr/lib")
+  set(HEADERS_INSTALL_DIR "/usr/local/include")
+  set(LIB_INSTALL_DIR "/usr/local/lib")
   include_directories("/usr/include/PCSC")
   if (APPLE)
     set(CMAKE_MACOSX_RPATH 1)
@@ -98,31 +98,49 @@ add_library(abettor-c-util STATIC
   ${PROJECT_SOURCE_DIR}/util/util.c
 )
 
-# install(DIRECTORY 
-#   ${PROJECT_INCLUDE_DIR}/org 
-#   DESTINATION 
-#   ${HEADERS_INSTALL_DIR} 
-#   FILES_MATCHING 
-#   PATTERN "*.h"
-# )
-# 
-# install(TARGETS
-#   abettor-c-bio
-#   abettor-c-crypto
-#   abettor-c-date
-#   abettor-c-fs
-#   abettor-c-log
-#   abettor-c-net
-#   abettor-c-pkcs11
-#   abettor-c-rand
-#   abettor-c-scard
-#   abettor-c-test
-#   abettor-c-unicode
-#   abettor-c-util
-#   DESTINATION
-#   ${LIB_INSTALL_DIR}
-# )
-# 
+install(DIRECTORY 
+  ${PROJECT_INCLUDE_DIR}/org 
+  DESTINATION 
+  ${HEADERS_INSTALL_DIR} 
+  FILES_MATCHING 
+  PATTERN "*.h"
+)
+
+if (UNIX) 
+  install(TARGETS
+    abettor-c-bio
+    abettor-c-crypto
+    abettor-c-date
+    abettor-c-fs
+    abettor-c-log
+    abettor-c-net
+    abettor-c-pkcs11
+    abettor-c-rand
+    abettor-c-test
+    abettor-c-unicode
+    abettor-c-util
+    DESTINATION
+    ${LIB_INSTALL_DIR}
+  )
+else()  
+  install(TARGETS
+    abettor-c-bio
+    abettor-c-crypto
+    abettor-c-date
+    abettor-c-fs
+    abettor-c-log
+    abettor-c-net
+    abettor-c-pkcs11
+    abettor-c-rand
+    abettor-c-scard
+    abettor-c-test
+    abettor-c-unicode
+    abettor-c-util
+    DESTINATION
+    ${LIB_INSTALL_DIR}
+  )
+endif()
+
 # add_custom_target(uninstall
 #   COMMAND rm -rfv ${LIB_INSTALL_DIR}/libabettor-c*
 #   COMMAND rm -rfv ${HEADERS_INSTALL_DIR}/org/labcrypto/abettor
