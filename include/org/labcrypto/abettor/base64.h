@@ -21,8 +21,8 @@
  *  SOFTWARE.
  */
  
-#ifndef _ORG_LABCRYPTO_ABETTOR__C__CRYPTO_H_
-#define _ORG_LABCRYPTO_ABETTOR__C__CRYPTO_H_
+#ifndef _ORG_LABCRYPTO_ABETTOR__C__BASE64_H_
+#define _ORG_LABCRYPTO_ABETTOR__C__BASE64_H_
 
 #include <stdlib.h>
 #include <stdio.h>
