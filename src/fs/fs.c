@@ -344,12 +344,17 @@ ORG_LABCRYPTO_ABETTOR__fs__enum_file_names (
   ORG_LABCRYPTO_ABETTOR_counter i = 0, c = 0;
   DIR *d;
   struct dirent *dir;
+  struct stat file_info;
   d = opendir(dir_path);
   if (d) {
     while ((dir = readdir(d)) != NULL) {
-      if (dir->d_type == DT_REG) {
+      char *full_path = malloc(strlen(dir_path) + strlen(dir->d_name) + 2);
+      sprintf(full_path, "%s/%s", dir_path, dir->d_name);
+      lstat(full_path, &file_info);
+      if ((file_info.st_mode & S_IFMT) == S_IFREG) {
         c++;
       }
+      free(full_path);
     }
     closedir(d);
     *length_ptr = c;
@@ -360,11 +365,15 @@ ORG_LABCRYPTO_ABETTOR__fs__enum_file_names (
     d = opendir(dir_path);
     i = 0;
     while ((dir = readdir(d)) != NULL) {
-      if (dir->d_type == DT_REG) {
+      char *full_path = malloc(strlen(dir_path) + strlen(dir->d_name) + 2);
+      sprintf(full_path, "%s/%s", dir_path, dir->d_name);
+      lstat(full_path, &file_info);
+      if ((file_info.st_mode & S_IFMT) == S_IFREG) {
         (*filenames_ptr)[i] = (ORG_LABCRYPTO_ABETTOR_string)malloc(256 * sizeof(ORG_LABCRYPTO_ABETTOR_char));
         strcpy((*filenames_ptr)[i], dir->d_name);
         i++;
       }
+      free(full_path);
     }
     if (i != c) {
       printf("libabettor-fs::ORG_LABCRYPTO_ABETTOR__fs__enum_file_names: WARNING > Inconsistency in number of files.");
@@ -388,12 +397,17 @@ ORG_LABCRYPTO_ABETTOR__fs__num_files_in_dir (
   ORG_LABCRYPTO_ABETTOR_counter c = 0;
   DIR *d;
   struct dirent *dir;
+  struct stat file_info;
   d = opendir(dir_path);
   if (d) {
     while ((dir = readdir(d)) != NULL) {
-      if (dir->d_type == DT_REG) {
+      char *full_path = malloc(strlen(dir_path) + strlen(dir->d_name) + 2);
+      sprintf(full_path, "%s/%s", dir_path, dir->d_name);
+      lstat(full_path, &file_info);
+      if ((file_info.st_mode & S_IFMT) == S_IFREG) {
         c++;
       }
+      free(full_path);
     }
     closedir(d);
     *length_ptr = c;
